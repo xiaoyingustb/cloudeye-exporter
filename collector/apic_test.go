@@ -6,9 +6,13 @@ import (
 	"github.com/agiledragon/gomonkey/v2"
 	"github.com/huaweicloud/huaweicloud-sdk-go-v3/services/apig/v2/model"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/huaweicloud/cloudeye-exporter/logs"
 )
 
 func TestShowDetailsOfInstanceV2(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
 	apigClient := getAPICSClient()
 	id := "0001-0001-0000001"
 	name := "instance01"
@@ -48,11 +52,13 @@ func TestGetResourceInfo(t *testing.T) {
 		},
 	}
 
-	patches := gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
+	patches := getPatches()
+	patches.ApplyFuncReturn(getMetricConfigMap, sysConfig)
 	patches.ApplyFuncReturn(getAllAPICInstances, instances, nil)
 	patches.ApplyFuncReturn(getApisOfInstances, apis, nil)
 	patches.ApplyFuncReturn(showDetailsOfInstanceV2, &instance, nil)
 	defer patches.Reset()
+	logs.InitLog("")
 	var getter = APICInfo{}
 	label, metrics := getter.GetResourceInfo()
 	assert.Equal(t, 4, len(label))

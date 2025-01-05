@@ -53,9 +53,9 @@ func TestAGTECSInfo_GetResourceInfo(t *testing.T) {
 			},
 		},
 	}
-	patches := gomonkey.ApplyFuncReturn(getECSAGTMetrics, []model.MetricInfoList{metricInfosList})
+	patches := gomonkey.ApplyFuncReturn(listAllMetrics, []model.MetricInfoList{metricInfosList}, nil)
 	defer patches.Reset()
 	agtEcsInfo1 := AGTECSInfo{}
-	_, filterMetrics := agtEcsInfo1.GetResourceInfo()
-	assert.NotNil(t, filterMetrics)
+	resourceInfo, _ := agtEcsInfo1.GetResourceInfo()
+	assert.NotNil(t, resourceInfo)
 }

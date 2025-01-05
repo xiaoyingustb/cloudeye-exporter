@@ -96,6 +96,15 @@ func getServerResourceKey(metric model.BatchMetricData) string {
 	return ""
 }
 
+func getServerResourceKeyFromMetricInfo(metric model.MetricInfoList) string {
+	for _, dim := range metric.Dimensions {
+		if dim.Name == "instance_id" {
+			return dim.Value
+		}
+	}
+	return ""
+}
+
 func getDmsResourceKey(metric model.BatchMetricData) string {
 	for _, dim := range *metric.Dimensions {
 		if dim.Name == "kafka_instance_id" || dim.Name == "rabbitmq_instance_id" || dim.Name == "reliablemq_instance_id" {

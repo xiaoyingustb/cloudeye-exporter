@@ -47,8 +47,41 @@ func (getter BMSInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.Metric
 
 type SERVICEBMSInfo struct{}
 
+var serviceBmsInfo serversInfo
+
 func (getter SERVICEBMSInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.MetricInfoList) {
+	serviceBmsInfo.Lock()
+	defer serviceBmsInfo.Unlock()
+	if serviceBmsInfo.LabelInfo == nil || time.Now().Unix() > serviceBmsInfo.TTL {
+		serviceBmsInfo.FilterMetrics = getServiceBMSMetrics()
+		serviceBmsInfo.LabelInfo = bmsInfo.LabelInfo
+		serviceBmsInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
+	}
+	return serviceBmsInfo.LabelInfo, serviceBmsInfo.FilterMetrics
+}
+
+func getServiceBMSMetrics() []cesmodel.MetricInfoList {
+	allMetrics, err := listAllMetrics("SERVICE.BMS")
+	var filteredMetrics []cesmodel.MetricInfoList
+	if err != nil {
+		logs.Logger.Errorf("Get all metrics of SERVICE.BMS error: %s", err.Error())
+		return filteredMetrics
+	}
+	if bmsInfo.LabelInfo == nil {
+		logs.Logger.Info("No bms resource info found, skip to query agent metrics info")
+		return filteredMetrics
+	}
 	bmsInfo.Lock()
 	defer bmsInfo.Unlock()
-	return bmsInfo.LabelInfo, nil
+	for _, metric := range allMetrics {
+		serverKey := getServerResourceKeyFromMetricInfo(metric)
+		if serverKey == "" {
+			continue
+		}
+		if _, ok := bmsInfo.LabelInfo[serverKey]; !ok {
+			continue
+		}
+		filteredMetrics = append(filteredMetrics, metric)
+	}
+	return filteredMetrics
 }

@@ -4,9 +4,9 @@ go 1.19
 
 require (
 	github.com/agiledragon/gomonkey/v2 v2.11.0
-	github.com/huaweicloud/huaweicloud-sdk-go-v3 v0.1.92
+	github.com/huaweicloud/huaweicloud-sdk-go-v3 v0.1.110
 	github.com/prometheus/client_golang v1.17.0
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	go.uber.org/zap v1.24.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	gopkg.in/yaml.v3 v3.0.1
@@ -30,7 +30,7 @@ require (
 	go.mongodb.org/mongo-driver v1.12.0 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
-	golang.org/x/crypto v0.18.0 // indirect
+	golang.org/x/crypto v0.23.0 // indirect
 	golang.org/x/sys v0.11.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect

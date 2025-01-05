@@ -179,8 +179,26 @@ func (getter AGTECSInfo) GetResourceInfo() (map[string]labelInfo, []model.Metric
 
 func getECSAGTMetrics() []model.MetricInfoList {
 	allMetrics, err := listAllMetrics("AGT.ECS")
+	var filteredMetrics []model.MetricInfoList
 	if err != nil {
-		logs.Logger.Errorf("[%s] Get all metrics of AGT.ECS error: %s", err.Error())
+		logs.Logger.Errorf("Get all metrics of AGT.ECS error: %s", err.Error())
+		return filteredMetrics
 	}
-	return allMetrics
+	if ecsInfo.LabelInfo == nil {
+		logs.Logger.Info("No ecs resource info found, skip to query agent metrics info")
+		return filteredMetrics
+	}
+	ecsInfo.Lock()
+	defer ecsInfo.Unlock()
+	for _, metric := range allMetrics {
+		serverKey := getServerResourceKeyFromMetricInfo(metric)
+		if serverKey == "" {
+			continue
+		}
+		if _, ok := ecsInfo.LabelInfo[serverKey]; !ok {
+			continue
+		}
+		filteredMetrics = append(filteredMetrics, metric)
+	}
+	return filteredMetrics
 }
