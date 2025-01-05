@@ -189,7 +189,7 @@ func TestFmtTags(t *testing.T) {
 
 	valueA := "value_a"
 	tagInfo := []cbrmodel.Tag{
-		{Key: "key_a", Value: valueA},
+		{Key: "key_a", Value: &valueA},
 	}
 	tags = fmtTags(tagInfo)
 	assert.Equal(t, "value_a", tags["key_a"])
@@ -325,6 +325,53 @@ func TestStrSliceContains(t *testing.T) {
 		t.Run(testCase.name, func(t *testing.T) {
 			result := strSliceContains(testCase.slice, testCase.str)
 			testCase.expect(t, result)
+		})
+	}
+}
+
+func TestGetServerResourceKeyFromMetricInfo(t *testing.T) {
+	testCases := []struct {
+		name           string
+		metricInfoList model.MetricInfoList
+		expect         func(t *testing.T, resourceKey string)
+	}{
+		{
+			"no_instance_id_dim_name",
+			model.MetricInfoList{
+				Namespace:  namespace,
+				MetricName: "cpu_usage",
+				Dimensions: []model.MetricsDimension{
+					{
+						Name:  "instance_id1",
+						Value: "9234ad9f-87a5-49a9-b6ec-11ecde1d943b",
+					},
+				},
+			},
+			func(t *testing.T, resourceKey string) {
+				assert.Equal(t, "", resourceKey)
+			},
+		},
+		{
+			"has_instance_id_dim_name",
+			model.MetricInfoList{
+				Namespace:  namespace,
+				MetricName: "cpu_usage",
+				Dimensions: []model.MetricsDimension{
+					{
+						Name:  "instance_id",
+						Value: "9234ad9f-87a5-49a9-b6ec-11ecde1d943b",
+					},
+				},
+			},
+			func(t *testing.T, resourceKey string) {
+				assert.NotEqual(t, "", resourceKey)
+			},
+		},
+	}
+	for _, testCase := range testCases {
+		t.Run(testCase.name, func(t *testing.T) {
+			resourceKey := getServerResourceKeyFromMetricInfo(testCase.metricInfoList)
+			testCase.expect(t, resourceKey)
 		})
 	}
 }
