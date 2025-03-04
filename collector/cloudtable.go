@@ -40,13 +40,21 @@ func (ct CloudTableInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.Met
 			logs.Logger.Errorf("[%s] Get all metrics of SYS.CloudTable error: %s", err.Error())
 			return cloudTableInfo.LabelInfo, cloudTableInfo.FilterMetrics
 		}
-		for _, metric := range allMetrics {
+
+		var filteredMetrics []cesmodel.MetricInfoList
+		for _, metricInfo := range allMetrics {
+			if IsMetricInfoInWhiteList(metricInfo) {
+				filteredMetrics = append(filteredMetrics, metricInfo)
+			}
+		}
+
+		for _, metric := range filteredMetrics {
 			if info, ok := resourceInfos[metric.Dimensions[0].Value]; ok {
 				resourceInfos[GetResourceKeyFromMetricInfo(metric)] = info
 			}
 		}
 		cloudTableInfo.LabelInfo = resourceInfos
-		cloudTableInfo.FilterMetrics = allMetrics
+		cloudTableInfo.FilterMetrics = filteredMetrics
 		cloudTableInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
 	}
 	return cloudTableInfo.LabelInfo, cloudTableInfo.FilterMetrics

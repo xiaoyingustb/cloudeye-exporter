@@ -35,19 +35,31 @@ func TestWAFInfo_GetResourceInfo(t *testing.T) {
 				sysConfig := map[string][]string{"waf_instance_id": {"attacks"}}
 				patches = gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
 				patches.ApplyFuncReturn(listResources, mockRmsResource(), nil)
+				conf.AccessKey = "test_ak"
+				conf.SecretKey = "test_sk"
 				wafClient := getWAFClient()
 				ID := "1"
 				InstanceName := "AA"
-				resp := &model.ListInstanceResponse{
-					HttpStatusCode: 200,
-					Items: &[]model.ListInstance{
-						{
-							Id:           &ID,
-							InstanceName: &InstanceName,
-						},
+				outputs := []gomonkey.OutputCell{
+					{
+						Values: gomonkey.Params{&model.ListInstanceResponse{
+							HttpStatusCode: 200,
+							Items: &[]model.ListInstance{
+								{
+									Id:           &ID,
+									InstanceName: &InstanceName,
+								},
+							},
+						}, nil},
+					},
+					{
+						Values: gomonkey.Params{&model.ListInstanceResponse{
+							HttpStatusCode: 200,
+							Items:          &[]model.ListInstance{},
+						}, nil},
 					},
 				}
-				patches = gomonkey.ApplyMethodReturn(wafClient, "ListInstance", resp, nil)
+				patches = patches.ApplyMethodSeq(wafClient, "ListInstance", outputs)
 			}
 			if tt.name == "getAllWafInstancesFromRMSErr" {
 				patches = getPatches()
@@ -71,23 +83,35 @@ func TestWAFInfo_GetResourceInfo(t *testing.T) {
 }
 
 func TestWafGetResourceInfo(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
 	sysConfig := map[string][]string{"waf_instance_id": {"attacks"}}
 	patches := gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
 	defer patches.Reset()
-	patches.ApplyFuncReturn(listResources, mockRmsResource(), nil)
+	patches = patches.ApplyFuncReturn(listResources, mockRmsResource(), nil)
 	wafClient := getWAFClient()
 	ID := "1"
 	InstanceName := "AA"
-	resp := &model.ListInstanceResponse{
-		HttpStatusCode: 200,
-		Items: &[]model.ListInstance{
-			{
-				Id:           &ID,
-				InstanceName: &InstanceName,
-			},
+	outputs := []gomonkey.OutputCell{
+		{
+			Values: gomonkey.Params{&model.ListInstanceResponse{
+				HttpStatusCode: 200,
+				Items: &[]model.ListInstance{
+					{
+						Id:           &ID,
+						InstanceName: &InstanceName,
+					},
+				},
+			}, nil},
+		},
+		{
+			Values: gomonkey.Params{&model.ListInstanceResponse{
+				HttpStatusCode: 200,
+				Items:          &[]model.ListInstance{},
+			}, nil},
 		},
 	}
-	patches = gomonkey.ApplyMethodReturn(wafClient, "ListInstance", resp, nil)
+	patches = patches.ApplyMethodSeq(wafClient, "ListInstance", outputs)
 
 	var wafgetter WAFInfo
 	labels, metrics := wafgetter.GetResourceInfo()
@@ -97,6 +121,8 @@ func TestWafGetResourceInfo(t *testing.T) {
 }
 
 func TestWafGetResourceInfo_getAllWafInstancesFromRMSErr(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
 	patches := getPatches()
 	defer patches.Reset()
 
@@ -113,6 +139,8 @@ func TestWafGetResourceInfo_getAllWafInstancesFromRMSErr(t *testing.T) {
 }
 
 func TestWafGetResourceInfo_getAllPremiumWafInstancesNormal(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
 	patches := getPatches()
 	defer patches.Reset()
 
@@ -125,16 +153,26 @@ func TestWafGetResourceInfo_getAllPremiumWafInstancesNormal(t *testing.T) {
 	wafClient := getWAFClient()
 	ID := "1"
 	InstanceName := "AA"
-	resp := &model.ListInstanceResponse{
-		HttpStatusCode: 200,
-		Items: &[]model.ListInstance{
-			{
-				Id:           &ID,
-				InstanceName: &InstanceName,
-			},
+	outputs := []gomonkey.OutputCell{
+		{
+			Values: gomonkey.Params{&model.ListInstanceResponse{
+				HttpStatusCode: 200,
+				Items: &[]model.ListInstance{
+					{
+						Id:           &ID,
+						InstanceName: &InstanceName,
+					},
+				},
+			}, nil},
+		},
+		{
+			Values: gomonkey.Params{&model.ListInstanceResponse{
+				HttpStatusCode: 200,
+				Items:          &[]model.ListInstance{},
+			}, nil},
 		},
 	}
-	patches = gomonkey.ApplyMethodReturn(wafClient, "ListInstance", resp, nil)
+	patches = patches.ApplyMethodSeq(wafClient, "ListInstance", outputs)
 	logs.InitLog("")
 	var wafGetter WAFInfo
 	labels, metrics := wafGetter.GetResourceInfo()
@@ -144,6 +182,8 @@ func TestWafGetResourceInfo_getAllPremiumWafInstancesNormal(t *testing.T) {
 }
 
 func TestWafGetResourceInfo_getAllPremiumWafInstancesErr(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
 	patches := getPatches()
 	defer patches.Reset()
 
@@ -176,6 +216,8 @@ func TestWafGetResourceInfo_getAllPremiumWafInstancesErr(t *testing.T) {
 }
 
 func Test_getWAFClient(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
 	tests := []struct {
 		name    string
 		wantNil bool
@@ -193,6 +235,10 @@ func Test_getWAFClient(t *testing.T) {
 }
 
 func Test_getAllPremiumWafInstances(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	ID := "1"
+	InstanceName := "AA"
 	tests := []struct {
 		name    string
 		wantNil bool
@@ -216,11 +262,26 @@ func Test_getAllPremiumWafInstances(t *testing.T) {
 			logs.InitLog("")
 			if tt.name == "normal" {
 				wafClient := getWAFClient()
-				resp := &model.ListInstanceResponse{
-					HttpStatusCode: 200,
-					Items:          &[]model.ListInstance{},
+				outputs := []gomonkey.OutputCell{
+					{
+						Values: gomonkey.Params{&model.ListInstanceResponse{
+							HttpStatusCode: 200,
+							Items: &[]model.ListInstance{
+								{
+									Id:           &ID,
+									InstanceName: &InstanceName,
+								},
+							},
+						}, nil},
+					},
+					{
+						Values: gomonkey.Params{&model.ListInstanceResponse{
+							HttpStatusCode: 200,
+							Items:          &[]model.ListInstance{},
+						}, nil},
+					},
 				}
-				patches = gomonkey.ApplyMethodReturn(wafClient, "ListInstance", resp, nil)
+				patches = patches.ApplyMethodSeq(wafClient, "ListInstance", outputs)
 			}
 			if tt.name == "HttpStatusCode ERR" {
 				wafClient := getWAFClient()
@@ -238,7 +299,7 @@ func Test_getAllPremiumWafInstances(t *testing.T) {
 				}
 				patches = gomonkey.ApplyMethodReturn(wafClient, "ListInstance", resp, errors.New("aa"))
 			}
-			assert.Equalf(t, tt.wantNil, getAllPremiumWafInstances() == nil, "getAllPremiumWafInstances()")
+			assert.Equalf(t, tt.wantNil, len(getAllPremiumWafInstances()) == 0, "getAllPremiumWafInstances()")
 			if patches != nil {
 				patches.Reset()
 			}

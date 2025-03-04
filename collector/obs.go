@@ -15,8 +15,8 @@ var obsServerInfo serversInfo
 type OBSInfo struct{}
 
 func (getter OBSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInfoList) {
-	filterMetrics := make([]model.MetricInfoList, 0)
 	resourceInfos := map[string]labelInfo{}
+	var filteredMetrics []model.MetricInfoList
 	obsServerInfo.Lock()
 	defer obsServerInfo.Unlock()
 
@@ -24,10 +24,15 @@ func (getter OBSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		allMetrics, err := listAllMetrics("SYS.OBS")
 		if err != nil {
 			logs.Logger.Errorf("[%s] Get all metrics of SYS.OBS failed, error is: %s", err.Error())
-			return resourceInfos, filterMetrics
+			return resourceInfos, filteredMetrics
+		}
+		for _, metricInfo := range allMetrics {
+			if IsMetricInfoInWhiteList(metricInfo) {
+				filteredMetrics = append(filteredMetrics, metricInfo)
+			}
 		}
 		metricDimMap := map[string]cesmodel.MetricsDimension{}
-		for _, metric := range allMetrics {
+		for _, metric := range filteredMetrics {
 			for _, dimension := range metric.Dimensions {
 				metricDimMap[dimension.Value] = dimension
 			}
@@ -36,7 +41,7 @@ func (getter OBSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		services, err := getAllServerFromRMS("obs", "buckets")
 		if err != nil {
 			logs.Logger.Error("Get all obs server from RMS failed, error is:", err.Error())
-			return resourceInfos, filterMetrics
+			return resourceInfos, filteredMetrics
 		}
 		for _, instance := range services {
 			if _, ok := metricDimMap[instance.Name]; ok {
@@ -53,7 +58,7 @@ func (getter OBSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 
 		userInfoMap := getUserInfoFromIAM()
 		if userInfoMap != nil {
-			for _, metric := range allMetrics {
+			for _, metric := range filteredMetrics {
 				tenantId := getTenantId(metric)
 				if tenantId == "" {
 					continue
@@ -68,7 +73,7 @@ func (getter OBSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 			}
 		}
 		obsServerInfo.LabelInfo = resourceInfos
-		obsServerInfo.FilterMetrics = allMetrics
+		obsServerInfo.FilterMetrics = filteredMetrics
 		obsServerInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
 	}
 	return obsServerInfo.LabelInfo, obsServerInfo.FilterMetrics

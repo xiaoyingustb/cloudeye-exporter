@@ -327,3 +327,32 @@ func isErrorTypeForTooManyRequests(err error) bool {
 	}
 	return false
 }
+
+// 判断指标是否在白名单中
+func IsMetricInfoInWhiteList(metricInfo model.MetricInfoList) bool {
+	configMap := getMetricConfigMap(metricInfo.Namespace)
+	// 如果白名单中无对应命名空间，代表全量查询该命名空间下的指标数据
+	if configMap == nil {
+		return true
+	}
+	var currentDimNameArray []string
+	for _, dimension := range metricInfo.Dimensions {
+		currentDimNameArray = append(currentDimNameArray, dimension.Name)
+	}
+	currentDimNames := strings.Join(currentDimNameArray, ",")
+	var metricNames []string
+	// 从白名单中获取当前维度所有指标列表
+	for dimNames := range configMap {
+		if DimNameEquals(currentDimNames, dimNames) {
+			metricNames = configMap[dimNames]
+			break
+		}
+	}
+	// 判断当前指标是否在指标列表中
+	for _, metricName := range metricNames {
+		if metricName == metricInfo.MetricName {
+			return true
+		}
+	}
+	return false
+}

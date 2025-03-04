@@ -189,7 +189,7 @@ func TestFmtTags(t *testing.T) {
 
 	valueA := "value_a"
 	tagInfo := []cbrmodel.Tag{
-		{Key: "key_a", Value: &valueA},
+		{Key: "key_a", Value: valueA},
 	}
 	tags = fmtTags(tagInfo)
 	assert.Equal(t, "value_a", tags["key_a"])

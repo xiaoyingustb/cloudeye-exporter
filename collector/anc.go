@@ -3,6 +3,7 @@ package collector
 import (
 	"time"
 
+	"github.com/huaweicloud/huaweicloud-sdk-go-v3/services/ces/v1/model"
 	cesmodel "github.com/huaweicloud/huaweicloud-sdk-go-v3/services/ces/v1/model"
 
 	"github.com/huaweicloud/cloudeye-exporter/logs"
@@ -37,10 +38,16 @@ func (getter ANCInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.Metric
 	defer ancInfo.Unlock()
 	if ancInfo.LabelInfo == nil || time.Now().Unix() > ancInfo.TTL {
 		resourceInfos := map[string]labelInfo{}
-		filteredMetrics, err := listAllMetrics("SYS.ANC")
+		currentAllMetrics, err := listAllMetrics("SYS.ANC")
 		if err != nil {
 			logs.Logger.Errorf("Get all anc metrics: %s", err.Error())
 			return ancInfo.LabelInfo, ancInfo.FilterMetrics
+		}
+		var filteredMetrics []model.MetricInfoList
+		for _, metricInfo := range currentAllMetrics {
+			if IsMetricInfoInWhiteList(metricInfo) {
+				filteredMetrics = append(filteredMetrics, metricInfo)
+			}
 		}
 		ancResourceMetricMap := getAncSubResourceMetrics(filteredMetrics)
 		getAncResourceInfoFromRms("anc_anc_id", resourceInfos, ancResourceMetricMap)

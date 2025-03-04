@@ -52,12 +52,17 @@ func (getter EgInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.MetricI
 		getEgResourceInfoFromRms("subscription_id", resourceInfos, egResourceMetricMap)
 		getEgResourceInfoFromRms("streaming_id", resourceInfos, egResourceMetricMap)
 		egInfo.LabelInfo = resourceInfos
+
 		var filteredMetrics []cesmodel.MetricInfoList
-		for _, metrics := range allMetrics {
-			if _, ok := resourceInfos[GetResourceKeyFromMetricInfo(metrics)]; ok {
-				filteredMetrics = append(filteredMetrics, metrics)
+		for _, metricInfo := range allMetrics {
+			if !IsMetricInfoInWhiteList(metricInfo) {
+				continue
+			}
+			if _, ok := resourceInfos[GetResourceKeyFromMetricInfo(metricInfo)]; ok {
+				filteredMetrics = append(filteredMetrics, metricInfo)
 			}
 		}
+
 		egInfo.FilterMetrics = filteredMetrics
 		egInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
 	}

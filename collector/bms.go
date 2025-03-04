@@ -81,7 +81,10 @@ func getServiceBMSMetrics() []cesmodel.MetricInfoList {
 		if _, ok := bmsInfo.LabelInfo[serverKey]; !ok {
 			continue
 		}
-		filteredMetrics = append(filteredMetrics, metric)
+		//白名单校验通过，查询当前指标对应指标数据
+		if IsMetricInfoInWhiteList(metric) {
+			filteredMetrics = append(filteredMetrics, metric)
+		}
 	}
 	return filteredMetrics
 }
