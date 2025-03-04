@@ -49,7 +49,12 @@ func (getter EVSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		}
 
 		metricMap := map[string]model.MetricInfoList{}
+		var filteredMetrics []model.MetricInfoList
 		for _, metric := range allMetrics {
+			if !IsMetricInfoInWhiteList(metric) {
+				continue
+			}
+			filteredMetrics = append(filteredMetrics, metric)
 			resourceKey := GetResourceKeyFromMetricInfo(metric)
 			metricMap[resourceKey] = metric
 		}
@@ -76,7 +81,7 @@ func (getter EVSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		}
 
 		evsInfo.LabelInfo = resourceInfos
-		evsInfo.FilterMetrics = allMetrics
+		evsInfo.FilterMetrics = filteredMetrics
 		evsInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
 	}
 	return evsInfo.LabelInfo, evsInfo.FilterMetrics

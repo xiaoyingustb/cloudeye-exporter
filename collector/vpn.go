@@ -27,6 +27,9 @@ func (getter VPNInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		metricMap := map[string][]model.MetricInfoList{}
 		evpnSaMap := map[string][]model.MetricInfoList{}
 		for _, metric := range allMetrics {
+			if !IsMetricInfoInWhiteList(metric) {
+				continue
+			}
 			resourceKey := GetResourceKeyFromMetricInfo(metric)
 			dimNameArr := make([]string, 0, 0)
 			for _, dimension := range metric.Dimensions {

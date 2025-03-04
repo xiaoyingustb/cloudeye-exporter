@@ -116,7 +116,6 @@ SYS.DCS:
       - node_status
       - command_max_rt
       - command_avg_rt
-      - connections_usage
       - cpu_avg_usage
       - storage_usage
       - used_storage
@@ -2130,10 +2129,6 @@ SYS.LakeFormation:
       - req_count_error
       - output_throughput
       - input_throughput
-# MRS服务不支持指标过滤，查询全量指标
-SYS.MRS:
-  resource: "service"
-
 SYS.DAYU:
   dim_metric_name:
     stream_id:

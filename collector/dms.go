@@ -3,8 +3,9 @@ package collector
 import (
 	"time"
 
-	"github.com/huaweicloud/cloudeye-exporter/logs"
 	"github.com/huaweicloud/huaweicloud-sdk-go-v3/services/ces/v1/model"
+
+	"github.com/huaweicloud/cloudeye-exporter/logs"
 )
 
 type DmsInstanceInfo struct {
@@ -52,7 +53,14 @@ func getDMSResourceAndMetrics() (map[string]labelInfo, []model.MetricInfoList) {
 	if err != nil {
 		logs.Logger.Errorf("[%s] Get all metrics of SYS.DMS error: %s", err.Error())
 	}
-	return resourceInfos, allMetrics
+	var filteredMetrics []model.MetricInfoList
+	for _, metricInfo := range allMetrics {
+		if IsMetricInfoInWhiteList(metricInfo) {
+			filteredMetrics = append(filteredMetrics, metricInfo)
+		}
+	}
+
+	return resourceInfos, filteredMetrics
 }
 
 func getDMSInstanceFromRMS() []ResourceBaseInfo {

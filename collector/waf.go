@@ -45,7 +45,7 @@ func (getter WAFInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		}
 
 		premiumWafInstances := getAllPremiumWafInstances()
-		if premiumWafInstances == nil {
+		if len(premiumWafInstances) == 0 {
 			return nil, nil
 		}
 		for _, instance := range premiumWafInstances {
@@ -79,16 +79,31 @@ func getWAFClient() *waf.WafClient {
 }
 
 func getAllPremiumWafInstances() []wafModel.ListInstance {
-	resp, err := getWAFClient().ListInstance(&wafModel.ListInstanceRequest{})
-	if err != nil {
-		logs.Logger.Errorf("Get all premiumWafInstances err, err is : %s", err.Error())
-		return nil
+	result := make([]wafModel.ListInstance, 0)
+	pageSize := int32(100)
+	page := int32(1)
+	req := &wafModel.ListInstanceRequest{
+		Page:     &page,
+		Pagesize: &pageSize,
 	}
-	if resp.HttpStatusCode != http.StatusOK {
-		logs.Logger.Errorf("Get all premiumWafInstances HttpStatusCode is %d", resp.HttpStatusCode)
-		return nil
+	for {
+		resp, err := getWAFClient().ListInstance(req)
+		if err != nil {
+			logs.Logger.Errorf("Get all premiumWafInstances err, err is : %s", err.Error())
+			return nil
+		}
+		if resp.HttpStatusCode != http.StatusOK {
+			logs.Logger.Errorf("Get all premiumWafInstances HttpStatusCode is %d", resp.HttpStatusCode)
+			break
+		}
+		if len(*resp.Items) == 0 {
+			break
+		}
+		instanceInfo := *resp.Items
+		result = append(result, instanceInfo...)
+		*req.Page += 1
 	}
-	return *resp.Items
+	return result
 }
 
 func (getter WAFInfo) resetResourceInfo() {

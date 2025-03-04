@@ -60,7 +60,13 @@ func getMRSResourceAndMetrics() (map[string]labelInfo, []model.MetricInfoList) {
 	if err != nil {
 		logs.Logger.Errorf("[%s] Get all metrics of SYS.MRS error: %s", err.Error())
 	}
-	return resourceInfos, allMetrics
+	var filteredMetrics []model.MetricInfoList
+	for _, metricInfo := range allMetrics {
+		if IsMetricInfoInWhiteList(metricInfo) {
+			filteredMetrics = append(filteredMetrics, metricInfo)
+		}
+	}
+	return resourceInfos, filteredMetrics
 }
 
 func getClusterInfo() ([]ResourceBaseInfo, error) {

@@ -3,18 +3,28 @@ package collector
 import (
 	"testing"
 
-	"github.com/agiledragon/gomonkey/v2"
 	"github.com/huaweicloud/huaweicloud-sdk-go-v3/services/ces/v1/model"
 	rmmModel "github.com/huaweicloud/huaweicloud-sdk-go-v3/services/rms/v1/model"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/huaweicloud/cloudeye-exporter/logs"
 )
 
 func TestEvsGetResourceInfo(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
 	var evsgetter EVSInfo
 	patches := getPatches()
-	sysConfig := map[string][]string{"disk_name": {"disk_device_read_bytes_rate"}}
-	patches = gomonkey.ApplyFuncReturn(getResourceFromRMS, true)
-	patches = patches.ApplyFuncReturn(getMetricConfigMap, sysConfig)
+	logs.InitLog("")
+	metricConf = map[string]MetricConf{
+		"SYS.EVS": {
+			DimMetricName: map[string][]string{
+				"disk_name": {"disk_device_read_bytes_rate"},
+			},
+		},
+	}
+	patches.ApplyFuncReturn(getResourceFromRMS, true)
+
 	volumes := mockRmsResource()
 	volumes[0].Properties = map[string]interface{}{
 		"attachments": []Attachment{
@@ -62,6 +72,7 @@ func TestEvsGetResourceInfo(t *testing.T) {
 		},
 	}
 	patches.ApplyFuncReturn(listAllMetrics, metrics, nil)
+	patches.ApplyFuncReturn(IsMetricInfoInWhiteList, true)
 	defer patches.Reset()
 
 	labels, metrics := evsgetter.GetResourceInfo()
