@@ -509,6 +509,21 @@
           "legendFormat": "网络输出吞吐量",
           "range": false,
           "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "avg(huaweicloud_sys_rds_rds042_database_connections{epId=~'$EPS', name=~\"$hostname\"}) by (dataVip) - 0",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "G"
         }
       ],
       "title": "RDS资源总览表【企业项目：$EPS，实例总数：$total】",
@@ -531,9 +546,12 @@
               "Time 5": true,
               "Time 6": true,
               "Value #B": false,
+              "Value #D": false,
+              "Value #G": false,
               "cpu 1": true,
               "cpu 2": true,
               "cpu 3": true,
+              "engineName 1": false,
               "engineName 2": true,
               "engineName 3": true,
               "engineVersion 1": true,
@@ -559,6 +577,7 @@
               "port 1": true,
               "port 2": true,
               "port 3": true,
+              "postgresql_cluster_id 1": false,
               "rds_cluster_id 1": true,
               "rds_cluster_id 2": true,
               "rds_cluster_id 3": true,
@@ -575,14 +594,19 @@
               "Time 2": 15,
               "Time 3": 29,
               "Time 4": 43,
-              "Time 5": 45,
-              "Time 6": 47,
+              "Time 5": 46,
+              "Time 6": 48,
+              "Time 7": 62,
               "Value #A": 14,
               "Value #B": 28,
               "Value #C": 42,
-              "Value #D": 44,
-              "Value #E": 46,
-              "Value #F": 48,
+              "Value #D": 45,
+              "Value #E": 47,
+              "Value #F": 49,
+              "Value #G": 44,
+              "b 1": 52,
+              "b 2": 56,
+              "b 3": 60,
               "cpu 1": 4,
               "cpu 2": 16,
               "cpu 3": 30,
@@ -614,9 +638,18 @@
               "port 1": 11,
               "port 2": 25,
               "port 3": 39,
+              "postgresql_cluster_id 1": 50,
+              "postgresql_cluster_id 2": 54,
+              "postgresql_cluster_id 3": 58,
               "rds_cluster_id 1": 12,
               "rds_cluster_id 2": 26,
               "rds_cluster_id 3": 40,
+              "scam 1": 51,
+              "scam 2": 55,
+              "scam 3": 59,
+              "test_aom 1": 53,
+              "test_aom 2": 57,
+              "test_aom 3": 61,
               "unit 1": 13,
               "unit 2": 27,
               "unit 3": 41
@@ -628,15 +661,50 @@
               "Value #A": "CPU使用率",
               "Value #B": "内存使用率",
               "Value #C": "磁盘使用率",
-              "Value #D": "总连接数",
+              "Value #D": "mysql总连接数",
               "Value #E": "网络输入吞吐量",
               "Value #F": "网络输出吞吐量",
+              "Value #G": "",
               "cpu 1": "",
               "cpu 3": "",
               "dataVip": "IP",
               "engineName 1": "",
               "mem 1": "",
               "name 1": "主机名"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "总连接数",
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "Value #G",
+                "mysql总连接数"
+              ],
+              "reducer": "sum"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "IP",
+                "engineName 1",
+                "主机名",
+                "CPU使用率",
+                "内存使用率",
+                "磁盘使用率",
+                "Value #G",
+                "总连接数",
+                "网络输入吞吐量",
+                "网络输出吞吐量"
+              ]
             }
           }
         }
@@ -1142,7 +1210,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1245,7 +1314,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1348,7 +1418,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1464,7 +1535,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1578,7 +1650,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1693,7 +1766,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1808,7 +1882,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1907,7 +1982,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2107,6 +2183,6 @@
   "timezone": "browser",
   "title": "关系型数据库(RDS)",
   "uid": "cdyyfytqtixogf",
-  "version": 3,
+  "version": 1,
   "weekStart": ""
 }

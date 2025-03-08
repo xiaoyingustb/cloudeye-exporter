@@ -272,6 +272,7 @@ SYS.DCAAS:
       - network_outgoing_packets
       - latency
       - packet_loss_rate
+      - network_status
     virtual_interface_id:
       - network_incoming_bits_rate
       - network_outgoing_bits_rate
@@ -283,6 +284,10 @@ SYS.DCAAS:
       - network_outgoing_packets
       - latency
       - packet_loss_rate
+      - bgp_receive_route_num_v6
+      - bgp_receive_route_num_v4
+      - bgp_peer_status_v6
+      - bgp_peer_status_v4
     virtual_gateway_id:
       - network_incoming_bits_rate
       - network_outgoing_bits_rate
@@ -575,6 +580,21 @@ SYS.RDS:
       - round_trip_time
       - packet_loss_rate
       - inactive_logical_replication_slot
+      - write_lsn_replication_latency_size
+      - wal_size
+      - user_current_connections
+      - user_active_connections
+      - temporary_files_generation_size
+      - temporary_files_generation_num
+      - sys_memory_hit_rate
+      - synchronous_replication_blocking_time
+      - slave_replication_status
+      - sent_lsn_replication_latency_size
+      - replay_lsn_replication_latency_size
+      - pgaudit_log_size
+      - flush_lsn_replication_latency_size
+      - dbuser_passwd_deadline
+      - data_disk_inode_used
     rds_cluster_sqlserver_id:
       - rds001_cpu_util
       - rds002_mem_util
@@ -659,6 +679,38 @@ SYS.ELB:
       - l7_in_bps_usage
       - l7_out_bps_usage
       - l7_qps_usage
+      - m27_out_bandwidth_ipv6
+      - m26_in_bandwidth_ipv6
+      - m25_l7_resp_Bps
+      - m24_l7_req_Bps
+      - m19_l7_upstream_3xx
+      - m18_l7_upstream_2xx
+      - l7_upstream_other_status
+      - l7_upstream_504
+      - l7_upstream_503
+      - l7_upstream_502
+      - l7_upstream_501
+      - l7_upstream_500
+      - l7_upstream_404
+      - l7_upstream_403
+      - l7_upstream_400
+      - l7_upstream_101
+      - ipgroup_blocked_traffic
+      - ipgroup_blocked_packets
+      - elb_http_5xx
+      - elb_http_504
+      - elb_http_503
+      - elb_http_502
+      - elb_http_4xx
+      - elb_http_499
+      - elb_http_408
+      - elb_http_404
+      - elb_http_400
+      - elb_http_3xx
+      - elb_http_2xx
+      - dropped_traffic
+      - dropped_packets
+      - dropped_connections
     'lbaas_instance_id,lbaas_listener_id':
       - m1_cps
       - m2_act_conn
@@ -693,6 +745,33 @@ SYS.ELB:
       - m1f_lvs_rps
       - m22_in_bandwidth
       - m23_out_bandwidth
+      - ma_normal_servers
+      - m9_abnormal_servers
+      - m19_l7_upstream_3xx
+      - m18_l7_upstream_2xx
+      - l7_upstream_other_status
+      - l7_upstream_504
+      - l7_upstream_503
+      - l7_upstream_502
+      - l7_upstream_501
+      - l7_upstream_500
+      - l7_upstream_404
+      - l7_upstream_403
+      - l7_upstream_400
+      - l7_upstream_101
+      - ipgroup_blocked_traffic
+      - ipgroup_blocked_packets
+      - elb_http_5xx
+      - elb_http_504
+      - elb_http_503
+      - elb_http_502
+      - elb_http_4xx
+      - elb_http_499
+      - elb_http_408
+      - elb_http_404
+      - elb_http_400
+      - elb_http_3xx
+      - elb_http_2xx
     'lbaas_instance_id,lbaas_pool_id':
       - m9_abnormal_servers
       - ma_normal_servers
@@ -1117,6 +1196,10 @@ SYS.WAF:
       - waf_attack_percentage
     waf_instance_id:
       - attacks
+      - base_protection_counts
+      - cc_protection_counts
+      - crawlers
+      - precise_protection_counts
       - requests
       - waf_http_2xx
       - waf_http_3xx
@@ -2116,6 +2199,7 @@ SYS.CC:
       - network_outgoing_packets_rate
       - network_incoming_packets
       - network_outgoing_packets
+      - network_bandwidth_usage
 SYS.LakeFormation:
   resource: "service"
   dim_metric_name:

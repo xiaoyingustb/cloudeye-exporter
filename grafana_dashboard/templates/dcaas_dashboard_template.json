@@ -2,7 +2,7 @@
   "__inputs": [
     {
       "name": "DS_PROMETHEUS",
-      "label": "Prometheus",
+      "label": "prometheus",
       "description": "",
       "type": "datasource",
       "pluginId": "prometheus",
@@ -15,7 +15,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.2.0"
+      "version": "10.4.1"
     },
     {
       "type": "datasource",
@@ -61,6 +61,7 @@
   "liveNow": false,
   "panels": [
     {
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -68,11 +69,497 @@
         "y": 0
       },
       "id": 2,
+      "panels": [],
       "title": "资源总览-华为云专线 企业项目：$EPS",
       "type": "row"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "网络流入带宽"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 10240000
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 102400000
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "binbps"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "网络流出带宽"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 10240000
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 102400000
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "binbps"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "网络流入流量"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "bits"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "网络流出流量"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "bits"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "网络流入包速率"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "pps"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "网络流出包速率"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "pps"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "端口状态"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "green",
+                      "value": 1
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "index": 0,
+                        "text": "DOWN"
+                      },
+                      "1": {
+                        "index": 1,
+                        "text": "UP"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 1,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "huaweicloud_sys_dcaas_network_incoming_bits_rate{epId=~\"$EPS\", direct_connect_id=~\".+\"} - 0",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "huaweicloud_sys_dcaas_network_outgoing_bits_rate{epId=~\"$EPS\", direct_connect_id=~\".+\"} - 0",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "avg(huaweicloud_sys_dcaas_network_incoming_bytes{epId=~\"$EPS\", direct_connect_id=~\".+\"}) by (name) - 0",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "avg(huaweicloud_sys_dcaas_network_outgoing_bytes{epId=~\"$EPS\", direct_connect_id=~\".+\"}) by (name) - 0",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "avg(huaweicloud_sys_dcaas_network_incoming_packets_rate{epId=~\"$EPS\", direct_connect_id=~\".+\"}) by (name) - 0",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "avg(huaweicloud_sys_dcaas_network_outgoing_packets_rate{epId=~\"$EPS\", direct_connect_id=~\".+\"}) by (name) - 0",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "avg(huaweicloud_sys_dcaas_latency{epId=~\"$EPS\", direct_connect_id=~\".+\"}) by (name) - 0",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "G"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "avg(huaweicloud_sys_dcaas_packet_loss_rate{epId=~\"$EPS\", direct_connect_id=~\".+\"}) by (name) -0",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "H"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "huaweicloud_sys_dcaas_network_status{epId=~\"$EPS\", direct_connect_id=~\".+\"} - 0",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "I"
+        }
+      ],
+      "title": "物理连接资源总览表",
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "device_id",
+                "name",
+                "Value #A",
+                "Value #B",
+                "Value #C",
+                "Value #D",
+                "Value #E",
+                "Value #F",
+                "Value #I"
+              ]
+            }
+          }
+        },
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Value #A": "网络流入带宽",
+              "Value #B": "网络流出带宽",
+              "Value #C": "网络流入流量",
+              "Value #D": "网络流出流量",
+              "Value #E": "网络流入包速率",
+              "Value #F": "网络流出包速率",
+              "Value #I": "端口状态",
+              "device_id": "设备IP",
+              "name": "设备名称"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -303,9 +790,9 @@
         "h": 13,
         "w": 24,
         "x": 0,
-        "y": 1
+        "y": 14
       },
-      "id": 1,
+      "id": 8,
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -319,13 +806,16 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "huaweicloud_sys_dcaas_network_incoming_bits_rate{epId=~\"$EPS\"} - 0",
+          "expr": "huaweicloud_sys_dcaas_network_incoming_bits_rate{epId=~\"$EPS\", virtual_interface_id=~\".+\"} - 0",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -333,10 +823,13 @@
           "refId": "A"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "huaweicloud_sys_dcaas_network_outgoing_bits_rate{epId=~\"$EPS\"} - 0",
+          "expr": "huaweicloud_sys_dcaas_network_outgoing_bits_rate{epId=~\"$EPS\", virtual_interface_id=~\".+\"} - 0",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -345,10 +838,13 @@
           "refId": "B"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "avg(huaweicloud_sys_dcaas_network_incoming_bytes{epId=~\"$EPS\"}) by (name) - 0",
+          "expr": "avg(huaweicloud_sys_dcaas_network_incoming_bytes{epId=~\"$EPS\", virtual_interface_id=~\".+\"}) by (name) - 0",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -357,10 +853,13 @@
           "refId": "C"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "avg(huaweicloud_sys_dcaas_network_outgoing_bytes{epId=~\"$EPS\"}) by (name) - 0",
+          "expr": "avg(huaweicloud_sys_dcaas_network_outgoing_bytes{epId=~\"$EPS\", virtual_interface_id=~\".+\"}) by (name) - 0",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -369,10 +868,13 @@
           "refId": "D"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "avg(huaweicloud_sys_dcaas_network_incoming_packets_rate{epId=~\"$EPS\"}) by (name) - 0",
+          "expr": "avg(huaweicloud_sys_dcaas_network_incoming_packets_rate{epId=~\"$EPS\", virtual_interface_id=~\".+\"}) by (name) - 0",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -381,10 +883,13 @@
           "refId": "E"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "avg(huaweicloud_sys_dcaas_network_outgoing_packets_rate{epId=~\"$EPS\"}) by (name) - 0",
+          "expr": "avg(huaweicloud_sys_dcaas_network_outgoing_packets_rate{epId=~\"$EPS\", virtual_interface_id=~\".+\"}) by (name) - 0",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -393,10 +898,13 @@
           "refId": "F"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "avg(huaweicloud_sys_dcaas_latency{epId=~\"$EPS\"}) by (name) - 0",
+          "expr": "avg(huaweicloud_sys_dcaas_latency{epId=~\"$EPS\", virtual_interface_id=~\".+\"}) by (name) - 0",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -405,10 +913,13 @@
           "refId": "G"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "avg(huaweicloud_sys_dcaas_packet_loss_rate{epId=~\"$EPS\"}) by (name) -0",
+          "expr": "avg(huaweicloud_sys_dcaas_packet_loss_rate{epId=~\"$EPS\", virtual_interface_id=~\".+\"}) by (name) -0",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -417,7 +928,7 @@
           "refId": "H"
         }
       ],
-      "title": "云专线资源总览表",
+      "title": "虚拟接口资源总览表",
       "transformations": [
         {
           "id": "filterFieldsByName",
@@ -444,6 +955,7 @@
           "id": "organize",
           "options": {
             "excludeByName": {},
+            "includeByName": {},
             "indexByName": {},
             "renameByName": {
               "Value #A": "网络流入带宽",
@@ -453,7 +965,7 @@
               "Value #E": "网络流入包速率",
               "Value #F": "网络流出包速率",
               "device_id": "设备IP",
-              "name": "虚拟接口"
+              "name": "设备名称"
             }
           }
         }
@@ -466,15 +978,18 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 14
+        "y": 27
       },
       "id": 7,
       "panels": [],
-      "title": "资源明细：【$EPS】【$hostIP】【$hostname】",
+      "title": "物理连接资源明细：【$EPS】【$hostIP】【$hostname】",
       "type": "row"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -534,7 +1049,7 @@
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 15
+        "y": 28
       },
       "id": 3,
       "options": {
@@ -556,21 +1071,27 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_dcaas_network_incoming_bits_rate{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\"}",
+          "expr": "huaweicloud_sys_dcaas_network_incoming_bits_rate{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\", direct_connect_id=~\".+\"}",
           "instant": false,
-          "legendFormat": "专线IP：{{device_id}}，专线名称：({{name}}（网络流入带宽）",
+          "legendFormat": "专线IP：{{device_id}}，物理连接名称：{{name}}（网络流入带宽）",
           "range": true,
           "refId": "A"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
-          "expr": "0 - huaweicloud_sys_dcaas_network_outgoing_bits_rate{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\"}",
+          "expr": "0 - huaweicloud_sys_dcaas_network_outgoing_bits_rate{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\", direct_connect_id=~\".+\"}",
           "hide": false,
           "instant": false,
-          "legendFormat": "专线IP：{{device_id}}，专线名称：({{name}}（网络流出带宽）",
+          "legendFormat": "专线IP：{{device_id}}，物理连接名称：{{name}}（网络流出带宽）",
           "range": true,
           "refId": "B"
         }
@@ -579,7 +1100,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -639,7 +1163,7 @@
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 15
+        "y": 28
       },
       "id": 4,
       "options": {
@@ -661,21 +1185,27 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_dcaas_network_incoming_bytes{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\"}",
+          "expr": "huaweicloud_sys_dcaas_network_incoming_bytes{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\", direct_connect_id=~\".+\"}",
           "instant": false,
-          "legendFormat": "专线IP：{{device_id}}，专线名称：({{name}}（网络流入流量）",
+          "legendFormat": "专线IP：{{device_id}}，物理连接名称：{{name}}（网络流入流量）",
           "range": true,
           "refId": "A"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
-          "expr": "0 - huaweicloud_sys_dcaas_network_outgoing_bytes{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\"}",
+          "expr": "0 - huaweicloud_sys_dcaas_network_outgoing_bytes{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\", direct_connect_id=~\".+\"}",
           "hide": false,
           "instant": false,
-          "legendFormat": "专线IP：{{device_id}}，专线名称：({{name}}（网络流出流量）",
+          "legendFormat": "专线IP：{{device_id}}，物理连接名称：{{name}}（网络流出流量）",
           "range": true,
           "refId": "B"
         }
@@ -684,7 +1214,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -744,7 +1277,7 @@
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 25
+        "y": 38
       },
       "id": 5,
       "options": {
@@ -766,21 +1299,27 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_dcaas_network_incoming_packets_rate{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\"}",
+          "expr": "huaweicloud_sys_dcaas_network_incoming_packets_rate{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\", direct_connect_id=~\".+\"}",
           "instant": false,
-          "legendFormat": "专线IP：{{device_id}}，专线名称：({{name}}（网络流入包速率）",
+          "legendFormat": "专线IP：{{device_id}}，物理连接名称：{{name}}（网络流入包速率）",
           "range": true,
           "refId": "A"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
-          "expr": "0 - huaweicloud_sys_dcaas_network_outgoing_packets_rate{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\"}",
+          "expr": "0 - huaweicloud_sys_dcaas_network_outgoing_packets_rate{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\", direct_connect_id=~\".+\"}",
           "hide": false,
           "instant": false,
-          "legendFormat": "专线IP：{{device_id}}，专线名称：({{name}}（网络流出包速率）",
+          "legendFormat": "专线IP：{{device_id}}，物理连接名称：{{name}}（网络流出包速率）",
           "range": true,
           "refId": "B"
         }
@@ -789,7 +1328,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -849,7 +1391,7 @@
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 25
+        "y": 38
       },
       "id": 6,
       "options": {
@@ -871,37 +1413,616 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_dcaas_network_incoming_packets{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\"}",
+          "expr": "huaweicloud_sys_dcaas_network_incoming_packets{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\", direct_connect_id=~\".+\"}",
           "instant": false,
-          "legendFormat": "专线IP：{{device_id}}，专线名称：({{name}}（网络流入包量）",
+          "legendFormat": "专线IP：{{device_id}}，物理连接名称：{{name}}（网络流入包量）",
           "range": true,
           "refId": "A"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
-          "expr": "0 - huaweicloud_sys_dcaas_network_outgoing_packets{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\"}",
+          "expr": "0 - huaweicloud_sys_dcaas_network_outgoing_packets{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\", direct_connect_id=~\".+\"}",
           "hide": false,
           "instant": false,
-          "legendFormat": "专线IP：{{device_id}}，专线名称：({{name}}（网络流出包量）",
+          "legendFormat": "专线IP：{{device_id}}，物理连接名称：{{name}}（网络流出包量）",
           "range": true,
           "refId": "B"
         }
       ],
       "title": "网络(流入/流出)包量",
       "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 48
+      },
+      "id": 9,
+      "panels": [],
+      "title": "虚拟接口资源明细：【$EPS】【$hostIP】【$hostname】",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "网络流入带宽（+）/网络流出带宽（-）",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 49
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "huaweicloud_sys_dcaas_network_incoming_bits_rate{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\", virtual_interface_id=~\".+\"}",
+          "instant": false,
+          "legendFormat": "专线IP：{{device_id}}，虚拟接口名称：{{name}}（网络流入带宽）",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "0 - huaweicloud_sys_dcaas_network_outgoing_bits_rate{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\", virtual_interface_id=~\".+\"}",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "专线IP：{{device_id}}，虚拟接口名称：{{name}}（网络流出带宽）",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "网络(流入/流出)带宽",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "网络流入带宽（+）/网络流出带宽（-）",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbits"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 49
+      },
+      "id": 11,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "huaweicloud_sys_dcaas_network_incoming_bytes{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\", virtual_interface_id=~\".+\"}",
+          "instant": false,
+          "legendFormat": "专线IP：{{device_id}}，虚拟接口名称：{{name}}（网络流入流量）",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "0 - huaweicloud_sys_dcaas_network_outgoing_bytes{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\", virtual_interface_id=~\".+\"}",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "专线IP：{{device_id}}，虚拟接口名称：{{name}}（网络流出流量）",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "网络(流入/流出)流量",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "网络流入包速率（+）/网络流出包速率（-）",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "pps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 59
+      },
+      "id": 12,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "huaweicloud_sys_dcaas_network_incoming_packets_rate{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\", virtual_interface_id=~\".+\"}",
+          "instant": false,
+          "legendFormat": "专线IP：{{device_id}}，虚拟接口名称：{{name}}（网络流入包速率）",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "0 - huaweicloud_sys_dcaas_network_outgoing_packets_rate{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\", virtual_interface_id=~\".+\"}",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "专线IP：{{device_id}}，虚拟接口名称：{{name}}（网络流出包速率）",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "网络(流入/流出)包速率",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "网络流入包量（+）/网络流出包量（-）",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 59
+      },
+      "id": 13,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "huaweicloud_sys_dcaas_network_incoming_packets{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\", virtual_interface_id=~\".+\"}",
+          "instant": false,
+          "legendFormat": "专线IP：{{device_id}}，虚拟接口名称：{{name}}（网络流入包量）",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "0 - huaweicloud_sys_dcaas_network_outgoing_packets{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\", virtual_interface_id=~\".+\"}",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "专线IP：{{device_id}}，虚拟接口名称：{{name}}（网络流出包量）",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "网络(流入/流出)包量",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "接收到的IPv4路由条目数",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 69
+      },
+      "id": 14,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "huaweicloud_sys_dcaas_bgp_receive_route_num_v4{epId=~\"$EPS\",device_id=~\"$hostIP\",name=~\"$hostname\", virtual_interface_id=~\".+\"}",
+          "instant": false,
+          "legendFormat": "专线IP：{{device_id}}，虚拟接口名称：{{name}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "接收到的IPv4路由条目数",
+      "type": "timeseries"
     }
   ],
   "refresh": "",
-  "schemaVersion": 38,
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "huaweicloud_epinfo",
         "hide": 0,
         "includeAll": true,
@@ -922,7 +2043,10 @@
       },
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "label_values(huaweicloud_sys_dcaas_network_incoming_bytes{epId=~\"$EPS\"},device_id)",
         "hide": 0,
         "includeAll": true,
@@ -943,7 +2067,10 @@
       },
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "label_values(huaweicloud_sys_dcaas_network_incoming_bytes{epId=~\"$EPS\", device_id=~\"$hostIP\"},name)",
         "hide": 0,
         "includeAll": true,
@@ -972,6 +2099,6 @@
   "timezone": "",
   "title": "云专线（DCAAS）",
   "uid": "ecb22732-9c7d-41b2-a9cd-408a62798288",
-  "version": 1,
+  "version": 3,
   "weekStart": ""
 }
