@@ -28,6 +28,21 @@ func getRMSClientBuilder() *http_client.HcHttpClientBuilder {
 }
 
 func listResources(provider, resourceType string, optionalRegionID ...string) ([]model.ResourceEntity, error) {
+	var result []model.ResourceEntity
+	var err error
+	retryTimes := 0
+	for retryTimes < CloudConf.Global.RmsRetryTimes {
+		result, err = listResourceNoRetry(provider, resourceType, optionalRegionID...)
+		if err == nil {
+			break
+		}
+		logs.Logger.Errorf("List resource error: %s", err.Error())
+		retryTimes += 1
+	}
+	return result, err
+}
+
+func listResourceNoRetry(provider, resourceType string, optionalRegionID ...string) ([]model.ResourceEntity, error) {
 	regionID := conf.Region
 	if len(optionalRegionID) > 0 {
 		regionID = optionalRegionID[0]

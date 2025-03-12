@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/huaweicloud/cloudeye-exporter/logs"
 	"github.com/huaweicloud/huaweicloud-sdk-go-v3/services/ces/v1/model"
+
+	"github.com/huaweicloud/cloudeye-exporter/logs"
 )
 
 var ltsInfo serversInfo
@@ -54,11 +55,14 @@ func (getter LTSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		logGroups, err := getAllLogGroup()
 		if err != nil {
 			logs.Logger.Errorf("Get all log group error, error is %s", err.Error())
-			return nil, nil
+			return ltsInfo.LabelInfo, ltsInfo.FilterMetrics
 		}
 		buildLogGroupInfos(logGroups, &filterMetrics, resourceInfos)
-		buildLogStreamInfos(logGroups, &filterMetrics, resourceInfos)
-
+		err = buildLogStreamInfos(logGroups, &filterMetrics, resourceInfos)
+		if err != nil {
+			logs.Logger.Errorf("Build log stream infos error, error is %s", err.Error())
+			return ltsInfo.LabelInfo, ltsInfo.FilterMetrics
+		}
 		ltsInfo.LabelInfo = resourceInfos
 		ltsInfo.FilterMetrics = filterMetrics
 		ltsInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
@@ -83,14 +87,14 @@ func buildLogGroupInfos(logGroups []LogGroup, filterMetrics *[]model.MetricInfoL
 	}
 }
 
-func buildLogStreamInfos(logGroups []LogGroup, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) {
+func buildLogStreamInfos(logGroups []LogGroup, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) error {
 	sysConfigMap := getMetricConfigMap("SYS.LTS")
 	logStreamMetrics := sysConfigMap["log_group_id,log_stream_id"]
 	for _, group := range logGroups {
 		logStreams, err := getAllLogStream(group.LogGroupID)
 		if err != nil {
 			logs.Logger.Errorf("Get all log group error, error is %s", err.Error())
-			return
+			return err
 		}
 
 		for _, stream := range logStreams {
@@ -116,6 +120,7 @@ func buildLogStreamInfos(logGroups []LogGroup, filterMetrics *[]model.MetricInfo
 		}
 
 	}
+	return nil
 }
 
 func getAllLogGroup() ([]LogGroup, error) {

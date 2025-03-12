@@ -788,6 +788,46 @@ SYS.ELB:
       - m17_l7_upstream_rt_p99
       - m24_l7_req_Bps
       - m25_l7_resp_Bps
+    'lbaas_instance_id,available_zone':
+      - m1_cps
+      - m2_act_conn
+      - m3_inact_conn
+      - m4_ncps
+      - m5_in_pps
+      - m6_out_pps
+      - m7_in_Bps
+      - m8_out_Bps
+      - mb_l7_qps
+      - mc_l7_http_2xx
+      - md_l7_http_3xx
+      - me_l7_http_4xx
+      - mf_l7_http_5xx
+      - m10_l7_http_other_status
+      - m11_l7_http_404
+      - m12_l7_http_499
+      - m13_l7_http_502
+      - m14_l7_rt
+      - m15_l7_upstream_4xx
+      - m16_l7_upstream_5xx
+      - m17_l7_upstream_rt
+      - m1a_l7_upstream_rt_max
+      - m1b_l7_upstream_rt_min
+      - m1c_l7_rt_max
+      - m1d_l7_rt_min
+      - m1e_server_rps
+      - m21_client_rps
+      - m1f_lvs_rps
+      - l4_ncps_usage
+      - l4_con_usage
+      - l4_in_bps_usage
+      - l4_out_bps_usage
+      - l7_ncps_usage
+      - l7_con_usage
+      - l7_in_bps_usage
+      - l7_out_bps_usage
+      - l7_qps_usage
+      - m26_in_bandwidth_ipv6
+      - m27_out_bandwidth_ipv6
 SYS.GAUSSDB:
   dim_metric_name:
     'gaussdb_mysql_instance_id,gaussdb_mysql_node_id':
@@ -2200,6 +2240,7 @@ SYS.CC:
       - network_incoming_packets
       - network_outgoing_packets
       - network_bandwidth_usage
+      - network_bandwidth
 SYS.LakeFormation:
   resource: "service"
   dim_metric_name:
@@ -2813,3 +2854,24 @@ SYS.EWP:
     site_id:
       - website_design_clicks
       - website_design_request_failed_rate
+SYS.ER:
+  resource: "rms"
+  dim_metric_name:
+    er_instance_id:
+      - instance_bits_rate_in
+      - instance_bits_rate_out
+      - instance_bytes_in
+      - instance_bytes_out
+      - instance_packets_drop_blackhole
+      - instance_packets_drop_noroute
+      - instance_packets_in
+      - instance_packets_out
+    er_instance_id,er_attachment_id:
+      - attachment_bits_rate_in
+      - attachment_bits_rate_out
+      - attachment_bytes_in
+      - attachment_bytes_out
+      - attachment_packets_drop_blackhole
+      - attachment_packets_drop_noroute
+      - attachment_packets_in
+      - attachment_packets_out

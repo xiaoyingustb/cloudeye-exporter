@@ -24,7 +24,7 @@ func (getter OBSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		allMetrics, err := listAllMetrics("SYS.OBS")
 		if err != nil {
 			logs.Logger.Errorf("[%s] Get all metrics of SYS.OBS failed, error is: %s", err.Error())
-			return resourceInfos, filteredMetrics
+			return obsServerInfo.LabelInfo, obsServerInfo.FilterMetrics
 		}
 		for _, metricInfo := range allMetrics {
 			if IsMetricInfoInWhiteList(metricInfo) {
@@ -41,7 +41,7 @@ func (getter OBSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		services, err := getAllServerFromRMS("obs", "buckets")
 		if err != nil {
 			logs.Logger.Error("Get all obs server from RMS failed, error is:", err.Error())
-			return resourceInfos, filteredMetrics
+			return obsServerInfo.LabelInfo, obsServerInfo.FilterMetrics
 		}
 		for _, instance := range services {
 			if _, ok := metricDimMap[instance.Name]; ok {

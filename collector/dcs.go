@@ -27,13 +27,22 @@ func (getter DCSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		sysConfigMap := getMetricConfigMap("SYS.DCS")
 
 		// redis instance
-		buildRedisInstancesInfo(sysConfigMap, &filterMetrics, resourceInfos)
+		if err := buildRedisInstancesInfo(sysConfigMap, &filterMetrics, resourceInfos); err != nil {
+			logs.Logger.Errorf("Get redis instance info error: %s", err.Error())
+			return dcsInfo.LabelInfo, dcsInfo.FilterMetrics
+		}
 
 		// memcached instance
-		buildMemcachedInstancesInfo(sysConfigMap, &filterMetrics, resourceInfos)
+		if err := buildMemcachedInstancesInfo(sysConfigMap, &filterMetrics, resourceInfos); err != nil {
+			logs.Logger.Errorf("Get memcached instance info error: %s", err.Error())
+			return dcsInfo.LabelInfo, dcsInfo.FilterMetrics
+		}
 
 		// node
-		buildDcsNodesInfo(sysConfigMap, &filterMetrics, resourceInfos)
+		if err := buildDcsNodesInfo(sysConfigMap, &filterMetrics, resourceInfos); err != nil {
+			logs.Logger.Errorf("Get dcs node info error: %s", err.Error())
+			return dcsInfo.LabelInfo, dcsInfo.FilterMetrics
+		}
 
 		dcsInfo.LabelInfo = resourceInfos
 		dcsInfo.FilterMetrics = filterMetrics
@@ -42,10 +51,10 @@ func (getter DCSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 	return dcsInfo.LabelInfo, dcsInfo.FilterMetrics
 }
 
-func buildRedisInstancesInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) {
+func buildRedisInstancesInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) error {
 	redisInstances, err := getRedisInstancesFromRMS()
 	if err != nil {
-		return
+		return err
 	}
 	for index := range redisInstances {
 		if metricNames, ok := sysConfigMap["dcs_instance_id"]; ok {
@@ -62,12 +71,13 @@ func buildRedisInstancesInfo(sysConfigMap map[string][]string, filterMetrics *[]
 			resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 		}
 	}
+	return nil
 }
 
-func buildMemcachedInstancesInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) {
+func buildMemcachedInstancesInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) error {
 	memcachedInstances, err := getMemcachedInstancesFromRMS()
 	if err != nil {
-		return
+		return err
 	}
 	for index := range memcachedInstances {
 		if metricNames, ok := sysConfigMap["dcs_memcached_instance_id"]; ok {
@@ -84,12 +94,13 @@ func buildMemcachedInstancesInfo(sysConfigMap map[string][]string, filterMetrics
 			resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 		}
 	}
+	return nil
 }
 
-func buildDcsNodesInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) {
+func buildDcsNodesInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) error {
 	nodes, err := getDcsNodesFromRMS()
 	if err != nil {
-		return
+		return err
 	}
 	for index := range nodes {
 		dimName := getDimsNameKey(nodes[index].Dimensions)
@@ -108,6 +119,7 @@ func buildDcsNodesInfo(sysConfigMap map[string][]string, filterMetrics *[]model.
 			resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 		}
 	}
+	return nil
 }
 
 func getRedisInstancesFromRMS() ([]DcsInstancesInfo, error) {

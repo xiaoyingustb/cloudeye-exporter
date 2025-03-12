@@ -28,21 +28,21 @@ func (getter DNSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		metricNames, ok := sysConfigMap["dns_recordset_id"]
 		if !ok {
 			logs.Logger.Warnf("Metric config is empty of SYS.DNS, dim_metric_name is dns_recordset_id")
-			return resourceInfos, filterMetrics
+			return dnsServerInfo.LabelInfo, dnsServerInfo.FilterMetrics
 		}
 
 		var allRecordSets []dnsModel.ListRecordSetsWithTags
 		publicRecordSets, err := getAllRecordSets("public")
 		if err != nil {
 			logs.Logger.Errorf("Failed to get public record sets, error is: %s", err.Error())
-			return resourceInfos, filterMetrics
+			return dnsServerInfo.LabelInfo, dnsServerInfo.FilterMetrics
 		}
 		allRecordSets = append(allRecordSets, publicRecordSets...)
 
 		privateRecordSets, err := getAllRecordSets("private")
 		if err != nil {
 			logs.Logger.Errorf("Failed to get private record sets, error is: %s", err.Error())
-			return resourceInfos, filterMetrics
+			return dnsServerInfo.LabelInfo, dnsServerInfo.FilterMetrics
 		}
 		allRecordSets = append(allRecordSets, privateRecordSets...)
 
@@ -64,12 +64,12 @@ func (getter DNSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		metricNames, ok = sysConfigMap["dns_zone_id"]
 		if !ok {
 			logs.Logger.Warnf("Metric config is empty of SYS.DNS, dim_metric_name is dns_zone_id")
-			return resourceInfos, filterMetrics
+			return dnsServerInfo.LabelInfo, dnsServerInfo.FilterMetrics
 		}
 		publicZones, err := getAllPublicZones()
 		if err != nil {
 			logs.Logger.Errorf("Failed to get all public zones, error is: %s", err.Error())
-			return resourceInfos, filterMetrics
+			return dnsServerInfo.LabelInfo, dnsServerInfo.FilterMetrics
 		}
 		for _, zone := range publicZones {
 			metrics := buildSingleDimensionMetrics(metricNames, "SYS.DNS", "dns_zone_id", *zone.Id)

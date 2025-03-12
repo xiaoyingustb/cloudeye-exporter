@@ -42,7 +42,6 @@ func (getter DayuInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricIn
 				resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 			}
 		}
-
 		dayuInfo.LabelInfo = resourceInfos
 		dayuInfo.FilterMetrics = filterMetrics
 		dayuInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()

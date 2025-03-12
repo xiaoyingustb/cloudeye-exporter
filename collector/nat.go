@@ -4,6 +4,8 @@ import (
 	"time"
 
 	cesmodel "github.com/huaweicloud/huaweicloud-sdk-go-v3/services/ces/v1/model"
+
+	"github.com/huaweicloud/cloudeye-exporter/logs"
 )
 
 var natInfo serversInfo
@@ -17,19 +19,22 @@ func (getter NATInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.Metric
 	defer natInfo.Unlock()
 	if natInfo.LabelInfo == nil || time.Now().Unix() > natInfo.TTL {
 		if metricNames, ok := getMetricConfigMap("SYS.NAT")["nat_gateway_id"]; ok {
-			if natGateways, err := getAllNatFromRMS(); err == nil {
-				for _, natGateway := range natGateways {
-					metrics := buildSingleDimensionMetrics(metricNames, "SYS.NAT", "nat_gateway_id", natGateway.ID)
-					filterMetrics = append(filterMetrics, metrics...)
-					info := labelInfo{
-						Name:  []string{"name", "epId"},
-						Value: []string{natGateway.Name, natGateway.EpId},
-					}
-					keys, values := getTags(natGateway.Tags)
-					info.Name = append(info.Name, keys...)
-					info.Value = append(info.Value, values...)
-					resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
+			natGateways, err := getAllNatFromRMS()
+			if err != nil {
+				logs.Logger.Error("Get nat resources from rms error: %s", err.Error())
+				return natInfo.LabelInfo, natInfo.FilterMetrics
+			}
+			for _, natGateway := range natGateways {
+				metrics := buildSingleDimensionMetrics(metricNames, "SYS.NAT", "nat_gateway_id", natGateway.ID)
+				filterMetrics = append(filterMetrics, metrics...)
+				info := labelInfo{
+					Name:  []string{"name", "epId"},
+					Value: []string{natGateway.Name, natGateway.EpId},
 				}
+				keys, values := getTags(natGateway.Tags)
+				info.Name = append(info.Name, keys...)
+				info.Value = append(info.Value, values...)
+				resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 			}
 		}
 		natInfo.LabelInfo = resourceInfos

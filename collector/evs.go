@@ -79,7 +79,6 @@ func (getter EVSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 				}
 			}
 		}
-
 		evsInfo.LabelInfo = resourceInfos
 		evsInfo.FilterMetrics = filteredMetrics
 		evsInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
@@ -123,11 +122,26 @@ func getVolumeDiskId(serverId string, diskId string) string {
 }
 
 func listVolumesFromEvs() ([]evsmodel.VolumeDetail, error) {
+	var volumes []evsmodel.VolumeDetail
+	epIds := getEpIdRequestPart()
+	for _, epId := range epIds {
+		tmpVolumes, err := listVolumesFromEvsByEpId(epId)
+		if err != nil {
+			logs.Logger.Errorf("Failed to list evs volumes, epId: %s, error: %s", epId, err.Error())
+			return nil, err
+		}
+		volumes = append(volumes, tmpVolumes...)
+	}
+	return volumes, nil
+}
+
+func listVolumesFromEvsByEpId(epId string) ([]evsmodel.VolumeDetail, error) {
 	limit := int32(1000)
 	offset := int32(0)
 	options := &evsmodel.ListVolumesRequest{
-		Limit:  &limit,
-		Offset: &offset,
+		Limit:               &limit,
+		Offset:              &offset,
+		EnterpriseProjectId: &epId,
 	}
 	var volumes []evsmodel.VolumeDetail
 	for {

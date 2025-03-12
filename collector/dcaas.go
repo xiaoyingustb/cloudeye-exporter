@@ -47,13 +47,22 @@ func (getter DCAASInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricI
 		sysConfigMap := getMetricConfigMap("SYS.DCAAS")
 
 		// direct_connect
-		buildConnectsInfo(sysConfigMap, &filterMetrics, resourceInfos)
+		if err := buildConnectsInfo(sysConfigMap, &filterMetrics, resourceInfos); err != nil {
+			logs.Logger.Errorf("Get dcaas connections error: %s", err.Error())
+			return dcaasInfo.LabelInfo, dcaasInfo.FilterMetrics
+		}
 
 		// virtual_interface
-		buildVifsInfo(sysConfigMap, &filterMetrics, resourceInfos)
+		if err := buildVifsInfo(sysConfigMap, &filterMetrics, resourceInfos); err != nil {
+			logs.Logger.Errorf("Get dcaas virtual interface info error: %s", err.Error())
+			return dcaasInfo.LabelInfo, dcaasInfo.FilterMetrics
+		}
 
 		// virtual_gateway
-		buildVgwsInfo(sysConfigMap, &filterMetrics, resourceInfos)
+		if err := buildVgwsInfo(sysConfigMap, &filterMetrics, resourceInfos); err != nil {
+			logs.Logger.Errorf("Get dcaas virtual gateway info error: %s", err.Error())
+			return dcaasInfo.LabelInfo, dcaasInfo.FilterMetrics
+		}
 
 		dcaasInfo.LabelInfo = resourceInfos
 		dcaasInfo.FilterMetrics = filterMetrics
@@ -62,10 +71,10 @@ func (getter DCAASInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricI
 	return dcaasInfo.LabelInfo, dcaasInfo.FilterMetrics
 }
 
-func buildVgwsInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) {
+func buildVgwsInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) error {
 	vgws, err := getDcaasVgwFromRMS()
 	if err != nil {
-		return
+		return err
 	}
 	for index := range vgws {
 		if metricNames, ok := sysConfigMap["virtual_gateway_id"]; ok {
@@ -81,12 +90,13 @@ func buildVgwsInfo(sysConfigMap map[string][]string, filterMetrics *[]model.Metr
 			resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 		}
 	}
+	return nil
 }
 
-func buildVifsInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) {
+func buildVifsInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) error {
 	vifs, err := getDcaasVifFromRMS()
 	if err != nil {
-		return
+		return err
 	}
 	for index := range vifs {
 		if metricNames, ok := sysConfigMap["virtual_interface_id"]; ok {
@@ -104,12 +114,13 @@ func buildVifsInfo(sysConfigMap map[string][]string, filterMetrics *[]model.Metr
 			resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 		}
 	}
+	return nil
 }
 
-func buildConnectsInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) {
+func buildConnectsInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) error {
 	connects, err := getDcaasConnectsFromRMS()
 	if err != nil {
-		return
+		return err
 	}
 	for index := range connects {
 		if metricNames, ok := sysConfigMap["direct_connect_id"]; ok {
@@ -126,6 +137,7 @@ func buildConnectsInfo(sysConfigMap map[string][]string, filterMetrics *[]model.
 			resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 		}
 	}
+	return nil
 }
 
 func getDcaasConnectsFromRMS() ([]ConnectInfo, error) {

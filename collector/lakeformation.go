@@ -48,7 +48,6 @@ func (getter LakeFormationInfo) GetResourceInfo() (map[string]labelInfo, []model
 				resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 			}
 		}
-
 		lakeformationInfo.LabelInfo = resourceInfos
 		lakeformationInfo.FilterMetrics = filterMetrics
 		lakeformationInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()

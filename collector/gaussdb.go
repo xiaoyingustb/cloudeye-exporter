@@ -45,75 +45,78 @@ func (getter GAUSSDBInfo) GetResourceInfo() (map[string]labelInfo, []model.Metri
 		// 获取gaussdbformysql资源标签和指标维度
 		gaussdbSysConfigMap := getMetricConfigMap("SYS.GAUSSDB")
 		nodes, instanceMap, err := getAllGaussdbNodesFromRMS()
-		if err == nil {
-			for _, node := range nodes {
-				dim0Name := node.Dimensions[0].Name
-				var metricNames []string
-				ok := false
-				if dim0Name == "gaussdb_mysql_ha_node_id" || dim0Name == "gaussdb_mysql_ha_id" {
-					metricNames, ok = gaussdbSysConfigMap["gaussdb_mysql_ha_id,gaussdb_mysql_ha_node_id"]
-				} else {
-					metricNames, ok = gaussdbSysConfigMap["gaussdb_mysql_instance_id,gaussdb_mysql_node_id"]
-				}
-				if !ok {
-					continue
-				}
-				metrics := buildDimensionMetrics(metricNames, "SYS.GAUSSDB", node.Dimensions)
-				filterMetrics = append(filterMetrics, metrics...)
-				info := labelInfo{
-					Name:  []string{"instanceName", "name", "epId", "innerPort", "innerIp", "role", "engineName"},
-					Value: []string{node.InstanceName, node.Name, node.EpId, node.InnerPort, node.InnerIp, node.Role, node.EngineName},
-				}
-				keys, values := getTags(node.Tags)
-				info.Name = append(info.Name, keys...)
-				info.Value = append(info.Value, values...)
-				resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
+		if err != nil {
+			logs.Logger.Errorf("Get gaussdb resources from rms error: %s", err.Error())
+			return gaussdbInfo.LabelInfo, gaussdbInfo.FilterMetrics
+		}
+		for _, node := range nodes {
+			dim0Name := node.Dimensions[0].Name
+			var metricNames []string
+			ok := false
+			if dim0Name == "gaussdb_mysql_ha_node_id" || dim0Name == "gaussdb_mysql_ha_id" {
+				metricNames, ok = gaussdbSysConfigMap["gaussdb_mysql_ha_id,gaussdb_mysql_ha_node_id"]
+			} else {
+				metricNames, ok = gaussdbSysConfigMap["gaussdb_mysql_instance_id,gaussdb_mysql_node_id"]
 			}
+			if !ok {
+				continue
+			}
+			metrics := buildDimensionMetrics(metricNames, "SYS.GAUSSDB", node.Dimensions)
+			filterMetrics = append(filterMetrics, metrics...)
+			info := labelInfo{
+				Name:  []string{"instanceName", "name", "epId", "innerPort", "innerIp", "role", "engineName"},
+				Value: []string{node.InstanceName, node.Name, node.EpId, node.InnerPort, node.InnerIp, node.Role, node.EngineName},
+			}
+			keys, values := getTags(node.Tags)
+			info.Name = append(info.Name, keys...)
+			info.Value = append(info.Value, values...)
+			resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 		}
 
 		// 获取dbproxy资源标签和指标维度
 		dbproxySysConfigMap := getMetricConfigMap("SYS.DBPROXY")
 		dbProxyNodes, err := getAllDBProxyNodesFromRMS()
-		if err == nil {
-			for _, node := range dbProxyNodes {
-				metricNames, ok := dbproxySysConfigMap["dbproxy_instance_id,dbproxy_node_id"]
-				if !ok {
-					continue
-				}
-				var properties DbProxyProperties
-				err = fmtResourceProperties(node.Properties, &properties)
-				if err != nil {
-					logs.Logger.Errorf("fmt gaussdb db proxy node properties error: %s", err.Error())
-					continue
-				}
-				instanceInfo, ok := instanceMap[properties.MasterInstanceId]
-				if !ok {
-					logs.Logger.Errorf("gaussdb db proxy node has no instance: %s", node.Name)
-					continue
-				}
-				info := labelInfo{
-					Name:  []string{"name", "instanceName", "instanceId", "epId", "role", "ipAddress", "engineName"},
-					Value: []string{*node.Name, *instanceInfo.Name, properties.MasterInstanceId, *node.EpId, properties.Role, properties.IpAddress, properties.EngineName},
-				}
-				keys, values := getTags(node.Tags)
-				info.Name = append(info.Name, keys...)
-				info.Value = append(info.Value, values...)
-
-				metrics := buildDimensionMetrics(metricNames, "SYS.DBPROXY", []model.MetricsDimension{
-					{
-						Name:  "dbproxy_instance_id",
-						Value: properties.ProxyId,
-					},
-					{
-						Name:  "dbproxy_node_id",
-						Value: *node.Id,
-					},
-				})
-				filterMetrics = append(filterMetrics, metrics...)
-				resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
-			}
+		if err != nil {
+			logs.Logger.Errorf("Get gauss db proxy resources from rms error: %s", err.Error())
+			return gaussdbInfo.LabelInfo, gaussdbInfo.FilterMetrics
 		}
+		for _, node := range dbProxyNodes {
+			metricNames, ok := dbproxySysConfigMap["dbproxy_instance_id,dbproxy_node_id"]
+			if !ok {
+				continue
+			}
+			var properties DbProxyProperties
+			err = fmtResourceProperties(node.Properties, &properties)
+			if err != nil {
+				logs.Logger.Errorf("fmt gaussdb db proxy node properties error: %s", err.Error())
+				continue
+			}
+			instanceInfo, ok := instanceMap[properties.MasterInstanceId]
+			if !ok {
+				logs.Logger.Errorf("gaussdb db proxy node has no instance: %s", node.Name)
+				continue
+			}
+			info := labelInfo{
+				Name:  []string{"name", "instanceName", "instanceId", "epId", "role", "ipAddress", "engineName"},
+				Value: []string{*node.Name, *instanceInfo.Name, properties.MasterInstanceId, *node.EpId, properties.Role, properties.IpAddress, properties.EngineName},
+			}
+			keys, values := getTags(node.Tags)
+			info.Name = append(info.Name, keys...)
+			info.Value = append(info.Value, values...)
 
+			metrics := buildDimensionMetrics(metricNames, "SYS.DBPROXY", []model.MetricsDimension{
+				{
+					Name:  "dbproxy_instance_id",
+					Value: properties.ProxyId,
+				},
+				{
+					Name:  "dbproxy_node_id",
+					Value: *node.Id,
+				},
+			})
+			filterMetrics = append(filterMetrics, metrics...)
+			resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
+		}
 		gaussdbInfo.LabelInfo = resourceInfos
 		gaussdbInfo.FilterMetrics = filterMetrics
 		gaussdbInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()

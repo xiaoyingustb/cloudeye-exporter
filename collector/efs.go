@@ -29,24 +29,24 @@ func (getter EFSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 			return efsInfo.LabelInfo, efsInfo.FilterMetrics
 		}
 		shares, err := getAllEfsShareFromRMS()
-		if err == nil {
-			for _, share := range shares {
-				metrics := buildSingleDimensionMetrics(metricNames, "SYS.EFS", "efs_instance_id", share.ID)
-				filterMetrics = append(filterMetrics, metrics...)
-				info := labelInfo{
-					Name:  []string{"name", "epId"},
-					Value: []string{share.Name, share.EpId},
-				}
-				keys, values := getTags(share.Tags)
-				info.Name = append(info.Name, keys...)
-				info.Value = append(info.Value, values...)
-				propertiesKeys, propertiesValues := getTags(share.EfsProperties)
-				info.Name = append(info.Name, propertiesKeys...)
-				info.Value = append(info.Value, propertiesValues...)
-				resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
-			}
+		if err != nil {
+			return efsInfo.LabelInfo, efsInfo.FilterMetrics
 		}
-
+		for _, share := range shares {
+			metrics := buildSingleDimensionMetrics(metricNames, "SYS.EFS", "efs_instance_id", share.ID)
+			filterMetrics = append(filterMetrics, metrics...)
+			info := labelInfo{
+				Name:  []string{"name", "epId"},
+				Value: []string{share.Name, share.EpId},
+			}
+			keys, values := getTags(share.Tags)
+			info.Name = append(info.Name, keys...)
+			info.Value = append(info.Value, values...)
+			propertiesKeys, propertiesValues := getTags(share.EfsProperties)
+			info.Name = append(info.Name, propertiesKeys...)
+			info.Value = append(info.Value, propertiesValues...)
+			resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
+		}
 		efsInfo.LabelInfo = resourceInfos
 		efsInfo.FilterMetrics = filterMetrics
 		efsInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()

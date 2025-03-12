@@ -48,7 +48,7 @@ func (getter EWPInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		allMetrics, listMetricErr := listAllMetrics("SYS.EWP")
 		if listMetricErr != nil {
 			logs.Logger.Errorf("Failed to get site resources, error: %s", listMetricErr.Error())
-			return nil, nil
+			return ewpInfo.LabelInfo, ewpInfo.FilterMetrics
 		}
 		metricGroups := getEwpMetricsGroups(allMetrics)
 		siteMetrics, ok := metricGroups["site_id"]
@@ -94,7 +94,6 @@ func (getter EWPInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 				resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 			}
 		}
-
 		ewpInfo.LabelInfo = resourceInfos
 		ewpInfo.FilterMetrics = filterMetrics
 		ewpInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()

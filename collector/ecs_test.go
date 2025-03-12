@@ -3,24 +3,29 @@ package collector
 import (
 	"testing"
 
-	"github.com/agiledragon/gomonkey/v2"
 	"github.com/huaweicloud/huaweicloud-sdk-go-v3/services/ces/v1/model"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/huaweicloud/cloudeye-exporter/logs"
 )
 
 func TestECSInfo_GetResourceInfo(t *testing.T) {
-	patches :=
-		gomonkey.ApplyFuncReturn(getAllServer, []EcsInstancesInfo{
-			{
-				ResourceBaseInfo: ResourceBaseInfo{
-					ID:   "c53dbd97-c4ae-4ef7-8d12-fae2d3d38a80",
-					Name: "nodelete-DRS-autotest-datamode1-test2",
-					Tags: map[string]string{"wukong": "000"},
-					EpId: "0",
-				},
-				IP: "192.168.20.53,100.93.4.203",
+	CloudConf.Global.RmsRetryTimes = 1
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	patches := getPatches()
+	logs.InitLog("")
+	patches.ApplyFuncReturn(getAllServer, []EcsInstancesInfo{
+		{
+			ResourceBaseInfo: ResourceBaseInfo{
+				ID:   "c53dbd97-c4ae-4ef7-8d12-fae2d3d38a80",
+				Name: "nodelete-DRS-autotest-datamode1-test2",
+				Tags: map[string]string{"wukong": "000"},
+				EpId: "0",
 			},
-		}, nil)
+			IP: "192.168.20.53,100.93.4.203",
+		},
+	}, nil)
 	patches.ApplyFuncReturn(getAllServerFromRMS, []EcsInstancesInfo{
 		{
 			ResourceBaseInfo: ResourceBaseInfo{
@@ -40,6 +45,9 @@ func TestECSInfo_GetResourceInfo(t *testing.T) {
 }
 
 func TestAGTECSInfo_GetResourceInfo(t *testing.T) {
+	CloudConf.Global.RmsRetryTimes = 1
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
 	unit := "%"
 	namespace := "AGT.ECS"
 	metricInfosList := model.MetricInfoList{
@@ -53,7 +61,9 @@ func TestAGTECSInfo_GetResourceInfo(t *testing.T) {
 			},
 		},
 	}
-	patches := gomonkey.ApplyFuncReturn(listAllMetrics, []model.MetricInfoList{metricInfosList}, nil)
+	patches := getPatches()
+	logs.InitLog("")
+	patches.ApplyFuncReturn(listAllMetrics, []model.MetricInfoList{metricInfosList}, nil)
 	defer patches.Reset()
 	agtEcsInfo1 := AGTECSInfo{}
 	resourceInfo, _ := agtEcsInfo1.GetResourceInfo()

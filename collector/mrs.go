@@ -21,12 +21,21 @@ func (getter MRSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 	mrsInfo.Lock()
 	defer mrsInfo.Unlock()
 	if mrsInfo.LabelInfo == nil {
-		mrsInfo.LabelInfo, mrsInfo.FilterMetrics = getMRSResourceAndMetrics()
+		var err error
+		mrsInfo.LabelInfo, mrsInfo.FilterMetrics, err = getMRSResourceAndMetrics()
+		if err != nil {
+			logs.Logger.Errorf("Get mrs resource and metrics error: %s", err.Error())
+			return mrsInfo.LabelInfo, mrsInfo.FilterMetrics
+		}
 		mrsInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
 	}
 	if time.Now().Unix() > mrsInfo.TTL {
 		go func() {
-			label, metrics := getMRSResourceAndMetrics()
+			label, metrics, err := getMRSResourceAndMetrics()
+			if err != nil {
+				logs.Logger.Errorf("Get mrs resource and metrics error: %s", err.Error())
+				return
+			}
 			mrsInfo.Lock()
 			defer mrsInfo.Unlock()
 			mrsInfo.LabelInfo = label
@@ -37,11 +46,11 @@ func (getter MRSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 	return mrsInfo.LabelInfo, mrsInfo.FilterMetrics
 }
 
-func getMRSResourceAndMetrics() (map[string]labelInfo, []model.MetricInfoList) {
+func getMRSResourceAndMetrics() (map[string]labelInfo, []model.MetricInfoList, error) {
 	clusters, err := getClusterInfo()
 	if err != nil {
 		logs.Logger.Errorf("[%s] Get all clusters error: %s", err.Error())
-		return nil, nil
+		return nil, nil, err
 	}
 
 	resourceInfos := map[string]labelInfo{}
@@ -59,6 +68,7 @@ func getMRSResourceAndMetrics() (map[string]labelInfo, []model.MetricInfoList) {
 	allMetrics, err := listAllMetrics("SYS.MRS")
 	if err != nil {
 		logs.Logger.Errorf("[%s] Get all metrics of SYS.MRS error: %s", err.Error())
+		return nil, nil, err
 	}
 	var filteredMetrics []model.MetricInfoList
 	for _, metricInfo := range allMetrics {
@@ -66,7 +76,7 @@ func getMRSResourceAndMetrics() (map[string]labelInfo, []model.MetricInfoList) {
 			filteredMetrics = append(filteredMetrics, metricInfo)
 		}
 	}
-	return resourceInfos, filteredMetrics
+	return resourceInfos, filteredMetrics, nil
 }
 
 func getClusterInfo() ([]ResourceBaseInfo, error) {
@@ -88,13 +98,27 @@ func getMRSClient() *mrs.MrsClient {
 }
 
 func getClusterFromMRS() ([]ResourceBaseInfo, error) {
+	var clusters []ResourceBaseInfo
+	epIds := getEpIdRequestPart()
+	for _, epId := range epIds {
+		tmpClusters, err := getClusterFromMRSByEpId(epId)
+		if err != nil {
+			logs.Logger.Errorf("Failed to list mrs cluster, epId: %s, error: %s", epId, err.Error())
+			return nil, err
+		}
+		clusters = append(clusters, tmpClusters...)
+	}
+	return clusters, nil
+}
+
+func getClusterFromMRSByEpId(epId string) ([]ResourceBaseInfo, error) {
 	pageSize := 2000
 	currentPage := 1
 	pageSizeStr := fmt.Sprintf("%d", pageSize)
 	var clusters []mrsmodel.Cluster
 	for {
 		currentPageStr := fmt.Sprintf("%d", currentPage)
-		req := &mrsmodel.ListClustersRequest{PageSize: &pageSizeStr, CurrentPage: &currentPageStr}
+		req := &mrsmodel.ListClustersRequest{PageSize: &pageSizeStr, CurrentPage: &currentPageStr, EnterpriseProjectId: &epId}
 		response, err := getMRSClient().ListClusters(req)
 		if err != nil {
 			logs.Logger.Errorf("Failed to get all mrs cluster : %s", err.Error())

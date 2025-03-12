@@ -10,6 +10,8 @@ import (
 )
 
 func TestGetRmsClient(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
 	endpointConfig = map[string]string{
 		"rms": "https://rms.myhuaweicloud.com",
 	}
@@ -18,6 +20,9 @@ func TestGetRmsClient(t *testing.T) {
 }
 
 func TestListResources(t *testing.T) {
+	CloudConf.Global.RmsRetryTimes = 1
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
 	patches := getPatches()
 	defer patches.Reset()
 	logs.InitLog("")
@@ -56,6 +61,9 @@ func TestListResources(t *testing.T) {
 }
 
 func TestListAllResourcesFromRMS(t *testing.T) {
+	CloudConf.Global.RmsRetryTimes = 1
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
 	patches := getPatches()
 	defer patches.Reset()
 	logs.InitLog("")
@@ -102,6 +110,9 @@ func TestListAllResourcesFromRMS(t *testing.T) {
 }
 
 func TestListEmptyResources(t *testing.T) {
+	CloudConf.Global.RmsRetryTimes = 1
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
 	patches := getPatches()
 	defer patches.Reset()
 	logs.InitLog("")

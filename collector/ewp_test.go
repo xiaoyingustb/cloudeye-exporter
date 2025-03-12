@@ -10,16 +10,17 @@ import (
 )
 
 func TestEWPInfo_GetResourceInfo(t *testing.T) {
+	CloudConf.Global.RmsRetryTimes = 1
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
 	var ewpGetter EWPInfo
 	metricConf = map[string]MetricConf{
 		"SYS.EWP": {
 			DimMetricName: map[string][]string{"user_id": {"total_request_success_rate"}, "site_id": {"website_design_clicks"}},
 		},
 	}
-	sysConfig := map[string][]string{}
 	patches := gomonkey.NewPatches()
 	defer patches.Reset()
-	patches.ApplyFuncReturn(getMetricConfigMap, sysConfig)
 	patches.ApplyFuncReturn(listResources, mockRmsResource(), nil)
 	patches.ApplyFuncReturn(getUserInfoFromIAM, map[string]string{"test_domain_id": "test_domain_name"})
 	patches.ApplyFuncReturn(listAllMetrics, []model.MetricInfoList{

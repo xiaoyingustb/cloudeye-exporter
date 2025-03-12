@@ -8,6 +8,7 @@ global:
   proxy_port: 0
   proxy_username: ""
   proxy_password: ""
+  rms_retry_times: 1
 auth:
   auth_url: "https://iam.xxx.yyy.com/v3"
   project_name: "{project_name}"

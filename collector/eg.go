@@ -1,6 +1,7 @@
 package collector
 
 import (
+	"fmt"
 	"time"
 
 	cesmodel "github.com/huaweicloud/huaweicloud-sdk-go-v3/services/ces/v1/model"
@@ -47,11 +48,22 @@ func (getter EgInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.MetricI
 			return egInfo.LabelInfo, egInfo.FilterMetrics
 		}
 		egResourceMetricMap := getEgSubResourceMetrics(allMetrics)
-		getEgResourceInfoFromRms("source_name", resourceInfos, egResourceMetricMap)
-		getEgResourceInfoFromRms("channel_id", resourceInfos, egResourceMetricMap)
-		getEgResourceInfoFromRms("subscription_id", resourceInfos, egResourceMetricMap)
-		getEgResourceInfoFromRms("streaming_id", resourceInfos, egResourceMetricMap)
-		egInfo.LabelInfo = resourceInfos
+		if err = getEgResourceInfoFromRms("source_name", resourceInfos, egResourceMetricMap); err != nil {
+			logs.Logger.Errorf("Failed to query eg source info from rms: %s", err.Error())
+			return egInfo.LabelInfo, egInfo.FilterMetrics
+		}
+		if err = getEgResourceInfoFromRms("channel_id", resourceInfos, egResourceMetricMap); err != nil {
+			logs.Logger.Errorf("Failed to query eg channel info from rms: %s", err.Error())
+			return egInfo.LabelInfo, egInfo.FilterMetrics
+		}
+		if err = getEgResourceInfoFromRms("subscription_id", resourceInfos, egResourceMetricMap); err != nil {
+			logs.Logger.Errorf("Failed to query eg subscription info from rms: %s", err.Error())
+			return egInfo.LabelInfo, egInfo.FilterMetrics
+		}
+		if err = getEgResourceInfoFromRms("streaming_id", resourceInfos, egResourceMetricMap); err != nil {
+			logs.Logger.Errorf("Failed to query eg streaming info from rms: %s", err.Error())
+			return egInfo.LabelInfo, egInfo.FilterMetrics
+		}
 
 		var filteredMetrics []cesmodel.MetricInfoList
 		for _, metricInfo := range allMetrics {
@@ -62,21 +74,21 @@ func (getter EgInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.MetricI
 				filteredMetrics = append(filteredMetrics, metricInfo)
 			}
 		}
-
+		egInfo.LabelInfo = resourceInfos
 		egInfo.FilterMetrics = filteredMetrics
 		egInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
 	}
 	return egInfo.LabelInfo, egInfo.FilterMetrics
 }
 
-func getEgResourceInfoFromRms(dimName string, resourceInfos map[string]labelInfo, allMetricMap map[string][]cesmodel.MetricInfoList) {
+func getEgResourceInfoFromRms(dimName string, resourceInfos map[string]labelInfo, allMetricMap map[string][]cesmodel.MetricInfoList) error {
 	dimConfig, ok := egDimConfigMap[dimName]
 	if !ok {
-		return
+		return fmt.Errorf("dimension is not in metric config map: %s", dimName)
 	}
 	rmsResourceInfos, err := getResourcesBaseInfoFromRMS(dimConfig["providerId"], dimConfig["resourceType"])
 	if err != nil {
-		return
+		return err
 	}
 	for _, rmsResourceInfo := range rmsResourceInfos {
 		info := labelInfo{
@@ -100,6 +112,7 @@ func getEgResourceInfoFromRms(dimName string, resourceInfos map[string]labelInfo
 			}
 		}
 	}
+	return nil
 }
 
 func getEgSubResourceMetrics(allMetrics []cesmodel.MetricInfoList) map[string][]cesmodel.MetricInfoList {

@@ -12,7 +12,7 @@ import (
 func TestMRSInfo_GetResourceInfo(t *testing.T) {
 	now := time.Now().Add(-time.Minute).Unix()
 	mrsInfo1 := MRSInfo{}
-	patches := gomonkey.ApplyFuncReturn(getMRSResourceAndMetrics, map[string]labelInfo{}, []model.MetricInfoList{})
+	patches := gomonkey.ApplyFuncReturn(getMRSResourceAndMetrics, map[string]labelInfo{}, []model.MetricInfoList{}, nil)
 	defer patches.Reset()
 	mrsInfo1.GetResourceInfo()
 	assert.NotNil(t, mrsInfo.LabelInfo)

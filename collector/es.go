@@ -42,7 +42,10 @@ func (getter ESInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInfo
 	esInfo.Lock()
 	defer esInfo.Unlock()
 	if esInfo.LabelInfo == nil || time.Now().Unix() > esInfo.TTL {
-		buildEsResourceInfo(&filterMetrics, resourceInfos)
+		if err := buildEsResourceInfo(&filterMetrics, resourceInfos); err != nil {
+			logs.Logger.Errorf("Build es resource info error: %s", err.Error())
+			return esInfo.LabelInfo, esInfo.FilterMetrics
+		}
 		esInfo.LabelInfo = resourceInfos
 		esInfo.FilterMetrics = filterMetrics
 		esInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
@@ -50,11 +53,11 @@ func (getter ESInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInfo
 	return esInfo.LabelInfo, esInfo.FilterMetrics
 }
 
-func buildEsResourceInfo(filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) {
+func buildEsResourceInfo(filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) error {
 	sysConfigMap := getMetricConfigMap("SYS.ES")
 	esInstances, err := getAllEsInstanceSFromRMS()
 	if err != nil {
-		return
+		return err
 	}
 	for _, esInstance := range esInstances {
 		if metricNames, ok := sysConfigMap["cluster_id"]; ok {
@@ -85,6 +88,7 @@ func buildEsResourceInfo(filterMetrics *[]model.MetricInfoList, resourceInfos ma
 			}
 		}
 	}
+	return nil
 }
 
 func getAllEsInstanceSFromRMS() ([]EsInstanceInfo, error) {

@@ -31,7 +31,7 @@ func (getter CBRInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		}
 		if err != nil {
 			logs.Logger.Errorf("Failed to get cbr instances, error: %s", err.Error())
-			return nil, nil
+			return cbrInfo.LabelInfo, cbrInfo.FilterMetrics
 		}
 
 		for _, instance := range cbrInstances {
@@ -48,7 +48,6 @@ func (getter CBRInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 				resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 			}
 		}
-
 		cbrInfo.LabelInfo = resourceInfos
 		cbrInfo.FilterMetrics = filterMetrics
 		cbrInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
@@ -61,9 +60,23 @@ func getAllCbrInstancesFromRMS() ([]ResourceBaseInfo, error) {
 }
 
 func getAllCbrInstancesFromCBR() ([]ResourceBaseInfo, error) {
+	var cbrInstances []ResourceBaseInfo
+	epIds := getEpIdRequestPart()
+	for _, epId := range epIds {
+		tmpCbrInstances, err := getCbrInstancesFromCBRByEpId(epId)
+		if err != nil {
+			logs.Logger.Errorf("Failed to list vault, epId: %s, error: %s", epId, err.Error())
+			return nil, err
+		}
+		cbrInstances = append(cbrInstances, tmpCbrInstances...)
+	}
+	return cbrInstances, nil
+}
+
+func getCbrInstancesFromCBRByEpId(epId string) ([]ResourceBaseInfo, error) {
 	limit := int32(1000)
 	offset := int32(0)
-	request := &cbrmodel.ListVaultRequest{Limit: &limit, Offset: &offset}
+	request := &cbrmodel.ListVaultRequest{Limit: &limit, Offset: &offset, EnterpriseProjectId: &epId}
 	var cbrInstances []ResourceBaseInfo
 	for {
 		response, err := getCBRClient().ListVault(request)

@@ -41,6 +41,7 @@ type Global struct {
 	LogsConfPath                string `yaml:"logs_conf_path"`
 	EndpointsConfPath           string `yaml:"endpoints_conf_path"`
 	IgnoreSSLVerify             bool   `yaml:"ignore_ssl_verify"`
+	RmsRetryTimes               int    `yaml:"rms_retry_times"`
 
 	// 用户配置的proxy信息
 	HttpSchema string `yaml:"proxy_schema"`
@@ -144,6 +145,14 @@ func SetDefaultConfigValues(config *CloudConfig) {
 
 	if config.Global.EndpointsConfPath == "" {
 		config.Global.EndpointsConfPath = "./endpoints.yml"
+	}
+
+	if config.Global.RmsRetryTimes <= 0 {
+		config.Global.RmsRetryTimes = 1
+	}
+
+	if config.Global.RmsRetryTimes > 10 {
+		config.Global.RmsRetryTimes = 10
 	}
 }
 

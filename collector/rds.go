@@ -34,36 +34,37 @@ func (getter RDSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 	if rdsInfo.LabelInfo == nil || time.Now().Unix() > rdsInfo.TTL {
 		sysConfigMap := getMetricConfigMap("SYS.RDS")
 		rdsInstances, err := getAllRdsInstanceSFromRMS()
-		if err == nil {
-			for _, instance := range rdsInstances {
-				var dimName string
-				switch instance.EngineName {
-				case "mysql":
-					dimName = "rds_cluster_id"
-				case "postgresql":
-					dimName = "postgresql_cluster_id"
-				case "sqlserver":
-					dimName = "rds_cluster_sqlserver_id"
-				default:
-					logs.Logger.Error("Failed to match case")
+		if err != nil {
+			logs.Logger.Error("Get rds instances from rms error: %s", err.Error())
+			return rdsInfo.LabelInfo, rdsInfo.FilterMetrics
+		}
+		for _, instance := range rdsInstances {
+			var dimName string
+			switch instance.EngineName {
+			case "mysql":
+				dimName = "rds_cluster_id"
+			case "postgresql":
+				dimName = "postgresql_cluster_id"
+			case "sqlserver":
+				dimName = "rds_cluster_sqlserver_id"
+			default:
+				logs.Logger.Error("Failed to match case")
+			}
+			if metricNames, ok := sysConfigMap[dimName]; ok {
+				metrics := buildSingleDimensionMetrics(metricNames, "SYS.RDS", dimName, instance.ID)
+				filterMetrics = append(filterMetrics, metrics...)
+				info := labelInfo{
+					Name: []string{"name", "epId", "engineVersion", "nodeNum", "port", "dataVip", "engineName",
+						"cpu", "mem"},
+					Value: []string{instance.Name, instance.EpId, instance.EngineVersion, instance.NodeNum,
+						instance.Port, instance.DataVip, instance.EngineName, instance.CPU, instance.MEM},
 				}
-				if metricNames, ok := sysConfigMap[dimName]; ok {
-					metrics := buildSingleDimensionMetrics(metricNames, "SYS.RDS", dimName, instance.ID)
-					filterMetrics = append(filterMetrics, metrics...)
-					info := labelInfo{
-						Name: []string{"name", "epId", "engineVersion", "nodeNum", "port", "dataVip", "engineName",
-							"cpu", "mem"},
-						Value: []string{instance.Name, instance.EpId, instance.EngineVersion, instance.NodeNum,
-							instance.Port, instance.DataVip, instance.EngineName, instance.CPU, instance.MEM},
-					}
-					keys, values := getTags(instance.Tags)
-					info.Name = append(info.Name, keys...)
-					info.Value = append(info.Value, values...)
-					resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
-				}
+				keys, values := getTags(instance.Tags)
+				info.Name = append(info.Name, keys...)
+				info.Value = append(info.Value, values...)
+				resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 			}
 		}
-
 		rdsInfo.LabelInfo = resourceInfos
 		rdsInfo.FilterMetrics = filterMetrics
 		rdsInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()

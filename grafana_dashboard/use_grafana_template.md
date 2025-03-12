@@ -80,6 +80,7 @@
    + [对象存储服务 OBS](templates/obs_dashboard_template.json)
    + [云解析服务 DNS](templates/dns_dashboard_template.json)
    + [企业门户 EWP](templates/ewp_dashboard_template.json)
+   + [企业路由器 ER](templates/er_dashboard_template.json)
 4. 效果展示：
    >ECS:
    > ![img.png](pic/ecs.jpg)

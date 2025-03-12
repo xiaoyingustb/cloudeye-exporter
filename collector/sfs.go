@@ -39,7 +39,6 @@ func (getter SFSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 			}
 			resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 		}
-
 		sfsInfo.LabelInfo = resourceInfos
 		sfsInfo.FilterMetrics = filterMetrics
 		sfsInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()

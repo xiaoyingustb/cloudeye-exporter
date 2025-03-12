@@ -53,7 +53,6 @@ func (cfw CFWInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.MetricInf
 			info.Value = append(info.Value, values...)
 			resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 		}
-
 		cfwServerInfo.LabelInfo = resourceInfos
 		cfwServerInfo.FilterMetrics = filterMetrics
 		cfwServerInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()

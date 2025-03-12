@@ -26,7 +26,7 @@ func (getter WAFInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		wafInstances, err := getAllWafInstancesFromRMS()
 		if err != nil {
 			logs.Logger.Errorf("Failed to get all waf instances, error: %s", err.Error())
-			return nil, nil
+			return wafInfo.LabelInfo, wafInfo.FilterMetrics
 		}
 
 		for _, instance := range wafInstances {
@@ -44,9 +44,9 @@ func (getter WAFInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 			}
 		}
 
-		premiumWafInstances := getAllPremiumWafInstances()
-		if len(premiumWafInstances) == 0 {
-			return nil, nil
+		premiumWafInstances, err := getAllPremiumWafInstances()
+		if err != nil {
+			return wafInfo.LabelInfo, wafInfo.FilterMetrics
 		}
 		for _, instance := range premiumWafInstances {
 			if metricNames, ok := sysConfigMap["instance_id"]; ok {
@@ -78,19 +78,21 @@ func getWAFClient() *waf.WafClient {
 		WithEndpoint(getEndpoint("waf", "v1")).Build())
 }
 
-func getAllPremiumWafInstances() []wafModel.ListInstance {
+func getAllPremiumWafInstances() ([]wafModel.ListInstance, error) {
 	result := make([]wafModel.ListInstance, 0)
 	pageSize := int32(100)
 	page := int32(1)
+	allGrantedEps := "all_granted_eps"
 	req := &wafModel.ListInstanceRequest{
-		Page:     &page,
-		Pagesize: &pageSize,
+		Page:                &page,
+		Pagesize:            &pageSize,
+		EnterpriseProjectId: &allGrantedEps,
 	}
 	for {
 		resp, err := getWAFClient().ListInstance(req)
 		if err != nil {
 			logs.Logger.Errorf("Get all premiumWafInstances err, err is : %s", err.Error())
-			return nil
+			return nil, err
 		}
 		if resp.HttpStatusCode != http.StatusOK {
 			logs.Logger.Errorf("Get all premiumWafInstances HttpStatusCode is %d", resp.HttpStatusCode)
@@ -103,7 +105,7 @@ func getAllPremiumWafInstances() []wafModel.ListInstance {
 		result = append(result, instanceInfo...)
 		*req.Page += 1
 	}
-	return result
+	return result, nil
 }
 
 func (getter WAFInfo) resetResourceInfo() {
