@@ -1,6 +1,7 @@
 package collector
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/huaweicloud/huaweicloud-sdk-go-v3/services/ces/v1/model"
@@ -50,9 +51,18 @@ func (getter ANCInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.Metric
 			}
 		}
 		ancResourceMetricMap := getAncSubResourceMetrics(filteredMetrics)
-		getAncResourceInfoFromRms("anc_anc_id", resourceInfos, ancResourceMetricMap)
-		getAncResourceInfoFromRms("anc_service_id", resourceInfos, ancResourceMetricMap)
-		getAncResourceInfoFromRms("anc_membergroup_id", resourceInfos, ancResourceMetricMap)
+		if err = getAncResourceInfoFromRms("anc_anc_id", resourceInfos, ancResourceMetricMap); err != nil {
+			logs.Logger.Errorf("Failed to get anc resource from rms: %s", err.Error())
+			return ancInfo.LabelInfo, ancInfo.FilterMetrics
+		}
+		if err = getAncResourceInfoFromRms("anc_service_id", resourceInfos, ancResourceMetricMap); err != nil {
+			logs.Logger.Errorf("Failed to get anc service resource from rms: %s", err.Error())
+			return ancInfo.LabelInfo, ancInfo.FilterMetrics
+		}
+		if err = getAncResourceInfoFromRms("anc_membergroup_id", resourceInfos, ancResourceMetricMap); err != nil {
+			logs.Logger.Errorf("Failed to get anc member group resource from rms: %s", err.Error())
+			return ancInfo.LabelInfo, ancInfo.FilterMetrics
+		}
 		ancInfo.LabelInfo = resourceInfos
 		ancInfo.FilterMetrics = filteredMetrics
 		ancInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
@@ -60,18 +70,18 @@ func (getter ANCInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.Metric
 	return ancInfo.LabelInfo, ancInfo.FilterMetrics
 }
 
-func getAncResourceInfoFromRms(dimName string, resourceInfos map[string]labelInfo, allMetricMap map[string][]cesmodel.MetricInfoList) {
+func getAncResourceInfoFromRms(dimName string, resourceInfos map[string]labelInfo, allMetricMap map[string][]cesmodel.MetricInfoList) error {
 	dimConfig, ok := dimConfigMap[dimName]
 	if !ok {
-		return
+		return fmt.Errorf("dim name not in dimension config file: %s", dimName)
 	}
 	rmsResourceInfos, err := getResourcesBaseInfoFromRMS(dimConfig["providerId"], dimConfig["resourceType"], "global")
 	if err != nil {
-		return
+		return err
 	}
 	metricNames, ok := getMetricConfigMap("SYS.ANC")[dimName]
 	if !ok {
-		return
+		return fmt.Errorf("dim name not in metric config file: %s", dimName)
 	}
 	for _, rmsResourceInfo := range rmsResourceInfos {
 		metrics := buildSingleDimensionMetrics(metricNames, "SYS.ANC", dimName, rmsResourceInfo.ID)
@@ -96,6 +106,7 @@ func getAncResourceInfoFromRms(dimName string, resourceInfos map[string]labelInf
 			}
 		}
 	}
+	return nil
 }
 
 func getAncSubResourceMetrics(allMetrics []cesmodel.MetricInfoList) map[string][]cesmodel.MetricInfoList {

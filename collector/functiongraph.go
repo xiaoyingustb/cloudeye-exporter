@@ -29,19 +29,22 @@ func (getter FunctionGraphInfo) GetResourceInfo() (map[string]labelInfo, []cesmo
 	defer functionGraphInfo.Unlock()
 	if functionGraphInfo.LabelInfo == nil || time.Now().Unix() > functionGraphInfo.TTL {
 		if metricNames, ok := getMetricConfigMap("SYS.FunctionGraph")["package-functionname"]; ok {
-			if functions, err := getAllFunctionGraphFromRMS(); err == nil {
-				for _, function := range functions {
-					metrics := buildSingleDimensionMetrics(metricNames, "SYS.FunctionGraph", "package-functionname", fmt.Sprintf("%s-%s", function.Package, function.FuncName))
-					filterMetrics = append(filterMetrics, metrics...)
-					info := labelInfo{
-						Name:  []string{"epId", "package", "function_name"},
-						Value: []string{function.EpId, function.Package, function.FuncName},
-					}
-					keys, values := getTags(function.Tags)
-					info.Name = append(info.Name, keys...)
-					info.Value = append(info.Value, values...)
-					resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
+			functions, err := getAllFunctionGraphFromRMS()
+			if err != nil {
+				logs.Logger.Errorf("Get function graph resources from rms error: %s", err.Error())
+				return functionGraphInfo.LabelInfo, functionGraphInfo.FilterMetrics
+			}
+			for _, function := range functions {
+				metrics := buildSingleDimensionMetrics(metricNames, "SYS.FunctionGraph", "package-functionname", fmt.Sprintf("%s-%s", function.Package, function.FuncName))
+				filterMetrics = append(filterMetrics, metrics...)
+				info := labelInfo{
+					Name:  []string{"epId", "package", "function_name"},
+					Value: []string{function.EpId, function.Package, function.FuncName},
 				}
+				keys, values := getTags(function.Tags)
+				info.Name = append(info.Name, keys...)
+				info.Value = append(info.Value, values...)
+				resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 			}
 		}
 		functionGraphInfo.LabelInfo = resourceInfos

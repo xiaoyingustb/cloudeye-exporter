@@ -23,13 +23,19 @@ func (getter DLIInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		sysConfigMap := getMetricConfigMap("SYS.DLI")
 
 		// queues
-		buildQueuesInfo(sysConfigMap, &filterMetrics, resourceInfos)
+		if err := buildQueuesInfo(sysConfigMap, &filterMetrics, resourceInfos); err != nil {
+			return dliInfo.LabelInfo, dliInfo.FilterMetrics
+		}
 
 		// flink jobs
-		buildFlinkJobsInfo(sysConfigMap, &filterMetrics, resourceInfos)
+		if err := buildFlinkJobsInfo(sysConfigMap, &filterMetrics, resourceInfos); err != nil {
+			return dliInfo.LabelInfo, dliInfo.FilterMetrics
+		}
 
 		// elastic resource pool
-		buildElasticPool(sysConfigMap, &filterMetrics, resourceInfos)
+		if err := buildElasticPool(sysConfigMap, &filterMetrics, resourceInfos); err != nil {
+			return dliInfo.LabelInfo, dliInfo.FilterMetrics
+		}
 
 		dliInfo.LabelInfo = resourceInfos
 		dliInfo.FilterMetrics = filterMetrics
@@ -38,17 +44,17 @@ func (getter DLIInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 	return dliInfo.LabelInfo, dliInfo.FilterMetrics
 }
 
-func buildElasticPool(configMap map[string][]string, filterMetrics *[]model.MetricInfoList, infos map[string]labelInfo) {
+func buildElasticPool(configMap map[string][]string, filterMetrics *[]model.MetricInfoList, infos map[string]labelInfo) error {
 	elasticPoolsMetricNames, ok := configMap["elastic_resource_pool_id"]
 	if !ok {
 		logs.Logger.Warnf("metric config is empty of elastic_resource_pool_id")
-		return
+		return fmt.Errorf("metric config is empty of elastic resource pool id")
 	}
 
 	elasticPoolRes, err := getElasticPoolFromDLI()
 	if err != nil {
 		logs.Logger.Errorf("Get all elastic pool error: %s", err.Error())
-		return
+		return err
 	}
 
 	for _, pool := range elasticPoolRes {
@@ -63,18 +69,19 @@ func buildElasticPool(configMap map[string][]string, filterMetrics *[]model.Metr
 		info.Value = append(info.Value, values...)
 		infos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 	}
+	return nil
 }
 
-func buildQueuesInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) {
+func buildQueuesInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) error {
 	queueMetricNames, ok := sysConfigMap["queue_id"]
 	if !ok {
 		logs.Logger.Warnf("metric config is empty of queue_id")
-		return
+		return fmt.Errorf("metric config is empty of queue id")
 	}
 	queues, err := getQueuesFromRMS()
 	if err != nil {
 		logs.Logger.Errorf("Get all dli queues: %s", err.Error())
-		return
+		return err
 	}
 	for _, queue := range queues {
 		metrics := buildSingleDimensionMetrics(queueMetricNames, "SYS.DLI", "queue_id", queue.ID)
@@ -88,18 +95,19 @@ func buildQueuesInfo(sysConfigMap map[string][]string, filterMetrics *[]model.Me
 		info.Value = append(info.Value, values...)
 		resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 	}
+	return nil
 }
 
-func buildFlinkJobsInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) {
+func buildFlinkJobsInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) error {
 	jobMetricNames, ok := sysConfigMap["flink_job_id"]
 	if !ok {
 		logs.Logger.Warnf("metric config is empty of flink_job_id")
-		return
+		return fmt.Errorf("metric config is empty of flink job id")
 	}
 	jobs, err := getAllFlinkJobsInfo()
 	if err != nil {
 		logs.Logger.Errorf("Get all dli flink job: %s", err.Error())
-		return
+		return err
 	}
 	for _, job := range jobs {
 		metrics := buildSingleDimensionMetrics(jobMetricNames, "SYS.DLI", "flink_job_id", job.ID)
@@ -113,6 +121,7 @@ func buildFlinkJobsInfo(sysConfigMap map[string][]string, filterMetrics *[]model
 		info.Value = append(info.Value, values...)
 		resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 	}
+	return nil
 }
 
 func getQueuesFromRMS() ([]ResourceBaseInfo, error) {

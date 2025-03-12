@@ -31,24 +31,24 @@ func (getter DRSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 			return drsInfo.LabelInfo, drsInfo.FilterMetrics
 		}
 		drsJobs, err := getAllDrsJobsFromRMS()
-		if err == nil {
-			for _, job := range drsJobs {
-				metrics := buildSingleDimensionMetrics(metricNames, "SYS.DRS", "instance_id", job.ID)
-				filterMetrics = append(filterMetrics, metrics...)
-				info := labelInfo{
-					Name:  []string{"name", "epId"},
-					Value: []string{job.Name, job.EpId},
-				}
-				keys, values := getTags(job.Tags)
-				info.Name = append(info.Name, keys...)
-				info.Value = append(info.Value, values...)
-				propertiesKeys, propertiesValues := getTags(job.DrsProperties)
-				info.Name = append(info.Name, propertiesKeys...)
-				info.Value = append(info.Value, propertiesValues...)
-				resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
-			}
+		if err != nil {
+			return drsInfo.LabelInfo, drsInfo.FilterMetrics
 		}
-
+		for _, job := range drsJobs {
+			metrics := buildSingleDimensionMetrics(metricNames, "SYS.DRS", "instance_id", job.ID)
+			filterMetrics = append(filterMetrics, metrics...)
+			info := labelInfo{
+				Name:  []string{"name", "epId"},
+				Value: []string{job.Name, job.EpId},
+			}
+			keys, values := getTags(job.Tags)
+			info.Name = append(info.Name, keys...)
+			info.Value = append(info.Value, values...)
+			propertiesKeys, propertiesValues := getTags(job.DrsProperties)
+			info.Name = append(info.Name, propertiesKeys...)
+			info.Value = append(info.Value, propertiesValues...)
+			resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
+		}
 		drsInfo.LabelInfo = resourceInfos
 		drsInfo.FilterMetrics = filterMetrics
 		drsInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
@@ -59,13 +59,18 @@ func (getter DRSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 func getAllDrsJobsFromRMS() ([]DrsInstanceInfo, error) {
 	var resources []rmsmodel.ResourceEntity
 	types := []string{"migrationJob", "synchronizationJob", "dataGuardJob", "subscriptionJob", "backupMigrationJob"}
+	queryErrFlag := false
 	for i := range types {
 		resourceList, err := listResources("drs", types[i])
 		if err != nil {
+			queryErrFlag = true
 			logs.Logger.Errorf("Failed to list resource of %s, error: %s", fmt.Sprintf("drs.%s", types[i]), err.Error())
 			continue
 		}
 		resources = append(resources, resourceList...)
+	}
+	if len(resources) == 0 && queryErrFlag {
+		return nil, fmt.Errorf("jobs for querying drs resource execute failed")
 	}
 
 	drsJobs := make([]DrsInstanceInfo, len(resources))

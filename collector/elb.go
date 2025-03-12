@@ -2,6 +2,7 @@ package collector
 
 import (
 	"fmt"
+	"strings"
 	"sync"
 	"time"
 
@@ -16,6 +17,7 @@ import (
 var elbInfo serversInfo
 var listenersMap map[string]model.Listener
 var poolsMap map[string]model.Pool
+var availabilityZoneMap map[string]model.AvailabilityZone
 
 func getELBClient() *elb.ElbClient {
 	return elb.NewElbClient(elb.ElbClientBuilder().WithCredential(
@@ -24,15 +26,16 @@ func getELBClient() *elb.ElbClient {
 		WithEndpoint(getEndpoint("elb", "v2")).Build())
 }
 
-func listLoadBalancers() []model.LoadBalancer {
+func listLoadBalancers() ([]model.LoadBalancer, error) {
 	limit := int32(1000)
-	request := &model.ListLoadBalancersRequest{Limit: &limit}
+	epIds := getEpIdRequestPart()
+	request := &model.ListLoadBalancersRequest{Limit: &limit, EnterpriseProjectId: &epIds}
 	var loadbalancers []model.LoadBalancer
 	for {
 		response, err := getELBClient().ListLoadBalancers(request)
 		if err != nil {
 			logs.Logger.Errorf("list LoadBalancers error: %s", err.Error())
-			return loadbalancers
+			return loadbalancers, err
 		}
 		tempLoadbalancers := *response.Loadbalancers
 		if len(tempLoadbalancers) == 0 {
@@ -42,12 +45,13 @@ func listLoadBalancers() []model.LoadBalancer {
 		request.Marker = &(tempLoadbalancers[len(tempLoadbalancers)-1].Id)
 	}
 
-	return loadbalancers
+	return loadbalancers, nil
 }
 
 func listListeners() []model.Listener {
 	limit := int32(1000)
-	request := &model.ListListenersRequest{Limit: &limit}
+	epIds := getEpIdRequestPart()
+	request := &model.ListListenersRequest{Limit: &limit, EnterpriseProjectId: &epIds}
 	var listeners []model.Listener
 	for {
 		response, err := getELBClient().ListListeners(request)
@@ -68,7 +72,8 @@ func listListeners() []model.Listener {
 
 func listPools() []model.Pool {
 	limit := int32(1000)
-	request := &model.ListPoolsRequest{Limit: &limit}
+	epIds := getEpIdRequestPart()
+	request := &model.ListPoolsRequest{Limit: &limit, EnterpriseProjectId: &epIds}
 	var pools []model.Pool
 	for {
 		response, err := getELBClient().ListPools(request)
@@ -87,6 +92,22 @@ func listPools() []model.Pool {
 	return pools
 }
 
+func listAvailabilityZones() []model.AvailabilityZone {
+	request := &model.ListAvailabilityZonesRequest{}
+	var resultZones []model.AvailabilityZone
+	response, err := getELBClient().ListAvailabilityZones(request)
+	if err != nil {
+		logs.Logger.Errorf("list availability zones error: %s", err.Error())
+		return resultZones
+	}
+	zones := *response.AvailabilityZones
+	for _, subZones := range zones {
+		resultZones = append(resultZones, subZones...)
+	}
+
+	return resultZones
+}
+
 type ELBInfo struct{}
 
 func (getter ELBInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.MetricInfoList) {
@@ -97,7 +118,11 @@ func (getter ELBInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.Metric
 	if elbInfo.LabelInfo == nil || time.Now().Unix() > elbInfo.TTL {
 		getResourceMap()
 		sysConfigMap := getMetricConfigMap("SYS.ELB")
-		loadBalancers := listLoadBalancers()
+		loadBalancers, err := listLoadBalancers()
+		if err != nil {
+			logs.Logger.Errorf("Get elb instances from services error: %s", err.Error())
+			return elbInfo.LabelInfo, elbInfo.FilterMetrics
+		}
 		for index := range loadBalancers {
 			loadBalancer := loadBalancers[index]
 			if loadBalancerMetricNames, ok := sysConfigMap["lbaas_instance_id"]; ok {
@@ -115,9 +140,10 @@ func (getter ELBInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.Metric
 				buildListenerInfo(sysConfigMap, &loadBalancer, info, &filterMetrics, resourceInfos)
 
 				buildPoolInfo(sysConfigMap, &loadBalancer, info, &filterMetrics, resourceInfos)
+
+				buildAvailabilityZoneInfo(sysConfigMap, &loadBalancer, info, &filterMetrics, resourceInfos)
 			}
 		}
-
 		elbInfo.LabelInfo = resourceInfos
 		elbInfo.FilterMetrics = filterMetrics
 		elbInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
@@ -167,15 +193,38 @@ func buildPoolInfo(sysConfigMap map[string][]string, loadBalancer *model.LoadBal
 	}
 }
 
+func buildAvailabilityZoneInfo(sysConfigMap map[string][]string, loadBalancer *model.LoadBalancer, info labelInfo, filterMetrics *[]cesmodel.MetricInfoList, resourceInfos map[string]labelInfo) {
+	zoneMetricNames, ok := sysConfigMap["lbaas_instance_id,available_zone"]
+	if !ok {
+		logs.Logger.Warn("availability zone metric names not config")
+		return
+	}
+	for _, zone := range loadBalancer.AvailabilityZoneList {
+		zonesMetrics := buildDimensionMetrics(zoneMetricNames, "SYS.ELB",
+			[]cesmodel.MetricsDimension{{Name: "lbaas_instance_id", Value: loadBalancer.Id}, {Name: "available_zone", Value: zone}})
+		zoneInfo := info
+		if detailZone, ok := availabilityZoneMap[zone]; ok {
+			zoneInfo.Name = append(zoneInfo.Name, []string{"state", "public_border_group", "category", "protocol"}...)
+			zoneInfo.Value = append(zoneInfo.Value, []string{detailZone.State, detailZone.PublicBorderGroup, fmt.Sprintf("%d", detailZone.Category), strings.Join(detailZone.Protocol, ",")}...)
+		}
+		*filterMetrics = append(*filterMetrics, zonesMetrics...)
+		resourceInfos[GetResourceKeyFromMetricInfo(zonesMetrics[0])] = zoneInfo
+	}
+}
+
 func getResourceMap() {
 	var wg sync.WaitGroup
-	wg.Add(2)
+	wg.Add(3)
 	go func() {
 		listenersMap = getListenersInfoMap()
 		wg.Done()
 	}()
 	go func() {
 		poolsMap = getPoolsInfoMap()
+		wg.Done()
+	}()
+	go func() {
+		availabilityZoneMap = getAvailabilityZoneInfoMap()
 		wg.Done()
 	}()
 	wg.Wait()
@@ -197,6 +246,15 @@ func getPoolsInfoMap() map[string]model.Pool {
 		poolsMap[pool.Id] = pool
 	}
 	return poolsMap
+}
+
+func getAvailabilityZoneInfoMap() map[string]model.AvailabilityZone {
+	zones := listAvailabilityZones()
+	zonesMap := make(map[string]model.AvailabilityZone, len(zones))
+	for _, zone := range zones {
+		zonesMap[zone.Code] = zone
+	}
+	return zonesMap
 }
 
 // 标签只允许大写字母，小写字母和下划线，过滤tags中有效的tag

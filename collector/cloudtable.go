@@ -27,7 +27,11 @@ func (ct CloudTableInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.Met
 	cloudTableInfo.Lock()
 	defer cloudTableInfo.Unlock()
 	if cloudTableInfo.LabelInfo == nil || time.Now().Unix() > cloudTableInfo.TTL {
-		clusters := GetClusterInfo()
+		clusters, err := GetClusterInfo()
+		if err != nil {
+			logs.Logger.Errorf("Get cloud table resource info from service error: %s", err.Error())
+			return cloudTableInfo.LabelInfo, cloudTableInfo.FilterMetrics
+		}
 		for _, cluster := range clusters {
 			info := labelInfo{
 				Name:  []string{"clusterName"},
@@ -60,7 +64,7 @@ func (ct CloudTableInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.Met
 	return cloudTableInfo.LabelInfo, cloudTableInfo.FilterMetrics
 }
 
-func GetClusterInfo() []model.ClusterDetail {
+func GetClusterInfo() ([]model.ClusterDetail, error) {
 	cloudTableClusterLimit := int32(100)
 	cloudTableClusterOffset := int32(0)
 	request := &model.ListClustersRequest{Limit: &cloudTableClusterLimit, Offset: &cloudTableClusterOffset}
@@ -70,7 +74,7 @@ func GetClusterInfo() []model.ClusterDetail {
 		if err != nil {
 			logs.Logger.Errorf("list cloud table clusters error: %s, limit: %d, offset: %d", err.Error(),
 				*request.Limit, *request.Offset)
-			return clusters
+			return nil, err
 		}
 		tempClusters := *response.Clusters
 		if len(tempClusters) == 0 {
@@ -79,5 +83,5 @@ func GetClusterInfo() []model.ClusterDetail {
 		clusters = append(clusters, tempClusters...)
 		*request.Offset += cloudTableClusterLimit
 	}
-	return clusters
+	return clusters, nil
 }

@@ -22,8 +22,9 @@ func (getter CDMInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.Metric
 	defer cdmInfo.Unlock()
 	if cdmInfo.LabelInfo == nil || time.Now().Unix() > cdmInfo.TTL {
 		if metricNames, ok := getMetricConfigMap("SYS.CDM")["instance_id"]; ok {
-			clusters := listClusters()
-			if clusters == nil {
+			clusters, err := listClusters()
+			if err != nil {
+				logs.Logger.Errorf("Get cdm resource info from service error: %s", err.Error())
 				return cdmInfo.LabelInfo, cdmInfo.FilterMetrics
 			}
 			for _, cluster := range *clusters {
@@ -52,11 +53,11 @@ func getCDMClient() *cdm.CdmClient {
 		WithEndpoint(getEndpoint("cdm", "v1.1")).Build())
 }
 
-func listClusters() *[]model.Clusters {
+func listClusters() (*[]model.Clusters, error) {
 	response, err := getCDMClient().ListClusters(&model.ListClustersRequest{})
 	if err != nil {
 		logs.Logger.Errorf("list cdm clusters error: %s", err.Error())
-		return nil
+		return nil, err
 	}
-	return response.Clusters
+	return response.Clusters, nil
 }

@@ -51,10 +51,16 @@ func (getter VPCInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		sysConfigMap := getMetricConfigMap("SYS.VPC")
 
 		// bandwidths
-		buildBandwidthsInfo(sysConfigMap, &filterMetrics, resourceInfos)
+		if err := buildBandwidthsInfo(sysConfigMap, &filterMetrics, resourceInfos); err != nil {
+			logs.Logger.Errorf("Build band width info error: %s", err.Error())
+			return vpcInfo.LabelInfo, vpcInfo.FilterMetrics
+		}
 
 		// publicips
-		buildPublicipsInfo(sysConfigMap, &filterMetrics, resourceInfos)
+		if err := buildPublicipsInfo(sysConfigMap, &filterMetrics, resourceInfos); err != nil {
+			logs.Logger.Errorf("Build public ip info error: %s", err.Error())
+			return vpcInfo.LabelInfo, vpcInfo.FilterMetrics
+		}
 
 		vpcInfo.LabelInfo = resourceInfos
 		vpcInfo.FilterMetrics = filterMetrics
@@ -63,10 +69,10 @@ func (getter VPCInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 	return vpcInfo.LabelInfo, vpcInfo.FilterMetrics
 }
 
-func buildPublicipsInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) {
+func buildPublicipsInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) error {
 	publicips, err := getAllPublicIpFromRMS()
 	if err != nil {
-		return
+		return err
 	}
 	for _, publicip := range publicips {
 		if metricNames, ok := sysConfigMap["publicip_id"]; ok {
@@ -82,12 +88,13 @@ func buildPublicipsInfo(sysConfigMap map[string][]string, filterMetrics *[]model
 			resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 		}
 	}
+	return nil
 }
 
-func buildBandwidthsInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) {
+func buildBandwidthsInfo(sysConfigMap map[string][]string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) error {
 	bandwidths, err := getAllBandwidthFromRMS()
 	if err != nil {
-		return
+		return err
 	}
 	for _, bandwidth := range bandwidths {
 		if metricNames, ok := sysConfigMap["bandwidth_id"]; ok {
@@ -103,6 +110,7 @@ func buildBandwidthsInfo(sysConfigMap map[string][]string, filterMetrics *[]mode
 			resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 		}
 	}
+	return nil
 }
 
 func getAllBandwidthFromRMS() ([]Bandwidth, error) {

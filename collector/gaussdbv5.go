@@ -32,12 +32,17 @@ func (getter GAUSSDBV5Info) GetResourceInfo() (map[string]labelInfo, []cesmodel.
 	if gaussdbV5Info.LabelInfo == nil || time.Now().Unix() > gaussdbV5Info.TTL {
 		sysConfigMap := getMetricConfigMap("SYS.GAUSSDBV5")
 		if instanceMetricNames, ok := sysConfigMap["gaussdbv5_instance_id"]; ok {
-			for _, instance := range listInstances() {
+			instances, err := listInstances()
+			if err != nil {
+				logs.Logger.Errorf("Get gauss db v5 instance from service error: %s", err.Error())
+				return gaussdbV5Info.LabelInfo, gaussdbV5Info.FilterMetrics
+			}
+			for _, instance := range instances {
 				metrics := buildSingleDimensionMetrics(instanceMetricNames, "SYS.GAUSSDBV5", "gaussdbv5_instance_id", instance.Id)
 				filterMetrics = append(filterMetrics, metrics...)
 				info := labelInfo{
-					Name:  []string{"name"},
-					Value: []string{instance.Name},
+					Name:  []string{"name", "epId"},
+					Value: []string{instance.Name, instance.EnterpriseProjectId},
 				}
 				keys, values := getTags(fmtTags(instance.Tags))
 				info.Name = append(info.Name, keys...)
@@ -54,8 +59,9 @@ func (getter GAUSSDBV5Info) GetResourceInfo() (map[string]labelInfo, []cesmodel.
 							[]cesmodel.MetricsDimension{{Name: "gaussdbv5_instance_id", Value: instance.Id}, {Name: "gaussdbv5_node_id", Value: node.ID}})
 						filterMetrics = append(filterMetrics, metrics...)
 						nodeInfo := labelInfo{
-							Name:  []string{"nodeName", "role", "status", "availability_zone"},
-							Value: []string{node.Name, node.Role, node.Status, node.AvailabilityZone},
+							Name: []string{"nodeName", "epId", "role", "status", "availability_zone"},
+							Value: []string{node.Name, instance.EnterpriseProjectId, node.Role, node.Status,
+								node.AvailabilityZone},
 						}
 						nodeInfo.Name = append(nodeInfo.Name, info.Name...)
 						nodeInfo.Value = append(nodeInfo.Value, info.Value...)
@@ -63,7 +69,6 @@ func (getter GAUSSDBV5Info) GetResourceInfo() (map[string]labelInfo, []cesmodel.
 					}
 				}
 			}
-
 		}
 		gaussdbV5Info.LabelInfo = resourceInfos
 		gaussdbV5Info.FilterMetrics = filterMetrics
@@ -79,7 +84,7 @@ func getGaussdbforopengaussClient() *gaussdbforopengauss.GaussDBforopenGaussClie
 		WithEndpoint(getEndpoint("gaussdb-opengauss", "v3")).Build())
 }
 
-func listInstances() []model.ListInstanceResponse {
+func listInstances() ([]model.ListInstanceResponse, error) {
 	limit := int32(100)
 	request := &model.ListInstancesRequest{Limit: &limit}
 	var instances []model.ListInstanceResponse
@@ -87,7 +92,7 @@ func listInstances() []model.ListInstanceResponse {
 		response, err := getGaussdbforopengaussClient().ListInstances(request)
 		if err != nil {
 			logs.Logger.Errorf("list opengauss instances error: %s", err.Error())
-			return instances
+			return instances, err
 		}
 		pageInstances := *response.Instances
 		if len(pageInstances) == 0 {
@@ -97,7 +102,7 @@ func listInstances() []model.ListInstanceResponse {
 		offset := int32(len(instances))
 		request.Offset = &offset
 	}
-	return instances
+	return instances, nil
 }
 
 func fmtNodesInfo(nodeInfo []interface{}) (*[]GaussdbV5Node, error) {

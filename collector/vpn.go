@@ -48,13 +48,30 @@ func (getter VPNInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 				metricMap[resourceKey] = metrics
 			}
 		}
-
-		buildIpsecConnectionsInfo(&filterMetrics, resourceInfos, metricMap)
-		buildConnectionsInfo(&filterMetrics, resourceInfos, metricMap)
-		buildEVPNGatewaysInfo(&filterMetrics, resourceInfos, metricMap)
-		buildEVPNConnectionsInfo(&filterMetrics, resourceInfos, metricMap)
-		buildP2CVpnGatewaysInfo(&filterMetrics, resourceInfos, metricMap)
-		buildEVPNSaInfo(&filterMetrics, resourceInfos, evpnSaMap)
+		if err = buildIpsecConnectionsInfo(&filterMetrics, resourceInfos, metricMap); err != nil {
+			logs.Logger.Errorf("Build ipsec connections info error: %s", err.Error())
+			return vpnInfo.LabelInfo, vpnInfo.FilterMetrics
+		}
+		if err = buildConnectionsInfo(&filterMetrics, resourceInfos, metricMap); err != nil {
+			logs.Logger.Errorf("Build connections info error: %s", err.Error())
+			return vpnInfo.LabelInfo, vpnInfo.FilterMetrics
+		}
+		if err = buildEVPNGatewaysInfo(&filterMetrics, resourceInfos, metricMap); err != nil {
+			logs.Logger.Errorf("Build evpn gateways info error: %s", err.Error())
+			return vpnInfo.LabelInfo, vpnInfo.FilterMetrics
+		}
+		if err = buildEVPNConnectionsInfo(&filterMetrics, resourceInfos, metricMap); err != nil {
+			logs.Logger.Errorf("Build evpn connections info error: %s", err.Error())
+			return vpnInfo.LabelInfo, vpnInfo.FilterMetrics
+		}
+		if err = buildP2CVpnGatewaysInfo(&filterMetrics, resourceInfos, metricMap); err != nil {
+			logs.Logger.Errorf("Build p2c vpn gateways info error: %s", err.Error())
+			return vpnInfo.LabelInfo, vpnInfo.FilterMetrics
+		}
+		if err = buildEVPNSaInfo(&filterMetrics, resourceInfos, evpnSaMap); err != nil {
+			logs.Logger.Errorf("Build evpn vpn sa info error: %s", err.Error())
+			return vpnInfo.LabelInfo, vpnInfo.FilterMetrics
+		}
 		vpnInfo.LabelInfo = resourceInfos
 		vpnInfo.FilterMetrics = filterMetrics
 		vpnInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
@@ -62,8 +79,12 @@ func (getter VPNInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 	return vpnInfo.LabelInfo, vpnInfo.FilterMetrics
 }
 
-func buildIpsecConnectionsInfo(filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo, metricsMap map[string][]model.MetricInfoList) {
-	for _, ipsecConnection := range getAllIpsecConnectionsFromRMS() {
+func buildIpsecConnectionsInfo(filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo, metricsMap map[string][]model.MetricInfoList) error {
+	ipsecConnections, err := getAllIpsecConnectionsFromRMS()
+	if err != nil {
+		return err
+	}
+	for _, ipsecConnection := range ipsecConnections {
 		metric, ok := metricsMap[ipsecConnection.ID]
 		if ok && metric[0].Dimensions[0].Name == "vgw_ipsec_connect_id" {
 			*filterMetrics = append(*filterMetrics, metric...)
@@ -77,10 +98,15 @@ func buildIpsecConnectionsInfo(filterMetrics *[]model.MetricInfoList, resourceIn
 			resourceInfos[GetResourceKeyFromMetricInfo(metric[0])] = info
 		}
 	}
+	return nil
 }
 
-func buildEVPNConnectionsInfo(filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo, metricsMap map[string][]model.MetricInfoList) {
-	for _, ipsecConnection := range getAllConnectionsFromRMS() {
+func buildEVPNConnectionsInfo(filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo, metricsMap map[string][]model.MetricInfoList) error {
+	allConnections, err := getAllConnectionsFromRMS()
+	if err != nil {
+		return err
+	}
+	for _, ipsecConnection := range allConnections {
 		metric, ok := metricsMap[ipsecConnection.ID]
 		if ok && metric[0].Dimensions[0].Name == "evpn_connection_id" {
 			*filterMetrics = append(*filterMetrics, metric...)
@@ -94,10 +120,15 @@ func buildEVPNConnectionsInfo(filterMetrics *[]model.MetricInfoList, resourceInf
 			resourceInfos[GetResourceKeyFromMetricInfo(metric[0])] = info
 		}
 	}
+	return nil
 }
 
-func buildEVPNGatewaysInfo(filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo, metricsMap map[string][]model.MetricInfoList) {
-	for _, ipsecConnection := range getAllVPNGatewaysFromRMS() {
+func buildEVPNGatewaysInfo(filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo, metricsMap map[string][]model.MetricInfoList) error {
+	allIpsecConnections, err := getAllVPNGatewaysFromRMS()
+	if err != nil {
+		return err
+	}
+	for _, ipsecConnection := range allIpsecConnections {
 		metric, ok := metricsMap[ipsecConnection.ID]
 		if ok && metric[0].Dimensions[0].Name == "evpn_gateway_id" {
 			*filterMetrics = append(*filterMetrics, metric...)
@@ -111,10 +142,15 @@ func buildEVPNGatewaysInfo(filterMetrics *[]model.MetricInfoList, resourceInfos 
 			resourceInfos[GetResourceKeyFromMetricInfo(metric[0])] = info
 		}
 	}
+	return nil
 }
 
-func buildP2CVpnGatewaysInfo(filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo, metricsMap map[string][]model.MetricInfoList) {
-	for _, ipsecConnection := range getAllP2CVPNGatewaysFromRMS() {
+func buildP2CVpnGatewaysInfo(filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo, metricsMap map[string][]model.MetricInfoList) error {
+	p2cVpnGateways, err := getAllP2CVPNGatewaysFromRMS()
+	if err != nil {
+		return err
+	}
+	for _, ipsecConnection := range p2cVpnGateways {
 		metric, ok := metricsMap[ipsecConnection.ID]
 		if ok && metric[0].Dimensions[0].Name == "p2c_vpn_gateway_id" {
 			*filterMetrics = append(*filterMetrics, metric...)
@@ -128,10 +164,15 @@ func buildP2CVpnGatewaysInfo(filterMetrics *[]model.MetricInfoList, resourceInfo
 			resourceInfos[GetResourceKeyFromMetricInfo(metric[0])] = info
 		}
 	}
+	return nil
 }
 
-func buildConnectionsInfo(filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo, metricsMap map[string][]model.MetricInfoList) {
-	for _, connection := range getAllConnectionsFromRMS() {
+func buildConnectionsInfo(filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo, metricsMap map[string][]model.MetricInfoList) error {
+	connections, err := getAllConnectionsFromRMS()
+	if err != nil {
+		return err
+	}
+	for _, connection := range connections {
 		metric, ok := metricsMap[connection.ID]
 		if ok && metric[0].Dimensions[0].Name == "vpn_connection_id" {
 			*filterMetrics = append(*filterMetrics, metric...)
@@ -145,11 +186,16 @@ func buildConnectionsInfo(filterMetrics *[]model.MetricInfoList, resourceInfos m
 			resourceInfos[GetResourceKeyFromMetricInfo(metric[0])] = info
 		}
 	}
+	return nil
 }
 
-func buildEVPNSaInfo(filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo, evpnSaMap map[string][]model.MetricInfoList) {
+func buildEVPNSaInfo(filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo, evpnSaMap map[string][]model.MetricInfoList) error {
+	allConnections, err := getAllConnectionsFromRMS()
+	if err != nil {
+		return err
+	}
 	connectionMap := map[string]ConnectionInfo{}
-	for _, connection := range getAllConnectionsFromRMS() {
+	for _, connection := range allConnections {
 		connectionMap[connection.ID] = connection
 	}
 	for dimKey, metric := range evpnSaMap {
@@ -167,6 +213,7 @@ func buildEVPNSaInfo(filterMetrics *[]model.MetricInfoList, resourceInfos map[st
 			resourceInfos[GetResourceKeyFromMetricInfo(metric[0])] = info
 		}
 	}
+	return nil
 }
 
 type ConnectionInfo struct {
@@ -182,11 +229,11 @@ type EVPNConnectionProperties struct {
 	TunnelPeerAddress string `json:"tunnel_peer_address"`
 }
 
-func getAllVPNGatewaysFromRMS() []ConnectionInfo {
+func getAllVPNGatewaysFromRMS() ([]ConnectionInfo, error) {
 	resp, err := listResources("vpnaas", "vpnGateways")
 	if err != nil {
 		logs.Logger.Errorf("Failed to list resource of vpnaas.vpnGateways, error: %s", err.Error())
-		return nil
+		return nil, err
 	}
 	connections := make([]ConnectionInfo, 0, len(resp))
 	for _, resource := range resp {
@@ -199,14 +246,14 @@ func getAllVPNGatewaysFromRMS() []ConnectionInfo {
 			},
 		})
 	}
-	return connections
+	return connections, nil
 }
 
-func getAllIpsecConnectionsFromRMS() []ConnectionInfo {
+func getAllIpsecConnectionsFromRMS() ([]ConnectionInfo, error) {
 	resp, err := listResources("vpnaas", "ipsec-site-connections")
 	if err != nil {
 		logs.Logger.Errorf("Failed to list resource of vpnaas.ipsec-site-connections, error: %s", err.Error())
-		return nil
+		return nil, err
 	}
 	connections := make([]ConnectionInfo, 0, len(resp))
 	for _, resource := range resp {
@@ -226,14 +273,14 @@ func getAllIpsecConnectionsFromRMS() []ConnectionInfo {
 			PeerAddress: properties.PeerAddress,
 		})
 	}
-	return connections
+	return connections, nil
 }
 
-func getAllConnectionsFromRMS() []ConnectionInfo {
+func getAllConnectionsFromRMS() ([]ConnectionInfo, error) {
 	resp, err := listResources("vpnaas", "vpnConnections")
 	if err != nil {
 		logs.Logger.Errorf("Failed to list resource of vpnaas.vpnConnections, error: %s", err.Error())
-		return nil
+		return nil, err
 	}
 	connections := make([]ConnectionInfo, 0, len(resp))
 	for _, resource := range resp {
@@ -253,14 +300,14 @@ func getAllConnectionsFromRMS() []ConnectionInfo {
 			PeerAddress: properties.PeerAddress,
 		})
 	}
-	return connections
+	return connections, nil
 }
 
-func getAllP2CVPNGatewaysFromRMS() []ConnectionInfo {
+func getAllP2CVPNGatewaysFromRMS() ([]ConnectionInfo, error) {
 	resp, err := listResources("vpnaas", "p2c-vpn-gateways")
 	if err != nil {
 		logs.Logger.Errorf("Failed to list resource of vpnaas.p2c-vpn-gateways, error: %s", err.Error())
-		return nil
+		return nil, err
 	}
 	connections := make([]ConnectionInfo, 0, len(resp))
 	for _, resource := range resp {
@@ -279,5 +326,5 @@ func getAllP2CVPNGatewaysFromRMS() []ConnectionInfo {
 			},
 		})
 	}
-	return connections
+	return connections, nil
 }

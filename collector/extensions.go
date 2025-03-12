@@ -60,6 +60,7 @@ var (
 		"SYS.OBS":           OBSInfo{},
 		"SYS.DNS":           DNSInfo{},
 		"SYS.EWP":           EWPInfo{},
+		"SYS.ER":            ERInfo{},
 	}
 )
 

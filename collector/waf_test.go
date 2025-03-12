@@ -30,10 +30,16 @@ func TestWAFInfo_GetResourceInfo(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			var patches *gomonkey.Patches
+			patches := gomonkey.NewPatches()
 			if tt.name == "normal" {
-				sysConfig := map[string][]string{"waf_instance_id": {"attacks"}}
-				patches = gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
+				metricConf = map[string]MetricConf{
+					"SYS.WAF": {
+						Resource: "rms",
+						DimMetricName: map[string][]string{
+							"waf_instance_id": {"attacks"},
+						},
+					},
+				}
 				patches.ApplyFuncReturn(listResources, mockRmsResource(), nil)
 				conf.AccessKey = "test_ak"
 				conf.SecretKey = "test_sk"
@@ -85,8 +91,15 @@ func TestWAFInfo_GetResourceInfo(t *testing.T) {
 func TestWafGetResourceInfo(t *testing.T) {
 	conf.AccessKey = "test_ak"
 	conf.SecretKey = "test_sk"
-	sysConfig := map[string][]string{"waf_instance_id": {"attacks"}}
-	patches := gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
+	metricConf = map[string]MetricConf{
+		"SYS.WAF": {
+			Resource: "rms",
+			DimMetricName: map[string][]string{
+				"waf_instance_id": {"attacks"},
+			},
+		},
+	}
+	patches := getPatches()
 	defer patches.Reset()
 	patches = patches.ApplyFuncReturn(listResources, mockRmsResource(), nil)
 	wafClient := getWAFClient()
@@ -121,13 +134,21 @@ func TestWafGetResourceInfo(t *testing.T) {
 }
 
 func TestWafGetResourceInfo_getAllWafInstancesFromRMSErr(t *testing.T) {
+	wafInfo.LabelInfo = nil
+	wafInfo.FilterMetrics = nil
 	conf.AccessKey = "test_ak"
 	conf.SecretKey = "test_sk"
 	patches := getPatches()
 	defer patches.Reset()
 
-	sysConfig := map[string][]string{"waf_instance_id": {"attacks"}}
-	patches.ApplyFuncReturn(getMetricConfigMap, sysConfig)
+	metricConf = map[string]MetricConf{
+		"SYS.WAF": {
+			Resource: "rms",
+			DimMetricName: map[string][]string{
+				"waf_instance_id": {"attacks"},
+			},
+		},
+	}
 	patches.ApplyFuncReturn(listResources, mockRmsResource(), errors.New(""))
 
 	logs.InitLog("")
@@ -144,11 +165,15 @@ func TestWafGetResourceInfo_getAllPremiumWafInstancesNormal(t *testing.T) {
 	patches := getPatches()
 	defer patches.Reset()
 
-	sysConfig := map[string][]string{
-		"waf_instance_id": {"attacks"},
-		"instance_id":     {"cpu_util"},
+	metricConf = map[string]MetricConf{
+		"SYS.WAF": {
+			Resource: "rms",
+			DimMetricName: map[string][]string{
+				"waf_instance_id": {"attacks"},
+				"instance_id":     {"cpu_util"},
+			},
+		},
 	}
-	patches.ApplyFuncReturn(getMetricConfigMap, sysConfig)
 	patches.ApplyFuncReturn(listResources, mockRmsResource(), nil)
 	wafClient := getWAFClient()
 	ID := "1"
@@ -182,16 +207,22 @@ func TestWafGetResourceInfo_getAllPremiumWafInstancesNormal(t *testing.T) {
 }
 
 func TestWafGetResourceInfo_getAllPremiumWafInstancesErr(t *testing.T) {
+	wafInfo.LabelInfo = nil
+	wafInfo.FilterMetrics = nil
 	conf.AccessKey = "test_ak"
 	conf.SecretKey = "test_sk"
 	patches := getPatches()
 	defer patches.Reset()
 
-	sysConfig := map[string][]string{
-		"waf_instance_id": {"attacks"},
-		"instance_id":     {"cpu_util"},
+	metricConf = map[string]MetricConf{
+		"SYS.WAF": {
+			Resource: "rms",
+			DimMetricName: map[string][]string{
+				"waf_instance_id": {"attacks"},
+				"instance_id":     {"cpu_util"},
+			},
+		},
 	}
-	patches.ApplyFuncReturn(getMetricConfigMap, sysConfig)
 	patches.ApplyFuncReturn(listResources, mockRmsResource(), nil)
 	wafClient := getWAFClient()
 	ID := "1"
@@ -299,7 +330,8 @@ func Test_getAllPremiumWafInstances(t *testing.T) {
 				}
 				patches = gomonkey.ApplyMethodReturn(wafClient, "ListInstance", resp, errors.New("aa"))
 			}
-			assert.Equalf(t, tt.wantNil, len(getAllPremiumWafInstances()) == 0, "getAllPremiumWafInstances()")
+			instances, _ := getAllPremiumWafInstances()
+			assert.Equalf(t, tt.wantNil, len(instances) == 0, "getAllPremiumWafInstances()")
 			if patches != nil {
 				patches.Reset()
 			}

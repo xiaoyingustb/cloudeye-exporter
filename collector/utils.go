@@ -356,3 +356,11 @@ func IsMetricInfoInWhiteList(metricInfo model.MetricInfoList) bool {
 	}
 	return false
 }
+
+func getEpIdRequestPart() []string {
+	if CloudConf.Global.EpIds == "" {
+		return []string{"all_granted_eps"}
+	}
+	epIds := strings.Split(CloudConf.Global.EpIds, ",")
+	return epIds
+}

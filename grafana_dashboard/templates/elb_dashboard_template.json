@@ -75,7 +75,10 @@
       "type": "row"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -456,7 +459,10 @@
       "pluginVersion": "10.4.1",
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_elb_m1_cps{epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"} -0",
@@ -467,7 +473,10 @@
           "refId": "A"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_elb_m2_act_conn{epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"} - 0",
@@ -479,7 +488,10 @@
           "refId": "B"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_elb_m3_inact_conn{epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"} - 0",
@@ -491,7 +503,10 @@
           "refId": "C"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_elb_m4_ncps{epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"} - 0",
@@ -503,7 +518,10 @@
           "refId": "D"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_elb_m7_in_Bps{epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"} - 0",
@@ -515,7 +533,10 @@
           "refId": "E"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_elb_m8_out_Bps{epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
@@ -527,7 +548,10 @@
           "refId": "F"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_elb_m15_l7_upstream_4xx{epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
@@ -539,7 +563,10 @@
           "refId": "G"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_elb_m16_l7_upstream_5xx{epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
@@ -600,7 +627,10 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -981,7 +1011,10 @@
       "pluginVersion": "10.4.1",
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_elb_m1_cps{epId=~\"$EPS\", lbaas_listener_id=~\".+\"} -0",
@@ -992,7 +1025,10 @@
           "refId": "A"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_elb_m2_act_conn{epId=~\"$EPS\", lbaas_listener_id=~\".+\"} - 0",
@@ -1004,7 +1040,10 @@
           "refId": "B"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_elb_m3_inact_conn{epId=~\"$EPS\", lbaas_listener_id=~\".+\"} - 0",
@@ -1016,7 +1055,10 @@
           "refId": "C"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_elb_m4_ncps{epId=~\"$EPS\", lbaas_listener_id=~\".+\"} - 0",
@@ -1028,7 +1070,10 @@
           "refId": "D"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_elb_m7_in_Bps{epId=~\"$EPS\", lbaas_listener_id=~\".+\"} - 0",
@@ -1040,7 +1085,10 @@
           "refId": "E"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_elb_m8_out_Bps{epId=~\"$EPS\", lbaas_listener_id=~\".+\"}",
@@ -1052,7 +1100,10 @@
           "refId": "F"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_elb_m15_l7_upstream_4xx{epId=~\"$EPS\", lbaas_listener_id=~\".+\"}",
@@ -1064,7 +1115,10 @@
           "refId": "G"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_elb_m16_l7_upstream_5xx{epId=~\"$EPS\", lbaas_listener_id=~\".+\"}",
@@ -1139,22 +1193,1879 @@
       "type": "table"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "并发连接数"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 2000
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 3000
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "活跃连接数"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 2000
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 3000
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "非活跃连接数"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 70
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 85
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "新建连接数"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 100
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 200
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "网络流入速率"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 10240000
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 102400000
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "binbps"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "网络流出速率"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 10240000
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 102400100
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "binbps"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "七层后端返回码（4xx）"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 1
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "七层后端返回码（5xx）"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 1
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "id": 18,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "frameIndex": 4,
+        "showHeader": true
+      },
+      "pluginVersion": "10.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "huaweicloud_sys_elb_m1_cps{epId=~\"$EPS\", available_zone=~\".+\"} -0",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "huaweicloud_sys_elb_m2_act_conn{epId=~\"$EPS\", available_zone=~\".+\"} - 0",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "huaweicloud_sys_elb_m3_inact_conn{epId=~\"$EPS\", available_zone=~\".+\"} - 0",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "huaweicloud_sys_elb_m4_ncps{epId=~\"$EPS\", available_zone=~\".+\"} - 0",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "huaweicloud_sys_elb_m7_in_Bps{epId=~\"$EPS\", available_zone=~\".+\"} - 0",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "huaweicloud_sys_elb_m8_out_Bps{epId=~\"$EPS\", available_zone=~\".+\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "F"
+        }
+      ],
+      "title": "ELB资源（可用区）总览表【企业项目：$EPS】",
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "name",
+                "vip_address",
+                "Value #A",
+                "Value #B",
+                "Value #C",
+                "Value #D",
+                "Value #E",
+                "Value #F",
+                "state",
+                "available_zone"
+              ]
+            }
+          }
+        },
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {
+              "Value #A": 4,
+              "Value #B": 5,
+              "Value #C": 6,
+              "Value #D": 7,
+              "Value #E": 8,
+              "Value #F": 9,
+              "available_zone": 1,
+              "name": 0,
+              "state": 3,
+              "vip_address": 2
+            },
+            "renameByName": {
+              "Value #A": "并发连接数",
+              "Value #B": "活跃连接数",
+              "Value #C": "非活跃连接数",
+              "Value #D": "新建连接数",
+              "Value #E": "网络流入速率",
+              "Value #F": "网络流出速率",
+              "Value #G": "七层后端返回码（4xx）",
+              "Value #H": "七层后端返回码（5xx）",
+              "available_zone": "可用区名称",
+              "listener_name": "监听器名称",
+              "name": "ELB实例名称",
+              "state": "可用区状态",
+              "vip_address": "私有IP"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 28
+      },
+      "id": 4,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 2,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 37
+          },
+          "id": 13,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "max",
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "huaweicloud_sys_elb_ma_normal_servers{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}（正常主机数）",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "正常主机数量（弹性负载均衡器实例）",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 2,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 37
+          },
+          "id": 8,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "max",
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "huaweicloud_sys_elb_l4_con_usage{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}} （L4并发连接使用率）",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "huaweicloud_sys_elb_l7_con_usage{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}} （L7并发连接使用率）",
+              "range": true,
+              "refId": "B"
+            }
+          ],
+          "title": "并发连接使用率（弹性负载均衡器实例）",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 2,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 45
+          },
+          "id": 10,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "max",
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "huaweicloud_sys_elb_l4_ncps_usage{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}（L4新建连接使用率）",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "huaweicloud_sys_elb_l7_ncps_usage{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}（L7新建连接使用率）",
+              "range": true,
+              "refId": "B"
+            }
+          ],
+          "title": "新建连接使用率（弹性负载均衡器实例）",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "出带宽使用率(+) / 入带宽使用率(-)",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 2,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 45
+          },
+          "id": 12,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "max",
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "huaweicloud_sys_elb_l4_in_bps_usage{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}（4层入带宽使用率）",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "0 - huaweicloud_sys_elb_l4_out_bps_usage{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}（4层出带宽使用率）",
+              "range": true,
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "huaweicloud_sys_elb_l7_in_bps_usage{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}（7层入带宽使用率）",
+              "range": true,
+              "refId": "C"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "0 - huaweicloud_sys_elb_l7_out_bps_usage{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}（7层出带宽使用率）",
+              "range": true,
+              "refId": "D"
+            }
+          ],
+          "title": "网络流入流出带宽使用率（弹性负载均衡器实例）",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 2,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 53
+          },
+          "id": 14,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "max",
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "huaweicloud_sys_elb_m9_abnormal_servers{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}（异常主机数）",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "异常主机数量（弹性负载均衡器实例）",
+          "type": "timeseries"
+        }
+      ],
+      "repeat": "EPS",
+      "repeatDirection": "h",
+      "title": "ELB实例资源明细：【$EPS】【$hostIP】【$hostname】",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 29
+      },
+      "id": 17,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 2,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 30
+          },
+          "id": 5,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "max",
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "huaweicloud_sys_elb_m2_act_conn{vip_address=~\"$hostIP\",name=~\"$hostname\",listener_name=~\"$listener\",lbaas_listener_id=~\".+\"}",
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，监听器名称：{{listener_name}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "活跃连接数（负载均衡监听器）",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 2,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 30
+          },
+          "id": 6,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "max",
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "huaweicloud_sys_elb_m3_inact_conn{vip_address=~\"$hostIP\",name=~\"$hostname\",listener_name=~\"$listener\",lbaas_listener_id=~\".+\"}",
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，监听器名称：{{listener_name}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "非活跃连接数（负载均衡监听器）",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 2,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 38
+          },
+          "id": 7,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "max",
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "huaweicloud_sys_elb_m1_cps{vip_address=~\"$hostIP\",name=~\"$hostname\",listener_name=~\"$listener\",lbaas_listener_id=~\".+\"}",
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，监听器名称：{{listener_name}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "并发连接数（负载均衡监听器）",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 2,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 38
+          },
+          "id": 9,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "max",
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "huaweicloud_sys_elb_m4_ncps{vip_address=~\"$hostIP\",name=~\"$hostname\",listener_name=~\"$listener\",lbaas_listener_id=~\".+\"}",
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，监听器名称：{{listener_name}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "新建连接数（负载均衡监听器）",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "流出（-）/流入（+）",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 2,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "binbps"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 46
+          },
+          "id": 11,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "max",
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "huaweicloud_sys_elb_m7_in_Bps{vip_address=~\"$hostIP\",name=~\"$hostname\",listener_name=~\"$listener\",lbaas_listener_id=~\".+\"}",
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，监听器名称：{{listener_name}}（网络流入速率）",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "0 - huaweicloud_sys_elb_m8_out_Bps{vip_address=~\"$hostIP\",name=~\"$hostname\",listener_name=~\"$listener\",lbaas_listener_id=~\".+\"}",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，监听器名称：{{listener_name}}（网络流出速率）",
+              "range": true,
+              "refId": "B"
+            }
+          ],
+          "title": "网络流入/流出速率（负载均衡监听器）",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 2,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 46
+          },
+          "id": 15,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "max",
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "huaweicloud_sys_elb_m15_l7_upstream_4xx{vip_address=~\"$hostIP\",name=~\"$hostname\",listener_name=~\"$listener\",lbaas_listener_id=~\".+\"}",
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，监听器名称：{{listener_name}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "后端返回码4xx（负载均衡监听器）",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 2,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 54
+          },
+          "id": 16,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "max",
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "huaweicloud_sys_elb_m16_l7_upstream_5xx{vip_address=~\"$hostIP\",name=~\"$hostname\",listener_name=~\"$listener\",lbaas_listener_id=~\".+\"}",
+              "instant": false,
+              "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，监听器名称：{{listener_name}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "后端返回码5xx（负载均衡监听器）",
+          "type": "timeseries"
+        }
+      ],
+      "repeat": "EPS",
+      "repeatDirection": "h",
+      "title": "ELB监听器资源明细：【$EPS】【$hostIP】【$hostname】【$listener】",
+      "type": "row"
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 30
       },
-      "id": 4,
+      "id": 19,
       "panels": [],
-      "repeat": "EPS",
-      "repeatDirection": "h",
-      "title": "资源明细：【$EPS】【$hostIP】【$hostname】【$listener】",
+      "title": "ELB可用区资源明细：【$EPS】【$hostIP】【$hostname】【$available_zone】",
       "type": "row"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1178,7 +3089,7 @@
             "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 2,
+            "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -1213,9 +3124,9 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 20
+        "y": 31
       },
-      "id": 5,
+      "id": 20,
       "options": {
         "legend": {
           "calcs": [
@@ -1235,20 +3146,26 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_elb_m2_act_conn{vip_address=~\"$hostIP\",name=~\"$hostname\",listener_name=~\"$listener\",lbaas_listener_id=~\".+\"}",
+          "expr": "huaweicloud_sys_elb_m1_cps{epId=~\"$EPS\",vip_address=~\"$hostIP\",name=~\"$hostname\", available_zone=~\".+\", available_zone=~\"$available_zone\"} -0",
           "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，监听器名称：{{listener_name}}",
+          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，可用区名称：{{available_zone}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "活跃连接数（负载均衡监听器）",
+      "title": "并发连接数（可用区）",
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1272,7 +3189,7 @@
             "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 2,
+            "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -1307,9 +3224,9 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 20
+        "y": 31
       },
-      "id": 6,
+      "id": 21,
       "options": {
         "legend": {
           "calcs": [
@@ -1329,20 +3246,26 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_elb_m3_inact_conn{vip_address=~\"$hostIP\",name=~\"$hostname\",listener_name=~\"$listener\",lbaas_listener_id=~\".+\"}",
+          "expr": "huaweicloud_sys_elb_m2_act_conn{epId=~\"$EPS\",vip_address=~\"$hostIP\",name=~\"$hostname\", available_zone=~\".+\", available_zone=~\"$available_zone\"} - 0",
           "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，监听器名称：{{listener_name}}",
+          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，可用区名称：{{available_zone}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "非活跃连接数（负载均衡监听器）",
+      "title": "活跃连接数（可用区）",
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1366,206 +3289,7 @@
             "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 2,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 28
-      },
-      "id": 7,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "max",
-            "mean"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": "${DS_PROMETHEUS}",
-          "editorMode": "code",
-          "expr": "huaweicloud_sys_elb_m1_cps{vip_address=~\"$hostIP\",name=~\"$hostname\",listener_name=~\"$listener\",lbaas_listener_id=~\".+\"}",
-          "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，监听器名称：{{listener_name}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "并发连接数（负载均衡监听器）",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "${DS_PROMETHEUS}",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 2,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 28
-      },
-      "id": 8,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "max",
-            "mean"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": "${DS_PROMETHEUS}",
-          "editorMode": "code",
-          "expr": "huaweicloud_sys_elb_l4_con_usage{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
-          "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}} （L4并发连接使用率）",
-          "range": true,
-          "refId": "A"
-        },
-        {
-          "datasource": "${DS_PROMETHEUS}",
-          "editorMode": "code",
-          "expr": "huaweicloud_sys_elb_l7_con_usage{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}} （L7并发连接使用率）",
-          "range": true,
-          "refId": "B"
-        }
-      ],
-      "title": "并发连接使用率（弹性负载均衡器实例）",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "${DS_PROMETHEUS}",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 2,
+            "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -1600,9 +3324,9 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 36
+        "y": 39
       },
-      "id": 9,
+      "id": 22,
       "options": {
         "legend": {
           "calcs": [
@@ -1622,20 +3346,26 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_elb_m4_ncps{vip_address=~\"$hostIP\",name=~\"$hostname\",listener_name=~\"$listener\",lbaas_listener_id=~\".+\"}",
+          "expr": "huaweicloud_sys_elb_m3_inact_conn{epId=~\"$EPS\",vip_address=~\"$hostIP\",name=~\"$hostname\", available_zone=~\".+\", available_zone=~\"$available_zone\"} - 0",
           "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，监听器名称：{{listener_name}}",
+          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，可用区名称：{{available_zone}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "新建连接数（负载均衡监听器）",
+      "title": "非活跃连接数（可用区）",
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1659,7 +3389,7 @@
             "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 2,
+            "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -1686,8 +3416,7 @@
                 "value": 80
               }
             ]
-          },
-          "unit": "percent"
+          }
         },
         "overrides": []
       },
@@ -1695,9 +3424,9 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 36
+        "y": 39
       },
-      "id": 10,
+      "id": 23,
       "options": {
         "legend": {
           "calcs": [
@@ -1717,30 +3446,26 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_elb_l4_ncps_usage{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
+          "expr": "huaweicloud_sys_elb_m4_ncps{epId=~\"$EPS\",vip_address=~\"$hostIP\",name=~\"$hostname\", available_zone=~\".+\", available_zone=~\"$available_zone\"} - 0",
           "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}（L4新建连接使用率）",
+          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，可用区名称：{{available_zone}}",
           "range": true,
           "refId": "A"
-        },
-        {
-          "datasource": "${DS_PROMETHEUS}",
-          "editorMode": "code",
-          "expr": "huaweicloud_sys_elb_l7_ncps_usage{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}（L7新建连接使用率）",
-          "range": true,
-          "refId": "B"
         }
       ],
-      "title": "新建连接使用率（弹性负载均衡器实例）",
+      "title": "新建连接数（可用区）",
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1800,9 +3525,9 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 44
+        "y": 47
       },
-      "id": 11,
+      "id": 24,
       "options": {
         "legend": {
           "calcs": [
@@ -1822,541 +3547,46 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_elb_m7_in_Bps{vip_address=~\"$hostIP\",name=~\"$hostname\",listener_name=~\"$listener\",lbaas_listener_id=~\".+\"}",
+          "expr": "huaweicloud_sys_elb_m7_in_Bps{epId=~\"$EPS\",vip_address=~\"$hostIP\",name=~\"$hostname\", available_zone=~\"$available_zone\", available_zone=~\".+\"}",
           "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，监听器名称：{{listener_name}}（网络流入速率）",
+          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，可用区名称：{{available_zone}}（网络流入速率）",
           "range": true,
           "refId": "A"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
-          "expr": "0 - huaweicloud_sys_elb_m8_out_Bps{vip_address=~\"$hostIP\",name=~\"$hostname\",listener_name=~\"$listener\",lbaas_listener_id=~\".+\"}",
+          "expr": "0 - huaweicloud_sys_elb_m8_out_Bps{epId=~\"$EPS\",vip_address=~\"$hostIP\",name=~\"$hostname\", available_zone=~\"$available_zone\", available_zone=~\".+\"}",
           "hide": false,
           "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，监听器名称：{{listener_name}}（网络流出速率）",
+          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，可用区名称：{{available_zone}}（网络流出速率）",
           "range": true,
           "refId": "B"
         }
       ],
-      "title": "网络流入/流出速率（负载均衡监听器）",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "${DS_PROMETHEUS}",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "出带宽使用率(+) / 入带宽使用率(-)",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 2,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 44
-      },
-      "id": 12,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "max",
-            "mean"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": "${DS_PROMETHEUS}",
-          "editorMode": "code",
-          "expr": "huaweicloud_sys_elb_l4_in_bps_usage{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
-          "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}（4层入带宽使用率）",
-          "range": true,
-          "refId": "A"
-        },
-        {
-          "datasource": "${DS_PROMETHEUS}",
-          "editorMode": "code",
-          "expr": "0 - huaweicloud_sys_elb_l4_out_bps_usage{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}（4层出带宽使用率）",
-          "range": true,
-          "refId": "B"
-        },
-        {
-          "datasource": "${DS_PROMETHEUS}",
-          "editorMode": "code",
-          "expr": "huaweicloud_sys_elb_l7_in_bps_usage{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}（7层入带宽使用率）",
-          "range": true,
-          "refId": "C"
-        },
-        {
-          "datasource": "${DS_PROMETHEUS}",
-          "editorMode": "code",
-          "expr": "0 - huaweicloud_sys_elb_l7_out_bps_usage{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}（7层出带宽使用率）",
-          "range": true,
-          "refId": "D"
-        }
-      ],
-      "title": "网络流入流出带宽使用率（弹性负载均衡器实例）",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "${DS_PROMETHEUS}",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 2,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 52
-      },
-      "id": 13,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "max",
-            "mean"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": "${DS_PROMETHEUS}",
-          "editorMode": "code",
-          "expr": "huaweicloud_sys_elb_ma_normal_servers{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
-          "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}（正常主机数）",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "正常主机数量（弹性负载均衡器实例）",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "${DS_PROMETHEUS}",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 2,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 52
-      },
-      "id": 14,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "max",
-            "mean"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": "${DS_PROMETHEUS}",
-          "editorMode": "code",
-          "expr": "huaweicloud_sys_elb_m9_abnormal_servers{vip_address=~\"$hostIP\",name=~\"$hostname\",epId=~\"$EPS\", lbaas_listener_id!~\".+\", available_zone!~\".+\", lbaas_pool_id!~\".+\"}",
-          "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}（异常主机数）",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "异常主机数量（弹性负载均衡器实例）",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "${DS_PROMETHEUS}",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 2,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 60
-      },
-      "id": 15,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "max",
-            "mean"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": "${DS_PROMETHEUS}",
-          "editorMode": "code",
-          "expr": "huaweicloud_sys_elb_m15_l7_upstream_4xx{vip_address=~\"$hostIP\",name=~\"$hostname\",listener_name=~\"$listener\",lbaas_listener_id=~\".+\"}",
-          "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，监听器名称：{{listener_name}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "后端返回码4xx（负载均衡监听器）",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "${DS_PROMETHEUS}",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 2,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 60
-      },
-      "id": 16,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "max",
-            "mean"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": "${DS_PROMETHEUS}",
-          "editorMode": "code",
-          "expr": "huaweicloud_sys_elb_m16_l7_upstream_5xx{vip_address=~\"$hostIP\",name=~\"$hostname\",listener_name=~\"$listener\",lbaas_listener_id=~\".+\"}",
-          "instant": false,
-          "legendFormat": "私有IP：{{vip_address}}，实例名：{{name}}，监听器名称：{{listener_name}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "后端返回码5xx（负载均衡监听器）",
+      "title": "网络流入/流出速率（可用区）",
       "type": "timeseries"
     }
   ],
+  "refresh": "5s",
   "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "huaweicloud_epinfo",
         "hide": 0,
         "includeAll": false,
@@ -2377,7 +3607,10 @@
       },
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "label_values(huaweicloud_sys_elb_m2_act_conn{epId=\"$EPS\"},vip_address)",
         "hide": 0,
         "includeAll": true,
@@ -2398,7 +3631,10 @@
       },
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "label_values(huaweicloud_sys_elb_m2_act_conn{epId=\"$EPS\"},name)",
         "hide": 0,
         "includeAll": true,
@@ -2419,7 +3655,10 @@
       },
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "query_result(count(huaweicloud_agt_ecs_net_tcp_established{epId=~\"$EPS\"}))",
         "hide": 2,
         "includeAll": false,
@@ -2439,7 +3678,10 @@
       },
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "label_values(huaweicloud_sys_elb_m2_act_conn{name=~\"$hostname\", vip_address=~\"$hostIP\"},listener_name)",
         "hide": 0,
         "includeAll": true,
@@ -2450,6 +3692,30 @@
         "query": {
           "qryType": 1,
           "query": "label_values(huaweicloud_sys_elb_m2_act_conn{name=~\"$hostname\", vip_address=~\"$hostIP\"},listener_name)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "label_values(huaweicloud_sys_elb_m1_cps{name=~\"$hostname\", vip_address=~\"$hostIP\"},available_zone)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "可用区",
+        "multi": true,
+        "name": "available_zone",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(huaweicloud_sys_elb_m1_cps{name=~\"$hostname\", vip_address=~\"$hostIP\"},available_zone)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -2468,6 +3734,6 @@
   "timezone": "browser",
   "title": "弹性负载均衡（ELB）",
   "uid": "adyxtb2y2aqrke",
-  "version": 6,
+  "version": 4,
   "weekStart": ""
 }

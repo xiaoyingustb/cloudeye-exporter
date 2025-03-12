@@ -52,7 +52,6 @@ func (getter ECSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 				resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 			}
 		}
-
 		ecsInfo.LabelInfo = resourceInfos
 		ecsInfo.FilterMetrics = filterMetrics
 		ecsInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
@@ -71,12 +70,28 @@ func getECSClient() *ecs.EcsClient {
 		WithHttpConfig(GetHttpConfig().WithIgnoreSSLVerification(CloudConf.Global.IgnoreSSLVerify)).
 		WithEndpoint(getEndpoint("ecs", "v2")).Build())
 }
+
 func getAllServer() ([]EcsInstancesInfo, error) {
+	var servers []EcsInstancesInfo
+	epIds := getEpIdRequestPart()
+	for _, epId := range epIds {
+		tmpServers, err := getAllServerByEpId(epId)
+		if err != nil {
+			logs.Logger.Errorf("Failed to list ecs server, epId: %s, error: %s", epId, err.Error())
+			return nil, err
+		}
+		servers = append(servers, tmpServers...)
+	}
+	return servers, nil
+}
+
+func getAllServerByEpId(epId string) ([]EcsInstancesInfo, error) {
 	limit := int32(1000)
 	offset := int32(1)
 	options := &ecsmodel.ListServersDetailsRequest{
-		Limit:  &limit,
-		Offset: &offset,
+		Limit:               &limit,
+		Offset:              &offset,
+		EnterpriseProjectId: &epId,
 	}
 	var servers []EcsInstancesInfo
 	for {
@@ -198,7 +213,7 @@ func getECSAGTMetrics() []model.MetricInfoList {
 		if _, ok := ecsInfo.LabelInfo[serverKey]; !ok {
 			continue
 		}
-		//°×Ãûµ¥Ğ£ÑéÍ¨¹ı£¬²éÑ¯µ±Ç°Ö¸±ê¶ÔÓ¦Ö¸±êÊı¾İ
+		//ç™½åå•æ ¡éªŒé€šè¿‡ï¼ŒæŸ¥è¯¢å½“å‰æŒ‡æ ‡å¯¹åº”æŒ‡æ ‡æ•°æ®
 		if IsMetricInfoInWhiteList(metric) {
 			filteredMetrics = append(filteredMetrics, metric)
 		}

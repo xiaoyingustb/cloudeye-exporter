@@ -54,7 +54,9 @@ func (getter CCInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.MetricI
 			logs.Logger.Errorf("Get all inter region bandwidths error: %s", err.Error())
 			return ccInfo.LabelInfo, ccInfo.FilterMetrics
 		}
-		ccInfo.LabelInfo, ccInfo.FilterMetrics = buildResourceInfoAndMetrics(metricNames, connections, packages, bandwidths)
+		resourceInfos, filterMetrics := buildResourceInfoAndMetrics(metricNames, connections, packages, bandwidths)
+		ccInfo.LabelInfo = resourceInfos
+		ccInfo.FilterMetrics = filterMetrics
 		ccInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
 	}
 	return ccInfo.LabelInfo, ccInfo.FilterMetrics
@@ -123,7 +125,8 @@ func getBandwidthPackageInfo(packages map[string]model.BandwidthPackage, connect
 }
 
 func listCCConnections() (map[string]model.CloudConnection, error) {
-	request := &model.ListCloudConnectionsRequest{Limit: &limit}
+	epIds := getEpIdRequestPart()
+	request := &model.ListCloudConnectionsRequest{Limit: &limit, EnterpriseProjectId: &epIds}
 	client := getCCClient()
 	connections := make(map[string]model.CloudConnection, 0)
 	for {
@@ -143,7 +146,8 @@ func listCCConnections() (map[string]model.CloudConnection, error) {
 }
 
 func listBandwidthPackages() (map[string]model.BandwidthPackage, error) {
-	request := &model.ListBandwidthPackagesRequest{Limit: &limit}
+	epIds := getEpIdRequestPart()
+	request := &model.ListBandwidthPackagesRequest{Limit: &limit, EnterpriseProjectId: &epIds}
 	client := getCCClient()
 	bandwidthPackages := make(map[string]model.BandwidthPackage, 0)
 	for {
@@ -179,7 +183,8 @@ func getCCClientBuilder() *http_client.HcHttpClientBuilder {
 }
 
 func listInterRegionBandwidths() ([]model.InterRegionBandwidth, error) {
-	request := &model.ListInterRegionBandwidthsRequest{Limit: &limit}
+	epIds := getEpIdRequestPart()
+	request := &model.ListInterRegionBandwidthsRequest{Limit: &limit, EnterpriseProjectId: &epIds}
 	client := getCCClient()
 	var resources []model.InterRegionBandwidth
 	for {

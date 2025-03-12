@@ -10,17 +10,21 @@ import (
 )
 
 func TestLTSGetResourceInfo(t *testing.T) {
-
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
 	patches := getPatches()
 	defer patches.Reset()
 	conf.DomainID = "123"
 	logs.InitLog("")
-	sysConfig := map[string][]string{
-		"log_group_id":               {"packet_loss_rate_avg"},
-		"log_group_id,log_stream_id": {"packet_loss_rate_avg"},
+	metricConf = map[string]MetricConf{
+		"SYS.LTS": {
+			Resource: "rms",
+			DimMetricName: map[string][]string{
+				"log_group_id":               {"packet_loss_rate_avg"},
+				"log_group_id,log_stream_id": {"packet_loss_rate_avg"},
+			},
+		},
 	}
-	patches.ApplyFuncReturn(getMetricConfigMap, sysConfig)
-
 	logGroupResp := ListLogGroupResponse{
 		LogGroups: []LogGroup{
 			{
@@ -55,7 +59,7 @@ func TestLTSGetResourceInfo(t *testing.T) {
 		if reqDef.Path == "/v2/{project_id}/groups" {
 			return &logGroupResp, nil
 		}
-		if reqDef.Path == "/v2/{project_id}/groups/xxxxx1/streams" {
+		if reqDef.Path == "/v2/{project_id}/groups/xxxxx1/streams" || reqDef.Path == "/v2/{project_id}/groups/xxxxx2/streams" {
 			return &logStreamResp, nil
 		}
 		return nil, nil
@@ -63,7 +67,7 @@ func TestLTSGetResourceInfo(t *testing.T) {
 
 	var ltsInfo LTSInfo
 	resourceInfo, metrics := ltsInfo.GetResourceInfo()
-	assert.Equal(t, 4, len(resourceInfo))
-	assert.Equal(t, 4, len(metrics))
+	assert.Equal(t, 6, len(resourceInfo))
+	assert.Equal(t, 6, len(metrics))
 
 }
