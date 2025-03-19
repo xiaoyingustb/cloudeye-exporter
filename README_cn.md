@@ -9,59 +9,59 @@
 Prometheus是用于展示大型测量数据的开源可视化工具，在工业监控、气象监控、家居自动化和过程管理等领域也有着较广泛的用户基础。将华为云Cloudeye服务接入 prometheus后，您可以利用 prometheus更好地监控和分析来自 Cloudeye服务的数据。
 
 ## 拓展标签支持情况
-该插件对于已对接云监控的云服务均支持指标数据的导出。为提高云服务资源的识别度、可读性，插件对于以下服务支持导出资源属性label，如ECS实例会增加hostname、ip等label，同时支持将华为云标签转化为label，满足对资源自定义label的诉求，具体如下：
+该插件对于已对接云监控的云服务均支持指标数据的导出。为提高云服务资源的识别度、可读性，插件对于以下服务支持导出资源属性label，如ECS实例会增加hostname、ip等label，同时支持将华为云标签转化为label，满足对资源自定义label的诉求，具体如下（点击云服务链接即可查看exporter支持导出的指标列表）：
 |云服务|命名空间|支持通过实例TAG增加标签|标签数据来源|
 | :--- | :--- | :--: | :--: |
-|弹性云服务器|SYS.ECS/AGT.ECS|√|RMS/云服务|
-|云硬盘|SYS.EVS|√|RMS/云服务|
-|分布式缓存服务|SYS.DCS|√|RMS|
-|云专线|SYS.DCAAS|√|RMS|
-|弹性公网IP和带宽|SYS.VPC|√|RMS|
-|云搜索服务|SYS.ES|√|RMS|
-|关系型数据库|SYS.RDS|√|RMS|
-|弹性负载均衡|SYS.ELB|√|云服务|
-|云数据库 GaussDB(for MySQL)|SYS.GAUSSDB|√|RMS|
-|云数据库 GaussDB(for openGauss)|SYS.GAUSSDBV5|√|云服务|
-|NAT网关|SYS.NAT|√|RMS|
-|弹性伸缩|SYS.AS|√|RMS|
-|函数工作流|SYS.FunctionGraph|√|RMS|
-|数据复制服务|SYS.DRS|√|RMS|
-|Web应用防火墙|SYS.WAF|√|RMS|
-|文档数据库服务|SYS.DDS|√|云服务|
-|API网关|SYS.APIG|×|云服务|
-|云备份|SYS.CBR|√|RMS/云服务|
-|数据湖探索|SYS.DLI|√|RMS&云服务|
-|弹性文件服务|SYS.SFS|×|云服务|
-|弹性文件服务 SFS Turbo|SYS.EFS|√|RMS|
-|虚拟专用网络|SYS.VPN|√|RMS|
-|云数据迁移|SYS.CDM|×|云服务|
-|数据仓库服务|SYS.DWS|√|云服务|
-|内容审核Moderation|SYS.MODERATION|×|-|
-|Anti-DDoS流量清洗|SYS.DDOS|√|RMS|
-|云数据库GeminiDB(for Nosql)|SYS.NoSQL|×|云服务|
-|分布式消息服务|SYS.DMS|√|RMS|
-|分布式数据库中间件|SYS.DDMS|×|RMS&云服务|
-|API专享版网关|SYS.APIC|×|云服务|
-|裸金属服务器|SYS.BMS/SERVICE.BMS|√|RMS|
-|ModelArts|SYS.ModelArts|√|RMS|
-|VPC终端节点|SYS.VPCEP |√|RMS|
-|图引擎服务GES|SYS.GES|√|RMS|
-|数据库安全服务DBSS|SYS.DBSS |√|RMS|
-|MapReduce服务|SYS.MRS |√|RMS/云服务|
-|湖仓构建服务|SYS.LakeFormation |√|RMS/云服务|
-|智能数据湖运营平台|SYS.DAYU |√|云服务|
-|云防火墙|SYS.CFW |√|RMS|
-|广域网质量监控|SYS.WANQMonitor |√|云服务|
-|云日志服务|SYS.LTS |×|云服务|
-|视频直播|SYS.LIVE |×|云服务|
-|云原生应用网络|SYS.ANC|√|RMS|
-|企业主机安全|SYS.HSS|×|云服务|
-|表格存储服务|SYS.CloudTable|×|云服务|
-|事件网格|SYS.EG|√|RMS|
-|对象存储服务|SYS.OBS|√|RMS|
-|云解析服务|SYS.DNS|√|云服务|
-|企业门户|SYS.EWP|√|云服务|
-|云连接|SYS.CC|√|云服务|
+|[弹性云服务器](cloudservice_metrics/SYS.ECS.md)|SYS.ECS/AGT.ECS|√|RMS/云服务|
+|[云硬盘](cloudservice_metrics/SYS.EVS.md)|SYS.EVS|√|RMS/云服务|
+|[分布式缓存服务](cloudservice_metrics/SYS.DCS.md)|SYS.DCS|√|RMS|
+|[云专线](cloudservice_metrics/SYS.DCAAS.md)|SYS.DCAAS|√|RMS|
+|[弹性公网IP和带宽](cloudservice_metrics/SYS.VPC.md)|SYS.VPC|√|RMS|
+|[云搜索服务](cloudservice_metrics/SYS.ES.md)|SYS.ES|√|RMS|
+|[关系型数据库](cloudservice_metrics/SYS.RDS.md)|SYS.RDS|√|RMS|
+|[弹性负载均衡](cloudservice_metrics/SYS.ELB.md)|SYS.ELB|√|云服务|
+|[云数据库 GaussDB(for MySQL)](cloudservice_metrics/SYS.GAUSSDB.md)|SYS.GAUSSDB|√|RMS|
+|[云数据库 GaussDB(for openGauss)](cloudservice_metrics/SYS.GAUSSDBV5.md)|SYS.GAUSSDBV5|√|云服务|
+|[NAT网关](cloudservice_metrics/SYS.NAT.md)|SYS.NAT|√|RMS|
+|[弹性伸缩](cloudservice_metrics/SYS.AS.md)|SYS.AS|√|RMS|
+|[函数工作流](cloudservice_metrics/SYS.FunctionGraph.md)|SYS.FunctionGraph|√|RMS|
+|[数据复制服务](cloudservice_metrics/SYS.DRS.md)|SYS.DRS|√|RMS|
+|[Web应用防火墙](cloudservice_metrics/SYS.WAF.md)|SYS.WAF|√|RMS|
+|[文档数据库服务](cloudservice_metrics/SYS.DDS.md)|SYS.DDS|√|云服务|
+|[API网关](cloudservice_metrics/SYS.APIG.md)|SYS.APIG|×|云服务|
+|[云备份](cloudservice_metrics/SYS.CBR.md)|SYS.CBR|√|RMS/云服务|
+|[数据湖探索](cloudservice_metrics/SYS.DLI.md)|SYS.DLI|√|RMS&云服务|
+|[弹性文件服务](cloudservice_metrics/SYS.SFS.md)|SYS.SFS|×|云服务|
+|[弹性文件服务 SFS Turbo](cloudservice_metrics/SYS.EFS.md)|SYS.EFS|√|RMS|
+|[虚拟专用网络](cloudservice_metrics/SYS.VPN.md)|SYS.VPN|√|RMS|
+|[云数据迁移](cloudservice_metrics/SYS.CDM.md)|SYS.CDM|×|云服务|
+|[数据仓库服务](cloudservice_metrics/SYS.DWS.md)|SYS.DWS|√|云服务|
+|[DDoS高防](cloudservice_metrics/SYS.DDOS.md)|SYS.DDOS|√|RMS|
+|[云数据库GeminiDB](cloudservice_metrics/SYS.NoSQL.md)|SYS.NoSQL|×|云服务|
+|[SYS.DMS（分布式消息服务）](cloudservice_metrics/SYS.DMS.md)|SYS.DMS|√|RMS|
+|[分布式数据库中间件](cloudservice_metrics/SYS.DDMS.md)|SYS.DDMS|×|RMS&云服务|
+|[API专享版网关](cloudservice_metrics/SYS.APIC.md)|SYS.APIC|×|云服务|
+|[裸金属服务器](cloudservice_metrics/SYS.BMS.md)|SERVICE.BMS|√|RMS|
+|[ModelArts](cloudservice_metrics/SYS.ModelArts.md)|SYS.ModelArts|√|RMS|
+|[VPC终端节点](cloudservice_metrics/SYS.VPCEP.md)|SYS.VPCEP |√|RMS|
+|[图引擎服务GES](cloudservice_metrics/SYS.GES.md)|SYS.GES|√|RMS|
+|[数据库安全服务DBSS](cloudservice_metrics/SYS.DBSS.md)|SYS.DBSS |√|RMS|
+|[MapReduce服务](cloudservice_metrics/SYS.MRS.md)|SYS.MRS |√|RMS/云服务|
+|[湖仓构建服务](cloudservice_metrics/SYS.LakeFormation.md)|SYS.LakeFormation |√|RMS/云服务|
+|[智能数据湖运营平台](cloudservice_metrics/SYS.DAYU.md)|SYS.DAYU |√|云服务|
+|[云防火墙](cloudservice_metrics/SYS.CFW.md)|SYS.CFW |√|RMS|
+|[广域网质量监控](cloudservice_metrics/SYS.WANQMonitor.md)|SYS.WANQMonitor |√|云服务|
+|[云日志服务](cloudservice_metrics/SYS.LTS.md)|SYS.LTS |×|云服务|
+|[视频直播](cloudservice_metrics/SYS.Live.md)|SYS.LIVE |×|云服务|
+|[云原生应用网络](cloudservice_metrics/SYS.ANC.md)|SYS.ANC|√|RMS|
+|[企业主机安全](cloudservice_metrics/SYS.HSS.md)|SYS.HSS|×|云服务|
+|[表格存储服务](cloudservice_metrics/SYS.CloudTable.md)|SYS.CloudTable|×|云服务|
+|[事件网格](cloudservice_metrics/SYS.EG.md)|SYS.EG|√|RMS|
+|[对象存储服务](cloudservice_metrics/SYS.OBS.md)|SYS.OBS|√|RMS|
+|[云解析服务](cloudservice_metrics/SYS.DNS.md)|SYS.DNS|√|云服务|
+|[企业门户](cloudservice_metrics/SYS.EWP.md)|SYS.EWP|√|云服务|
+|[云连接](cloudservice_metrics/SYS.CC.md)|SYS.CC|√|云服务|
+|[内容分发网络](cloudservice_metrics/SYS.CDN.md)|SYS.CDN|×|云服务|
 
 注：自定义标签时，key只能包含大写字母、小写字母以及中划线
 

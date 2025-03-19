@@ -1,6 +1,7 @@
 package collector
 
 import (
+	"strings"
 	"time"
 
 	"github.com/huaweicloud/huaweicloud-sdk-go-v3/core/auth/basic"
@@ -113,13 +114,32 @@ func getAllRecordSets(zoneType string) ([]dnsModel.ListRecordSetsWithTags, error
 }
 
 func getAllPublicZones() ([]dnsModel.PublicZoneResp, error) {
+	epIds := getDnsEpIdRequestPart()
+	var results []dnsModel.PublicZoneResp
+	for _, epId := range epIds {
+		zones, err := getAllPublicZonesByEpId(epId)
+		if err != nil {
+			return nil, err
+		}
+		results = append(results, zones...)
+	}
+	return results, nil
+}
+
+func getAllPublicZonesByEpId(epId string) ([]dnsModel.PublicZoneResp, error) {
 	limit := int32(500)
 	offset := int32(0)
 
 	var publicZones []dnsModel.PublicZoneResp
 	public := "public"
+	var request *dnsModel.ListPublicZonesRequest
+	if epId != "" {
+		request = &dnsModel.ListPublicZonesRequest{Type: &public, Limit: &limit, Offset: &offset, EnterpriseProjectId: &epId}
+	} else {
+		request = &dnsModel.ListPublicZonesRequest{Type: &public, Limit: &limit, Offset: &offset}
+	}
+
 	for {
-		request := &dnsModel.ListPublicZonesRequest{Type: &public, Limit: &limit, Offset: &offset}
 		response, err := getDnsClient().ListPublicZones(request)
 		if err != nil {
 			logs.Logger.Errorf("Failed to get all public zones, error is: %s", err.Error())
@@ -139,4 +159,17 @@ func getDnsClient() *dns.DnsClient {
 		basic.NewCredentialsBuilder().WithAk(conf.AccessKey).WithSk(conf.SecretKey).WithProjectId(conf.ProjectID).Build()).
 		WithHttpConfig(GetHttpConfig().WithIgnoreSSLVerification(CloudConf.Global.IgnoreSSLVerify)).
 		WithEndpoint(getEndpoint("dns", "v2")).Build())
+}
+
+// dns查询公网域名列表时，enterprise_project_id条件传入空字符串代表查询所有企业项目下的域名资源
+func getDnsEpIdRequestPart() []string {
+	if CloudConf.Global.EpIds == "" {
+		return []string{""}
+	}
+	epIds := strings.Split(CloudConf.Global.EpIds, ",")
+	var results []string
+	for _, epId := range epIds {
+		results = append(results, epId)
+	}
+	return results
 }

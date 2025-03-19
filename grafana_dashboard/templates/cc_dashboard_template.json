@@ -154,7 +154,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "网络流入带宽-云连接：云连接域间入站数据的比特率",
+      "description": "网络带宽使用率-云连接：云连接域间带宽值。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -216,7 +216,7 @@
         "x": 12,
         "y": 0
       },
-      "id": 2,
+      "id": 10,
       "options": {
         "legend": {
           "calcs": [],
@@ -236,14 +236,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_cc_network_incoming_bits_rate{connectionEpId=~\"$EPS\"}",
+          "expr": "huaweicloud_sys_cc_network_bandwidth{connectionEpId=~\"$EPS\"}",
           "instant": false,
           "legendFormat": "连接名称：{{connectionName}}；带宽包名：{{packageName}}；域间带宽信息：{{interRegions}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "网络流入带宽",
+      "title": "网络带宽值",
       "type": "timeseries"
     },
     {
@@ -348,7 +348,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "网络流入流量-云连接：云连接域间入站数据的字节数",
+      "description": "网络流入带宽-云连接：云连接域间入站数据的比特率",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -400,7 +400,7 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "binBps"
         },
         "overrides": []
       },
@@ -410,7 +410,7 @@
         "x": 12,
         "y": 9
       },
-      "id": 4,
+      "id": 2,
       "options": {
         "legend": {
           "calcs": [],
@@ -430,14 +430,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_cc_network_incoming_bytes{connectionEpId=~\"$EPS\"}",
+          "expr": "huaweicloud_sys_cc_network_incoming_bits_rate{connectionEpId=~\"$EPS\"}",
           "instant": false,
           "legendFormat": "连接名称：{{connectionName}}；带宽包名：{{packageName}}；域间带宽信息：{{interRegions}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "网络流入流量",
+      "title": "网络流入带宽",
       "type": "timeseries"
     },
     {
@@ -542,7 +542,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "网络流入包速率-云连接：云连接域间入站数据包速率",
+      "description": "网络流入流量-云连接：云连接域间入站数据的字节数",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -594,7 +594,7 @@
               }
             ]
           },
-          "unit": "包/秒"
+          "unit": "bytes"
         },
         "overrides": []
       },
@@ -604,7 +604,7 @@
         "x": 12,
         "y": 18
       },
-      "id": 6,
+      "id": 4,
       "options": {
         "legend": {
           "calcs": [],
@@ -624,14 +624,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_cc_network_incoming_packets_rate{connectionEpId=~\"$EPS\"}",
+          "expr": "huaweicloud_sys_cc_network_incoming_bytes{connectionEpId=~\"$EPS\"}",
           "instant": false,
           "legendFormat": "连接名称：{{connectionName}}；带宽包名：{{packageName}}；域间带宽信息：{{interRegions}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "网络流入包速率",
+      "title": "网络流入流量",
       "type": "timeseries"
     },
     {
@@ -736,7 +736,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "网络流入包量-云连接：云连接域间入站数据包数",
+      "description": "网络流入包速率-云连接：云连接域间入站数据包速率",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -788,7 +788,7 @@
               }
             ]
           },
-          "unit": "包"
+          "unit": "包/秒"
         },
         "overrides": []
       },
@@ -798,7 +798,7 @@
         "x": 12,
         "y": 27
       },
-      "id": 8,
+      "id": 6,
       "options": {
         "legend": {
           "calcs": [],
@@ -818,14 +818,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_cc_network_incoming_packets{connectionEpId=~\"$EPS\"}",
+          "expr": "huaweicloud_sys_cc_network_incoming_packets_rate{connectionEpId=~\"$EPS\"}",
           "instant": false,
           "legendFormat": "连接名称：{{connectionName}}；带宽包名：{{packageName}}；域间带宽信息：{{interRegions}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "网络流入包量",
+      "title": "网络流入包速率",
       "type": "timeseries"
     },
     {
@@ -924,6 +924,103 @@
       ],
       "title": "网络流出包量",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "description": "网络流入包量-云连接：云连接域间入站数据包数",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "包"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 36
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "huaweicloud_sys_cc_network_incoming_packets{connectionEpId=~\"$EPS\"}",
+          "instant": false,
+          "legendFormat": "连接名称：{{connectionName}}；带宽包名：{{packageName}}；域间带宽信息：{{interRegions}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "网络流入包量",
+      "type": "timeseries"
     }
   ],
   "schemaVersion": 39,
@@ -964,6 +1061,6 @@
   "timezone": "browser",
   "title": "云连接(CC)",
   "uid": "feezz159k04qoe",
-  "version": 3,
+  "version": 2,
   "weekStart": ""
 }
