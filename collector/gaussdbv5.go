@@ -59,9 +59,8 @@ func (getter GAUSSDBV5Info) GetResourceInfo() (map[string]labelInfo, []cesmodel.
 							[]cesmodel.MetricsDimension{{Name: "gaussdbv5_instance_id", Value: instance.Id}, {Name: "gaussdbv5_node_id", Value: node.ID}})
 						filterMetrics = append(filterMetrics, metrics...)
 						nodeInfo := labelInfo{
-							Name: []string{"nodeName", "epId", "role", "status", "availability_zone"},
-							Value: []string{node.Name, instance.EnterpriseProjectId, node.Role, node.Status,
-								node.AvailabilityZone},
+							Name:  []string{"nodeName", "role", "status", "availability_zone"},
+							Value: []string{node.Name, node.Role, node.Status, node.AvailabilityZone},
 						}
 						nodeInfo.Name = append(nodeInfo.Name, info.Name...)
 						nodeInfo.Value = append(nodeInfo.Value, info.Value...)
