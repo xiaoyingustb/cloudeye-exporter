@@ -1,0 +1,20 @@
+> CES Exporter支持导出的“DDoS服务”指标如下表所示
+
+|维度|指标名|指标描述|指标单位|
+|:--|:--|:--|:--|
+|instance_id<br>（实例ID）|instance_drop_rate|攻击带宽|Kbps|
+|instance_id<br>（实例ID）|instance_back_to_source_rate|业务带宽|Kbps|
+|instance_id<br>（实例ID）|instance_internet_in_rate|入带宽|Kbps|
+|instance_id<br>（实例ID）|instance_new_connection|新建连接|count/s|
+|instance_id<br>（实例ID）|instance_concurrent_connection|并发连接|count/s|
+|instance_id<br>（实例ID）|instance_service_bandwidth_usage|业务带宽利用率|%|
+|package<br>（防护包）|instance_drop_rate|攻击带宽|Kbps|
+|package<br>（防护包）|instance_back_to_source_rate|业务带宽|Kbps|
+|package<br>（防护包）|instance_internet_in_rate|入带宽|Kbps|
+|package<br>（防护包）|instance_new_connection|新建连接|count/s|
+|package<br>（防护包）|instance_concurrent_connection|并发连接|count/s|
+|package,ip<br>（防护包,防护ip）|ip_drop_rate|攻击带宽|Kbps|
+|package,ip<br>（防护包,防护ip）|ip_back_to_source_rate|业务带宽|Kbps|
+|package,ip<br>（防护包,防护ip）|ip_internet_in_rate|入带宽|Kbps|
+|package,ip<br>（防护包,防护ip）|ip_new_connection|新建连接|count/s|
+|package,ip<br>（防护包,防护ip）|ip_concurrent_connection|并发连接|count/s|

@@ -1,0 +1,1 @@
+> CES exporter默认导出SERVICE.BMS下已上报的全量指标，具体请参考[官网文档](https://support.huaweicloud.com/bestpractice-bms/bms_bp_2009.html)
