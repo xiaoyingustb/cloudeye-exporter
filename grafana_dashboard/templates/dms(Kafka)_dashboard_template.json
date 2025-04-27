@@ -9,6 +9,49 @@
       "pluginName": "Prometheus"
     }
   ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.4.1"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph (old)",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
   "description": "【文档数据库服务监控指标说明】https://support.huaweicloud.com/usermanual-dds/dds_03_0026.html",
   "editable": true,
   "fiscalYearStartMonth": 0,
@@ -29,7 +72,7 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "aej51t1e7wef4f",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -42,7 +85,7 @@
       "repeatDirection": "h",
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "aej51t1e7wef4f",
           "refId": "A"
         }
       ],
@@ -50,7 +93,10 @@
       "type": "row"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -326,7 +372,10 @@
       "pluginVersion": "10.4.1",
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dms_current_partitions{epId=~\"$EPS\",kafka_instance_id=~\".+\", instanceName=~\"$instancename\"}",
@@ -340,7 +389,10 @@
           "refId": "A"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dms_current_topics{epId=~\"$EPS\",kafka_instance_id=~\".+\", instanceName=~\"$instancename\"}",
@@ -353,7 +405,10 @@
           "refId": "B"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dms_group_msgs{epId=~\"$EPS\",kafka_instance_id=~\".+\", instanceName=~\"$instancename\"}",
@@ -406,7 +461,7 @@
     },
     {
       "collapsed": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "aej51t1e7wef4f",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -417,7 +472,7 @@
       "panels": [],
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "aej51t1e7wef4f",
           "refId": "A"
         }
       ],
@@ -429,7 +484,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "统计Kafka节点虚拟机的CPU使用率",
       "fieldConfig": {
         "defaults": {
@@ -475,7 +533,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": true,
           "expr": "huaweicloud_sys_dms_broker_cpu_usage{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\", kafka_broker=~\"$kafka_broker\"}",
@@ -526,7 +587,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "该指标为Kafka节点虚拟机层面采集的内存使用率",
       "fieldConfig": {
         "defaults": {
@@ -572,7 +636,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": true,
           "expr": "huaweicloud_sys_dms_broker_memory_usage{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\", kafka_broker=~\"$kafka_broker\"}",
@@ -623,7 +690,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "该指标为从Kafka节点虚拟机层面采集的磁盘容量使用率",
       "fieldConfig": {
         "defaults": {
@@ -669,7 +739,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dms_broker_disk_usage{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\", kafka_broker=~\"$kafka_broker\"}",
@@ -721,7 +794,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "统计Kafka节点当前所有TCP连接数量",
       "fieldConfig": {
         "defaults": {
@@ -766,7 +842,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": true,
           "expr": "huaweicloud_sys_dms_broker_connections{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\", kafka_broker=~\"$kafka_broker\"}",
@@ -817,7 +896,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "该指标用于统计每秒生产的字节数",
       "fieldConfig": {
         "defaults": {
@@ -862,7 +944,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": true,
           "expr": "huaweicloud_sys_dms_broker_bytes_in_rate{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\", kafka_broker=~\"$kafka_broker\"}",
@@ -910,7 +995,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "该指标用于统计每秒消费的字节数",
       "fieldConfig": {
         "defaults": {
@@ -956,7 +1044,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": true,
           "expr": "huaweicloud_sys_dms_broker_bytes_out_rate{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\", kafka_broker=~\"$kafka_broker\"}",
@@ -1007,7 +1098,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "统计Broker节点处理生产请求平均时长",
       "fieldConfig": {
         "defaults": {
@@ -1052,7 +1146,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": true,
           "expr": "huaweicloud_sys_dms_broker_produce_mean{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\", kafka_broker=~\"$kafka_broker\"}",
@@ -1103,7 +1200,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "统计Broker节点处理消费请求平均时长",
       "fieldConfig": {
         "defaults": {
@@ -1148,7 +1248,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": true,
           "expr": "huaweicloud_sys_dms_broker_fetch_mean{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\", kafka_broker=~\"$kafka_broker\"}",
@@ -1199,7 +1302,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "该指标从Kafka节点Kafka进程JVM中采集的堆内存使用率",
       "fieldConfig": {
         "defaults": {
@@ -1244,7 +1350,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dms_broker_heap_usage{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\"}",
@@ -1293,7 +1402,7 @@
     },
     {
       "collapsed": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "aej51t1e7wef4f",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1304,7 +1413,7 @@
       "panels": [],
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "aej51t1e7wef4f",
           "refId": "A"
         }
       ],
@@ -1316,7 +1425,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "该指标用于统计每秒生产/消费的字节数",
       "fieldConfig": {
         "defaults": {
@@ -1362,7 +1474,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dms_topic_bytes_in_rate{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\", kafka_topics=~\"$kafka_topic\"} - 0",
@@ -1377,7 +1492,10 @@
           "step": 20
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "exemplar": true,
           "expr": "0 - huaweicloud_sys_dms_topic_bytes_out_rate{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\", kafka_topics=~\"$kafka_topic\"}",
           "hide": false,
@@ -1424,12 +1542,14 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "该指标用于统计队列当前的消息数据大小",
       "fieldConfig": {
         "defaults": {
-          "links": [],
-          "unit": "decbytes"
+          "links": []
         },
         "overrides": []
       },
@@ -1471,7 +1591,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dms_topic_data_size{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\", kafka_topics=~\"$kafka_topic\"}",
@@ -1503,7 +1626,7 @@
       "yaxes": [
         {
           "$$hashKey": "object:80",
-          "format": "decbytes",
+          "format": "bytes",
           "logBase": 1,
           "show": true
         },
@@ -1523,7 +1646,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "该指标用于统计队列当前的消息总数",
       "fieldConfig": {
         "defaults": {
@@ -1569,7 +1695,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dms_topic_messages{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\", kafka_topics=~\"$kafka_topic\"}",
@@ -1617,7 +1746,10 @@
       }
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "用于标识各个topic下的分区数量",
       "fieldConfig": {
         "defaults": {
@@ -1625,6 +1757,7 @@
             "mode": "thresholds"
           },
           "custom": {
+            "align": "auto",
             "cellOptions": {
               "type": "auto"
             },
@@ -1685,7 +1818,10 @@
       "pluginVersion": "10.4.1",
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "count(huaweicloud_sys_dms_partition_messages{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\", kafka_topics=~\"$kafka_topic\"}) by (instanceName, kafka_topics)",
@@ -1735,7 +1871,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "该指标用于统计队列当前的消息总数",
       "fieldConfig": {
         "defaults": {
@@ -1781,7 +1920,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dms_partition_messages{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\", kafka_topics=~\"$kafka_topic\"} > 10000",
@@ -1830,7 +1972,7 @@
     },
     {
       "collapsed": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "aej51t1e7wef4f",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1841,7 +1983,7 @@
       "panels": [],
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "aej51t1e7wef4f",
           "refId": "A"
         }
       ],
@@ -1853,7 +1995,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1899,7 +2044,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dms_consumer_messages_remained{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\", kafka_groups=~\"$kafka_group\"}",
@@ -1951,7 +2099,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1997,7 +2148,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dms_consumer_messages_consumed{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\", kafka_groups=~\"$kafka_group\"}",
@@ -2049,12 +2203,14 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "统计消费组每分钟的消费数。",
       "fieldConfig": {
         "defaults": {
-          "links": [],
-          "unit": "个"
+          "links": []
         },
         "overrides": []
       },
@@ -2095,7 +2251,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dms_consumer_messages_consumed_per_min{epId=~\"$EPS\", kafka_instance_id=~\".+\", instanceName=~\"$instancename\", kafka_groups=~\"$kafka_group\"}",
@@ -2127,7 +2286,7 @@
       "yaxes": [
         {
           "$$hashKey": "object:467",
-          "format": "个",
+          "format": "个/分钟",
           "logBase": 1,
           "show": true
         },
@@ -2150,7 +2309,10 @@
     "list": [
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "huaweicloud_epinfo",
         "hide": 0,
         "includeAll": false,
@@ -2173,7 +2335,10 @@
       },
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "label_values(huaweicloud_sys_dms_current_partitions{epId=\"$EPS\"},instanceName)",
         "hide": 0,
         "includeAll": true,
@@ -2197,7 +2362,10 @@
       },
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "label_values(huaweicloud_sys_dms_broker_data_size{epId=~\"$EPS\", instanceName=~\"$instancename\"},kafka_broker)",
         "hide": 0,
         "includeAll": true,
@@ -2220,7 +2388,10 @@
       },
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "label_values(huaweicloud_sys_dms_messages_consumed{epId=~\"$EPS\", instanceName=~\"$instancename\"},kafka_groups)",
         "hide": 0,
         "includeAll": true,
@@ -2243,7 +2414,10 @@
       },
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "label_values(huaweicloud_sys_dms_topic_bytes_in_rate{epId=~\"$EPS\", instanceName=~\"$instancename\"},kafka_topics)",
         "hide": 0,
         "includeAll": true,

@@ -80,7 +80,6 @@
 |redis_cluster_id<br>（Redis实例）|redis832_cluster_dbcache_binlog_delay|dbcache主从同步位点延迟量|Counts|
 |redis_cluster_id<br>（Redis实例）|redis833_cluster_dbcache_replication_delay|dbcache主从同步时延|ms|
 |redis_cluster_id<br>（Redis实例）|redis834_cluster_dbcache_recv_bps|dbcache同步速率|Bytes/s|
-|redis_cluster_id,redis_node_id<br>（Redis实例,Redis节点）|gemini001_cpu_usage|CPU利用率|%|
 |redis_cluster_id,redis_node_id<br>（Redis实例,Redis节点）|redis661_rsync_ops|双活状态节点数据同步速率|Counts/Second|
 |redis_cluster_id,redis_node_id<br>（Redis实例,Redis节点）|redis669_connection_usage|连接数使用率|%|
 |redis_cluster_id,redis_node_id<br>（Redis实例,Redis节点）|nosql001_cpu_usage|CPU利用率|%|

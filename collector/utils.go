@@ -364,3 +364,18 @@ func getEpIdRequestPart() []string {
 	epIds := strings.Split(CloudConf.Global.EpIds, ",")
 	return epIds
 }
+
+func appendNameValuePairToLabelInfo(labelInfo labelInfo, names []string, values []string) labelInfo {
+	if len(names) != len(values) {
+		return labelInfo
+	}
+	for index, name := range names {
+		if isContainsInStringArr(name, labelInfo.Name) {
+			logs.Logger.Infof("Label name already exists: %s", name)
+			continue
+		}
+		labelInfo.Name = append(labelInfo.Name, name)
+		labelInfo.Value = append(labelInfo.Value, values[index])
+	}
+	return labelInfo
+}

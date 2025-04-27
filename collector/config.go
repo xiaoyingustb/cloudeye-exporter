@@ -1,13 +1,17 @@
 package collector
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"path/filepath"
 	"regexp"
 	"strings"
+
+	"github.com/huaweicloud/huaweicloud-sdk-go-v3/core/def"
 
 	"github.com/huaweicloud/huaweicloud-sdk-go-v3/core/auth/global"
 	v3 "github.com/huaweicloud/huaweicloud-sdk-go-v3/services/iam/v3"
@@ -52,6 +56,10 @@ type Global struct {
 
 	// CN列表，用于校验https证书链中的DNS名称
 	ClientCN string `yaml:"client_cn"`
+
+	UnitStandardizationEnabled  bool   `yaml:"unit_standardization_enabled"`
+	I18nConfigFilePath          string `yaml:"i18n_config_file_path"`
+	UnitStandardizationFilePath string `yaml:"unit_standardization_file_path"`
 }
 
 type CloudConfig struct {
@@ -154,6 +162,14 @@ func SetDefaultConfigValues(config *CloudConfig) {
 	if config.Global.RmsRetryTimes > 10 {
 		config.Global.RmsRetryTimes = 10
 	}
+
+	if config.Global.I18nConfigFilePath == "" {
+		config.Global.I18nConfigFilePath = "./i18n.json"
+	}
+
+	if config.Global.UnitStandardizationFilePath == "" {
+		config.Global.UnitStandardizationFilePath = "./unit_standard_transform.json"
+	}
 }
 
 type MetricConf struct {
@@ -175,6 +191,188 @@ func InitMetricConf() error {
 	}
 
 	return yaml.Unmarshal(data, &metricConf)
+}
+
+type UnitTransformItem struct {
+	MetricName string `json:"metric_name"`
+	Unit       string `json:"unit"`
+	UnitV2     string `json:"unit_v2"`
+}
+
+type UnitTransformConf struct {
+	Namespace string              `json:"namespace"`
+	Units     []UnitTransformItem `json:"units"`
+}
+
+var (
+	i18nConfigMap        = make(map[string]string)
+	unitTransformConfMap = make(map[string]UnitTransformItem)
+)
+var keyPatternForUnitUnifyI18n = "%s.%s.unit"
+var keyPatternForUnitStandardization = "%s.%s.%s"
+
+func InitUnitTransformConfig() error {
+	if !CloudConf.Global.UnitStandardizationEnabled {
+		return nil
+	}
+	err := InitI18nConfig()
+	if err != nil {
+		return err
+	}
+
+	err = InitUnitStandardizationConfig()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func InitI18nConfig() error {
+	resultMap, err := getI18nConfigFromServer()
+	if err == nil {
+		i18nConfigMap = resultMap
+		return nil
+	}
+	// 从ces服务端拉取i18n配置数据失败，降级从本地文件加载指标单位国际化信息
+	logs.Logger.Errorf("Get i18n config from ces server failed: %s, i18n config will load from local files", err.Error())
+	realPath, err := NormalizePath(CloudConf.Global.I18nConfigFilePath)
+	if err != nil {
+		return err
+	}
+	data, err := ioutil.ReadFile(realPath)
+	if err != nil {
+		return err
+	}
+	i18nInfoMap := make(map[string]string)
+	err = json.Unmarshal(data, &i18nInfoMap)
+	if err != nil {
+		return err
+	}
+	for key, unit := range i18nInfoMap {
+		unit = strings.TrimSpace(unit)
+		i18nConfigMap[key] = unit
+	}
+	return nil
+}
+
+type GetI18nInfoRequest struct {
+}
+
+type GetI18nResponse struct {
+	HttpStatusCode int           `json:"-"`
+	Body           io.ReadCloser `json:"-" type:"stream"`
+}
+
+func getReqDefForListI18n() *def.HttpRequestDef {
+	reqDefBuilder := def.NewHttpRequestDefBuilder().WithMethod(http.MethodGet).WithPath("/v1/{project_id}/ns-i18n").
+		WithResponse(new(GetI18nResponse)).WithContentType("application/json")
+	return reqDefBuilder.Build()
+}
+
+func getI18nConfigFromServer() (map[string]string, error) {
+	// 拉取英文语种的i18n配置信息
+	hcClient := getCESClient().HcClient.PreInvoke(map[string]string{"x-language": "en-us"})
+	resp, err := hcClient.Sync(&GetI18nInfoRequest{}, getReqDefForListI18n())
+	if err != nil {
+		logs.Logger.Errorf("List i18 config error: %s", err.Error())
+		return nil, err
+	}
+	realResp, ok := resp.(*GetI18nResponse)
+	if !ok {
+		logs.Logger.Errorf("Convert response to GetI18nResponse failed")
+		return nil, fmt.Errorf("convert response to GetI18nResponse failed")
+	}
+	if realResp.HttpStatusCode >= 400 {
+		logs.Logger.Errorf("List i18 config failed with http code: %d", realResp.HttpStatusCode)
+		return nil, fmt.Errorf("list i18 config failed with http code: %d", realResp.HttpStatusCode)
+	}
+
+	defer realResp.Body.Close()
+	allData, err := io.ReadAll(realResp.Body)
+	if err != nil {
+		logs.Logger.Errorf("Read content from i18n response body failed: %s", err.Error())
+		return nil, err
+	}
+
+	allI18nInfoMap := make(map[string]interface{})
+	err = json.Unmarshal(allData, &allI18nInfoMap)
+	if err != nil {
+		logs.Logger.Errorf("Unmarshal i18n response content to map info error: %s", err.Error())
+		return nil, err
+	}
+	// 只取指标单位相关i18n信息
+	unitI18nInfoMap := make(map[string]string)
+	for key, value := range allI18nInfoMap {
+		if !strings.HasSuffix(key, "unit") {
+			continue
+		}
+		if unit, isConvertOk := value.(string); isConvertOk {
+			unitI18nInfoMap[key] = strings.TrimSpace(unit)
+		}
+	}
+	return unitI18nInfoMap, nil
+}
+
+func InitUnitStandardizationConfig() error {
+	var unitTransformConfs []UnitTransformConf
+	realPath, err := NormalizePath(CloudConf.Global.UnitStandardizationFilePath)
+	if err != nil {
+		logs.Logger.Errorf("Parse unit standardization file failed, and the conversion function from i18n unit to standard unit will be disabled: %s", err.Error())
+		return err
+	}
+	data, err := ioutil.ReadFile(realPath)
+	if err != nil {
+		logs.Logger.Errorf("Read unit standardization file failed, and the conversion function from i18n unit to standard unit will be disabled: %s", err.Error())
+		return err
+	}
+	err = json.Unmarshal(data, &unitTransformConfs)
+	if err != nil {
+		logs.Logger.Errorf("Parse unit standardization file failed, and the conversion function from i18n unit to standard unit will be disabled: %s", err.Error())
+		return err
+	}
+	for _, unitTransformConf := range unitTransformConfs {
+		for _, item := range unitTransformConf.Units {
+			if !validateUnitTransformRule(unitTransformConf.Namespace, item) {
+				logs.Logger.Errorf("Unit config error, namespace: %s, source unit: %s, unit v2: %s",
+					unitTransformConf.Namespace, item.Unit, item.UnitV2)
+				continue
+			}
+			key := fmt.Sprintf(keyPatternForUnitStandardization, unitTransformConf.Namespace, item.MetricName, item.Unit)
+			unitTransformConfMap[key] = item
+		}
+	}
+	return nil
+}
+
+/*
+*
+
+	{
+	  "namespace": "SYS.NAT",
+	  "units": [
+	    # 单个UnitTransformItem结构
+	    {
+	      "metric_name": "*", #不能为空，值取具体指标名或者代表所有指标(*代表所有指标名)
+	      "unit": "Count",   #I18N单位（支持配置空值，此时metric_name不能为*，代表当前特定指标需要补齐单位，并在unit_v2中说明服务补充的单位信息）
+	      "unit_v2": "count" #指标单位含义阐述字段，表述本指标单位的标准化信息
+	    }
+	  ]
+	}
+*/
+func validateUnitTransformRule(namespace string, transformRule UnitTransformItem) bool {
+	if transformRule.MetricName == "" || transformRule.UnitV2 == "" {
+		logs.Logger.Errorf("Unit config error, namespace: %s, source unit: %s, unit v2: %s",
+			namespace, transformRule.MetricName, transformRule.Unit, transformRule.UnitV2)
+		return false
+	}
+
+	if transformRule.MetricName == "*" && transformRule.Unit == "" {
+		logs.Logger.Errorf("Source unit couldn't be empty when metric_name is *, namespace: %s, source unit: %s, unit v2: %s",
+			namespace, transformRule.Unit, transformRule.UnitV2)
+		return false
+	}
+	return true
 }
 
 func getMetricConfigMap(namespace string) map[string][]string {

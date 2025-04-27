@@ -129,6 +129,12 @@ func initConf() {
 		logs.Logger.Errorf("Init metric Config error: %s", err.Error())
 		logs.FlushLogAndExit(1)
 	}
+
+	err = collector.InitUnitTransformConfig()
+	if err != nil {
+		logs.Logger.Errorf("Failed to init unit transform config: %s", err.Error())
+	}
+
 	collector.InitEndpointConfig(collector.CloudConf.Global.EndpointsConfPath)
 }
 

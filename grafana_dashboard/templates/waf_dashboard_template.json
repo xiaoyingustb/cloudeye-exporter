@@ -15,7 +15,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "11.3.1"
+      "version": "10.4.1"
     },
     {
       "type": "datasource",
@@ -71,7 +71,6 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
-            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 5,
             "gradientMode": "opacity",
@@ -178,7 +177,6 @@
             "axisLabel": "入网总流量（+）/出网总流量（-）",
             "axisPlacement": "left",
             "barAlignment": 0,
-            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 5,
             "gradientMode": "opacity",
@@ -221,7 +219,7 @@
               }
             ]
           },
-          "unit": "mbytes"
+          "unit": "Mbits"
         },
         "overrides": []
       },
@@ -298,7 +296,6 @@
             "axisLabel": "入网总流量（+）/出网总流量（-）",
             "axisPlacement": "left",
             "barAlignment": 0,
-            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 5,
             "gradientMode": "opacity",
@@ -341,7 +338,7 @@
               }
             ]
           },
-          "unit": "MiBs"
+          "unit": "Mbits"
         },
         "overrides": []
       },
@@ -444,7 +441,6 @@
             "axisLabel": "",
             "axisPlacement": "left",
             "barAlignment": 0,
-            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 5,
             "gradientMode": "opacity",
@@ -551,7 +547,6 @@
             "axisLabel": "",
             "axisPlacement": "left",
             "barAlignment": 0,
-            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 5,
             "gradientMode": "opacity",
@@ -658,7 +653,6 @@
             "axisLabel": "",
             "axisPlacement": "left",
             "barAlignment": 0,
-            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 5,
             "gradientMode": "opacity",
@@ -765,7 +759,6 @@
             "axisLabel": "",
             "axisPlacement": "left",
             "barAlignment": 0,
-            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 5,
             "gradientMode": "opacity",
@@ -872,7 +865,6 @@
             "axisLabel": "",
             "axisPlacement": "left",
             "barAlignment": 0,
-            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 5,
             "gradientMode": "opacity",
@@ -979,7 +971,6 @@
             "axisLabel": "",
             "axisPlacement": "left",
             "barAlignment": 0,
-            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 5,
             "gradientMode": "opacity",
@@ -1086,7 +1077,6 @@
             "axisLabel": "",
             "axisPlacement": "left",
             "barAlignment": 0,
-            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 5,
             "gradientMode": "opacity",
@@ -1193,7 +1183,6 @@
             "axisLabel": "",
             "axisPlacement": "left",
             "barAlignment": 0,
-            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 5,
             "gradientMode": "opacity",
@@ -1300,7 +1289,6 @@
             "axisLabel": "",
             "axisPlacement": "left",
             "barAlignment": 0,
-            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 5,
             "gradientMode": "opacity",
@@ -1407,7 +1395,6 @@
             "axisLabel": "",
             "axisPlacement": "left",
             "barAlignment": 0,
-            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 5,
             "gradientMode": "opacity",
@@ -1498,7 +1485,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 40,
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
@@ -1509,6 +1496,7 @@
           "uid": "${DS_PROMETHEUS}"
         },
         "definition": "label_values(huaweicloud_sys_waf_requests,name)",
+        "hide": 0,
         "includeAll": true,
         "label": "防护域名",
         "multi": true,
@@ -1521,6 +1509,8 @@
         },
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
         "type": "query"
       }
     ]
@@ -1533,6 +1523,6 @@
   "timezone": "browser",
   "title": "Web应用防火墙(WAF)",
   "uid": "ae1smk6xg0rnke",
-  "version": 6,
+  "version": 2,
   "weekStart": ""
 }

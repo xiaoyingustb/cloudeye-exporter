@@ -11,6 +11,9 @@ import (
 )
 
 func TestCCGetResourceInfo(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	conf.Region = "cn-test-01"
 	patches := getPatches()
 	defer patches.Reset()
 	metricConf = map[string]MetricConf{

@@ -79,14 +79,26 @@ func getWAFClient() *waf.WafClient {
 }
 
 func getAllPremiumWafInstances() ([]wafModel.ListInstance, error) {
+	allInstances := make([]wafModel.ListInstance, 0)
+	epIds := getEpIdRequestPart()
+	for _, epId := range epIds {
+		instancesByEpId, err := getAllPremiumWafInstancesByEpId(epId)
+		if err != nil {
+			return nil, err
+		}
+		allInstances = append(allInstances, instancesByEpId...)
+	}
+	return allInstances, nil
+}
+
+func getAllPremiumWafInstancesByEpId(epId string) ([]wafModel.ListInstance, error) {
 	result := make([]wafModel.ListInstance, 0)
 	pageSize := int32(100)
 	page := int32(1)
-	allGrantedEps := "all_granted_eps"
 	req := &wafModel.ListInstanceRequest{
 		Page:                &page,
 		Pagesize:            &pageSize,
-		EnterpriseProjectId: &allGrantedEps,
+		EnterpriseProjectId: &epId,
 	}
 	for {
 		resp, err := getWAFClient().ListInstance(req)

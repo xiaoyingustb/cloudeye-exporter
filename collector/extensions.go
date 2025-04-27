@@ -61,6 +61,8 @@ var (
 		"SYS.DNS":           DNSInfo{},
 		"SYS.EWP":           EWPInfo{},
 		"SYS.ER":            ERInfo{},
+		"SYS.MaaS":          MaaSInfo{},
+		"SYS.GCB":           GCBInfo{},
 	}
 )
 
