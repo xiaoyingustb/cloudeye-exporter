@@ -78,6 +78,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
+      "description": "域名一分钟内请求次数汇总。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -180,6 +181,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
+      "description": "域名一分钟内回源的平均带宽（ 计算方式：一分钟内回源流量*8/60）。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -230,7 +232,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "bps"
         },
         "overrides": []
       },
@@ -275,6 +278,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
+      "description": "域名一分钟内HTTP状态码2xx次数汇总。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -370,6 +374,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
+      "description": "域名一分钟内平均请求耗时。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -420,7 +425,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "ms"
         },
         "overrides": []
       },
@@ -465,6 +471,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
+      "description": "域名一分钟内命中缓存的流量。（命中流量=流量+预热流量+外部流量-回源流量，若计算出命中流量为负数，上报数据将被抹为0）",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -515,7 +522,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "bytes"
         },
         "overrides": []
       },
@@ -560,6 +568,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
+      "description": "域名一分钟内总流量。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -610,7 +619,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "bytes"
         },
         "overrides": []
       },
@@ -655,6 +665,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
+      "description": "域名一分钟内回源总流量。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -705,7 +716,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "bytes"
         },
         "overrides": []
       },
@@ -750,6 +762,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
+      "description": "域名一分钟内回源失败次数汇总。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -879,6 +892,6 @@
   "timezone": "",
   "title": "内容分发网络(CDN)",
   "uid": "MtZyHmbIk",
-  "version": 16,
+  "version": 1,
   "weekStart": ""
 }

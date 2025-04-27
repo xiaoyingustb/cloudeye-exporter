@@ -2,7 +2,7 @@
   "__inputs": [
     {
       "name": "DS_PROMETHEUS",
-      "label": "Prometheus",
+      "label": "prometheus",
       "description": "",
       "type": "datasource",
       "pluginId": "prometheus",
@@ -15,7 +15,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.2.0"
+      "version": "10.4.1"
     },
     {
       "type": "datasource",
@@ -76,7 +76,10 @@
       "type": "row"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -625,10 +628,13 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dcs_cpu_usage{epId=~\"$EPS\", dcs_cluster_redis_node=~\".+\"} -0",
@@ -640,7 +646,10 @@
           "refId": "A"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dcs_memory_usage{epId=~\"$EPS\", dcs_cluster_redis_node=~\".+\"}",
@@ -652,7 +661,10 @@
           "refId": "B"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dcs_keyspace_hits_perc{epId=~\"$EPS\", dcs_cluster_redis_node=~\".+\"}",
@@ -664,7 +676,10 @@
           "refId": "C"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dcs_connected_clients{epId=~\"$EPS\", dcs_cluster_redis_node=~\".+\"}",
@@ -676,7 +691,10 @@
           "refId": "D"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dcs_total_connections_received{epId=~\"$EPS\", dcs_cluster_redis_node=~\".+\"}",
@@ -688,7 +706,10 @@
           "refId": "E"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dcs_command_max_delay{epId=~\"$EPS\", dcs_cluster_redis_node=~\".+\"}",
@@ -700,7 +721,10 @@
           "refId": "F"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dcs_rx_controlled{epId=~\"$EPS\", dcs_cluster_redis_node=~\".+\"}",
@@ -744,7 +768,10 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1224,10 +1251,13 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dcs_memory_usage{epId=~\"$EPS\", node_type!~\".+\"}",
@@ -1239,7 +1269,10 @@
           "refId": "B"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dcs_keyspace_hits_perc{epId=~\"$EPS\", node_type!~\".+\"}",
@@ -1251,7 +1284,10 @@
           "refId": "C"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dcs_connected_clients{epId=~\"$EPS\", node_type!~\".+\"}",
@@ -1263,7 +1299,10 @@
           "refId": "D"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dcs_total_connections_received{epId=~\"$EPS\", node_type!~\".+\"}",
@@ -1275,7 +1314,10 @@
           "refId": "E"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dcs_command_max_delay{epId=~\"$EPS\", node_type!~\".+\"}",
@@ -1287,7 +1329,10 @@
           "refId": "F"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_dcs_rx_controlled{epId=~\"$EPS\", node_type!~\".+\"}",
@@ -1341,7 +1386,10 @@
       "type": "row"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1425,7 +1473,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_cpu_usage{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", dcs_cluster_redis_node=~\".+\", name=~\"$hostname\"}",
           "instant": false,
@@ -1438,7 +1489,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1520,7 +1574,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_memory_usage{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", node_type!~\".+\"} - 0",
           "instant": false,
@@ -1533,7 +1590,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1615,7 +1675,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_memory_usage{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", dcs_cluster_redis_node=~\".+\"} - 0",
           "instant": false,
@@ -1628,7 +1691,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1709,7 +1775,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_keys{name=~\"$hostname\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", node_type!~\".+\"}",
           "instant": false,
@@ -1722,7 +1791,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1803,7 +1875,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_keys{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", dcs_cluster_redis_node=~\".+\"}",
           "instant": false,
@@ -1816,7 +1891,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1867,7 +1945,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -1897,7 +1976,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_keyspace_hits_perc{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", node_type!~\".+\"}",
           "instant": false,
@@ -1910,7 +1992,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1961,7 +2046,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -1991,7 +2077,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_keyspace_hits_perc{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", dcs_cluster_redis_node=~\".+\"}",
           "instant": false,
@@ -2004,7 +2093,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2056,7 +2148,7 @@
               }
             ]
           },
-          "unit": "KBs"
+          "unit": "KB/s"
         },
         "overrides": []
       },
@@ -2086,7 +2178,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_instantaneous_input_kbps{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", node_type!~\".+\"} - 0",
           "instant": false,
@@ -2095,7 +2190,10 @@
           "refId": "A"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "0 - huaweicloud_sys_dcs_instantaneous_output_kbps{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", node_type!~\".+\"}",
           "hide": false,
@@ -2109,7 +2207,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2161,7 +2262,7 @@
               }
             ]
           },
-          "unit": "KBs"
+          "unit": "KB/s"
         },
         "overrides": []
       },
@@ -2191,7 +2292,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_instantaneous_input_kbps{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", dcs_cluster_redis_node=~\".+\"} - 0",
           "instant": false,
@@ -2200,7 +2304,10 @@
           "refId": "A"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "0 - huaweicloud_sys_dcs_instantaneous_output_kbps{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", dcs_cluster_redis_node=~\".+\"}",
           "hide": false,
@@ -2214,7 +2321,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2296,7 +2406,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_command_max_delay{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", node_type!~\".+\"}",
           "instant": false,
@@ -2309,7 +2422,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2391,7 +2507,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_command_max_delay{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", node_type!~\".+\"}",
           "instant": false,
@@ -2404,7 +2523,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2486,7 +2608,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_expires{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", node_type!~\".+\"}",
           "instant": false,
@@ -2495,7 +2620,10 @@
           "refId": "A"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "0 - huaweicloud_sys_dcs_expired_keys{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", node_type!~\".+\"}",
           "hide": false,
@@ -2509,7 +2637,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2591,7 +2722,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_expires{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", dcs_cluster_redis_node=~\".+\"}",
           "instant": false,
@@ -2600,7 +2734,10 @@
           "refId": "A"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "0 - huaweicloud_sys_dcs_expired_keys{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", dcs_cluster_redis_node=~\".+\"}",
           "hide": false,
@@ -2614,7 +2751,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2696,7 +2836,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_instantaneous_ops{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", node_type!~\".+\"}",
           "instant": false,
@@ -2709,7 +2852,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2791,7 +2937,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_instantaneous_ops{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", dcs_cluster_redis_node=~\".+\"}",
           "instant": false,
@@ -2804,7 +2953,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2886,7 +3038,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_bandwidth_usage{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", node_type!~\".+\"}",
           "instant": false,
@@ -2899,7 +3054,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2981,7 +3139,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_bandwidth_usage{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", dcs_cluster_redis_node=~\".+\"}",
           "instant": false,
@@ -2994,7 +3155,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3076,7 +3240,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_rx_controlled{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", node_type!~\".+\"}",
           "instant": false,
@@ -3089,7 +3256,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3171,7 +3341,10 @@
       },
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "huaweicloud_sys_dcs_rx_controlled{epId=~\"$EPS\", cache_mode=~\"$cache_mode\", name=~\"$hostname\", dcs_cluster_redis_node=~\".+\"}",
           "instant": false,
@@ -3185,13 +3358,16 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 38,
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "huaweicloud_epinfo",
         "description": "",
         "hide": 0,
@@ -3213,7 +3389,10 @@
       },
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "label_values(huaweicloud_sys_dcs_cpu_usage{epId=\"$EPS\"},cache_mode)",
         "hide": 0,
         "includeAll": true,
@@ -3234,7 +3413,10 @@
       },
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "label_values(huaweicloud_sys_dcs_cpu_usage{epId=~\"$EPS\", cache_mode=~\"$cache_mode\"},name)",
         "hide": 0,
         "includeAll": true,
@@ -3255,7 +3437,10 @@
       },
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "query_result(count(huaweicloud_sys_dcs_memory_usage{epId=~\"$EPS\", node_type!~\".+\"}))",
         "hide": 2,
         "includeAll": false,
@@ -3275,7 +3460,10 @@
       },
       {
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "query_result(count(huaweicloud_sys_dcs_cpu_usage{epId=~\"$EPS\", dcs_cluster_redis_node=~\".+\"}))",
         "hide": 2,
         "includeAll": false,
@@ -3303,6 +3491,6 @@
   "timezone": "",
   "title": "分布式缓存服务（DCS）",
   "uid": "da3c0360-5de1-49f7-9c96-0149f38af83f",
-  "version": 7,
+  "version": 2,
   "weekStart": ""
 }

@@ -15,7 +15,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.4.1"
+      "version": "11.3.1"
     },
     {
       "type": "datasource",
@@ -58,7 +58,6 @@
   "graphTooltip": 0,
   "id": null,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
@@ -140,7 +139,7 @@
               },
               {
                 "id": "unit",
-                "value": "binbps"
+                "value": "bps"
               }
             ]
           },
@@ -178,7 +177,7 @@
               },
               {
                 "id": "unit",
-                "value": "binbps"
+                "value": "bps"
               }
             ]
           },
@@ -208,7 +207,7 @@
               },
               {
                 "id": "unit",
-                "value": "bits"
+                "value": "decbytes"
               }
             ]
           },
@@ -238,7 +237,7 @@
               },
               {
                 "id": "unit",
-                "value": "bits"
+                "value": "decbytes"
               }
             ]
           },
@@ -372,7 +371,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.4.1",
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -622,7 +621,7 @@
               },
               {
                 "id": "unit",
-                "value": "binbps"
+                "value": "bps"
               }
             ]
           },
@@ -660,7 +659,7 @@
               },
               {
                 "id": "unit",
-                "value": "binbps"
+                "value": "bps"
               }
             ]
           },
@@ -690,7 +689,7 @@
               },
               {
                 "id": "unit",
-                "value": "bits"
+                "value": "decbytes"
               }
             ]
           },
@@ -720,7 +719,7 @@
               },
               {
                 "id": "unit",
-                "value": "bits"
+                "value": "decbytes"
               }
             ]
           },
@@ -806,7 +805,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.4.1",
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -1002,6 +1001,7 @@
             "axisLabel": "网络流入带宽（+）/网络流出带宽（-）",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1069,6 +1069,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -1113,9 +1114,10 @@
             "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "网络流入带宽（+）/网络流出带宽（-）",
+            "axisLabel": "网络流入流量（+）/网络流出流量（-）",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1155,7 +1157,7 @@
               }
             ]
           },
-          "unit": "decbits"
+          "unit": "decbytes"
         },
         "overrides": []
       },
@@ -1183,6 +1185,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -1230,6 +1233,7 @@
             "axisLabel": "网络流入包速率（+）/网络流出包速率（-）",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1297,6 +1301,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -1344,6 +1349,7 @@
             "axisLabel": "网络流入包量（+）/网络流出包量（-）",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1411,6 +1417,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -1471,6 +1478,7 @@
             "axisLabel": "网络流入带宽（+）/网络流出带宽（-）",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1538,6 +1546,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -1582,9 +1591,10 @@
             "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "网络流入带宽（+）/网络流出带宽（-）",
+            "axisLabel": "网络流入流量（+）/网络流出流量（-）",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1624,7 +1634,7 @@
               }
             ]
           },
-          "unit": "decbits"
+          "unit": "decbytes"
         },
         "overrides": []
       },
@@ -1652,6 +1662,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -1699,6 +1710,7 @@
             "axisLabel": "网络流入包速率（+）/网络流出包速率（-）",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1766,6 +1778,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -1813,6 +1826,7 @@
             "axisLabel": "网络流入包量（+）/网络流出包量（-）",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1880,6 +1894,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -1927,6 +1942,7 @@
             "axisLabel": "接收到的IPv4路由条目数",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1994,6 +2010,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -2013,7 +2030,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 39,
+  "schemaVersion": 40,
   "tags": [],
   "templating": {
     "list": [
@@ -2024,7 +2041,6 @@
           "uid": "${DS_PROMETHEUS}"
         },
         "definition": "huaweicloud_epinfo",
-        "hide": 0,
         "includeAll": true,
         "label": "企业项目",
         "multi": true,
@@ -2037,8 +2053,6 @@
         },
         "refresh": 1,
         "regex": "/epName=\"(?<text>[^\"]+)|epId=\"(?<value>[^\"]+)/g",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       },
       {
@@ -2048,7 +2062,6 @@
           "uid": "${DS_PROMETHEUS}"
         },
         "definition": "label_values(huaweicloud_sys_dcaas_network_incoming_bytes{epId=~\"$EPS\"},device_id)",
-        "hide": 0,
         "includeAll": true,
         "label": "专线IP",
         "multi": true,
@@ -2061,8 +2074,6 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       },
       {
@@ -2072,10 +2083,8 @@
           "uid": "${DS_PROMETHEUS}"
         },
         "definition": "label_values(huaweicloud_sys_dcaas_network_incoming_bytes{epId=~\"$EPS\", device_id=~\"$hostIP\"},name)",
-        "hide": 0,
         "includeAll": true,
         "label": "专线名称",
-        "multi": false,
         "name": "hostname",
         "options": [],
         "query": {
@@ -2085,8 +2094,6 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       }
     ]
@@ -2099,6 +2106,6 @@
   "timezone": "",
   "title": "云专线（DCAAS）",
   "uid": "ecb22732-9c7d-41b2-a9cd-408a62798288",
-  "version": 3,
+  "version": 9,
   "weekStart": ""
 }

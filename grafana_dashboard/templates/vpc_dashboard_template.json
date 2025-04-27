@@ -1,8 +1,8 @@
 {
   "__inputs": [
     {
-      "name": "DS_PROMETHEUS",
-      "label": "prometheus",
+      "name": "DS_PROMETHEUS-1",
+      "label": "prometheus-1",
       "description": "",
       "type": "datasource",
       "pluginId": "prometheus",
@@ -15,7 +15,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.4.1"
+      "version": "11.3.1"
     },
     {
       "type": "datasource",
@@ -58,7 +58,6 @@
   "graphTooltip": 0,
   "id": null,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
@@ -71,14 +70,13 @@
       "id": 2,
       "panels": [],
       "repeat": "EPS",
-      "repeatDirection": "h",
       "title": "带宽 资源总览 企业项目：$EPS",
       "type": "row"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PROMETHEUS-1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -142,7 +140,7 @@
             "properties": [
               {
                 "id": "unit",
-                "value": "binbps"
+                "value": "bps"
               },
               {
                 "id": "custom.cellOptions",
@@ -218,7 +216,7 @@
             "properties": [
               {
                 "id": "unit",
-                "value": "bits"
+                "value": "decbytes"
               },
               {
                 "id": "custom.cellOptions",
@@ -256,7 +254,7 @@
             "properties": [
               {
                 "id": "unit",
-                "value": "binbps"
+                "value": "bps"
               },
               {
                 "id": "custom.cellOptions",
@@ -332,7 +330,7 @@
             "properties": [
               {
                 "id": "unit",
-                "value": "bits"
+                "value": "decbytes"
               },
               {
                 "id": "custom.cellOptions",
@@ -396,12 +394,12 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.4.1",
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -415,7 +413,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -430,7 +428,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -445,7 +443,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -460,7 +458,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -475,7 +473,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -547,14 +545,13 @@
       "id": 3,
       "panels": [],
       "repeat": "EPS",
-      "repeatDirection": "h",
       "title": "带宽 资源详情 企业项目：$EPS",
       "type": "row"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PROMETHEUS-1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -568,6 +565,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -607,7 +605,7 @@
               }
             ]
           },
-          "unit": "binbps"
+          "unit": "bps"
         },
         "overrides": []
       },
@@ -635,11 +633,12 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "expr": "huaweicloud_sys_vpc_downstream_bandwidth{epId=~\"$EPS\",publicIpAddress=~\"\", chargeMode=~\"$ChargeMode\"}",
@@ -655,7 +654,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PROMETHEUS-1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -669,6 +668,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -736,11 +736,12 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "expr": "huaweicloud_sys_vpc_downstream_bandwidth_usage{epId=~\"$EPS\",publicIpAddress=~\"\", chargeMode=~\"$ChargeMode\"}",
@@ -756,7 +757,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PROMETHEUS-1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -770,6 +771,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -809,7 +811,7 @@
               }
             ]
           },
-          "unit": "bits"
+          "unit": "decbytes"
         },
         "overrides": []
       },
@@ -837,11 +839,12 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "expr": "huaweicloud_sys_vpc_down_stream{epId=~\"$EPS\",publicIpAddress=~\"\", chargeMode=~\"$ChargeMode\"}",
@@ -857,7 +860,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PROMETHEUS-1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -871,6 +874,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -910,7 +914,7 @@
               }
             ]
           },
-          "unit": "binbps"
+          "unit": "bps"
         },
         "overrides": []
       },
@@ -938,11 +942,12 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "expr": "huaweicloud_sys_vpc_upstream_bandwidth{epId=~\"$EPS\",publicIpAddress=~\"\", chargeMode=~\"$ChargeMode\"}",
@@ -958,7 +963,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PROMETHEUS-1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -972,6 +977,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1039,11 +1045,12 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "expr": "huaweicloud_sys_vpc_upstream_bandwidth_usage{epId=~\"$EPS\",publicIpAddress=~\"\", chargeMode=~\"$ChargeMode\"}",
@@ -1059,7 +1066,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PROMETHEUS-1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1073,6 +1080,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1112,7 +1120,7 @@
               }
             ]
           },
-          "unit": "bits"
+          "unit": "decbytes"
         },
         "overrides": []
       },
@@ -1140,11 +1148,12 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "expr": "huaweicloud_sys_vpc_up_stream{epId=~\"$EPS\",publicIpAddress=~\"\", chargeMode=~\"$ChargeMode\"}",
@@ -1168,14 +1177,13 @@
       "id": 10,
       "panels": [],
       "repeat": "EPS",
-      "repeatDirection": "h",
       "title": "弹性公网IP 资源总览 企业项目：$EPS",
       "type": "row"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PROMETHEUS-1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1226,7 +1234,7 @@
               },
               {
                 "id": "unit",
-                "value": "binbps"
+                "value": "bps"
               },
               {
                 "id": "thresholds",
@@ -1300,7 +1308,7 @@
             "properties": [
               {
                 "id": "unit",
-                "value": "bits"
+                "value": "decbytes"
               },
               {
                 "id": "custom.cellOptions",
@@ -1338,7 +1346,7 @@
             "properties": [
               {
                 "id": "unit",
-                "value": "binbps"
+                "value": "bps"
               },
               {
                 "id": "custom.cellOptions",
@@ -1418,7 +1426,7 @@
             "properties": [
               {
                 "id": "unit",
-                "value": "bits"
+                "value": "decbytes"
               },
               {
                 "id": "custom.cellOptions",
@@ -1513,12 +1521,12 @@
           }
         ]
       },
-      "pluginVersion": "10.4.1",
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1532,7 +1540,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1547,7 +1555,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1562,7 +1570,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1577,7 +1585,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1592,7 +1600,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1672,14 +1680,13 @@
       "id": 12,
       "panels": [],
       "repeat": "EPS",
-      "repeatDirection": "h",
       "title": "弹性公网IP详情 企业项目：$EPS",
       "type": "row"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PROMETHEUS-1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1693,6 +1700,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1732,7 +1740,7 @@
               }
             ]
           },
-          "unit": "binbps"
+          "unit": "bps"
         },
         "overrides": []
       },
@@ -1760,11 +1768,12 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "expr": "huaweicloud_sys_vpc_downstream_bandwidth{epId=~\"$EPS\",publicIpAddress!=\"\", bandwidthChargeMode=~\"$ChargeMode\"}",
@@ -1780,7 +1789,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PROMETHEUS-1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1794,6 +1803,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1861,11 +1871,12 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "expr": "huaweicloud_sys_vpc_downstream_bandwidth_usage{epId=~\"$EPS\",publicIpAddress!=\"\",bandwidthChargeMode=~\"$ChargeMode\"}",
@@ -1881,7 +1892,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PROMETHEUS-1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1895,6 +1906,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1934,7 +1946,7 @@
               }
             ]
           },
-          "unit": "bits"
+          "unit": "decbytes"
         },
         "overrides": []
       },
@@ -1962,11 +1974,12 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "expr": "huaweicloud_sys_vpc_down_stream{epId=~\"$EPS\",publicIpAddress!=\"\",bandwidthChargeMode=~\"$ChargeMode\"}",
@@ -1982,7 +1995,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PROMETHEUS-1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1996,6 +2009,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -2035,7 +2049,7 @@
               }
             ]
           },
-          "unit": "binbps"
+          "unit": "bps"
         },
         "overrides": []
       },
@@ -2063,11 +2077,12 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "expr": "huaweicloud_sys_vpc_upstream_bandwidth{epId=~\"$EPS\",publicIpAddress!=\"\", bandwidthChargeMode=~\"$ChargeMode\"}",
@@ -2083,7 +2098,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PROMETHEUS-1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2097,6 +2112,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -2164,11 +2180,12 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "expr": "huaweicloud_sys_vpc_upstream_bandwidth_usage{epId=~\"$EPS\",publicIpAddress!=\"\",bandwidthChargeMode=~\"$ChargeMode\"}",
@@ -2184,7 +2201,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PROMETHEUS-1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2198,6 +2215,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -2237,7 +2255,7 @@
               }
             ]
           },
-          "unit": "bits"
+          "unit": "decbytes"
         },
         "overrides": []
       },
@@ -2265,11 +2283,12 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PROMETHEUS-1}"
           },
           "editorMode": "code",
           "expr": "huaweicloud_sys_vpc_up_stream{epId=~\"$EPS\",publicIpAddress!=\"\",bandwidthChargeMode=~\"$ChargeMode\"}",
@@ -2284,7 +2303,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 39,
+  "schemaVersion": 40,
   "tags": [],
   "templating": {
     "list": [
@@ -2292,13 +2311,11 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "${DS_PROMETHEUS-1}"
         },
         "definition": "huaweicloud_epinfo",
-        "hide": 0,
         "includeAll": false,
         "label": "企业项目",
-        "multi": false,
         "name": "EPS",
         "options": [],
         "query": {
@@ -2308,31 +2325,22 @@
         },
         "refresh": 1,
         "regex": "/epName=\"(?<text>[^\"]+)|epId=\"(?<value>[^\"]+)/g",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       },
       {
         "current": {
-          "selected": true,
           "text": [
-            "按流量"
+            "traffic"
           ],
           "value": [
             "traffic"
           ]
         },
-        "hide": 0,
         "includeAll": true,
         "label": "计费模式",
         "multi": true,
         "name": "ChargeMode",
         "options": [
-          {
-            "selected": false,
-            "text": "All",
-            "value": "$__all"
-          },
           {
             "selected": false,
             "text": "按带宽",
@@ -2345,8 +2353,6 @@
           }
         ],
         "query": "按带宽 : bandwidth , 按流量 : traffic",
-        "queryValue": "",
-        "skipUrlSync": false,
         "type": "custom"
       }
     ]
@@ -2359,6 +2365,6 @@
   "timezone": "",
   "title": "弹性公网IP和带宽(VPC)",
   "uid": "dfa72048-c799-4fdc-adfa-36b472b981a5",
-  "version": 2,
+  "version": 11,
   "weekStart": ""
 }

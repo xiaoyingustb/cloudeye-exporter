@@ -535,7 +535,7 @@
               }
             ]
           },
-          "unit": "Bps"
+          "unit": "binBps"
         },
         "overrides": []
       },
@@ -640,7 +640,7 @@
               }
             ]
           },
-          "unit": "Bps"
+          "unit": "binBps"
         },
         "overrides": []
       },
@@ -955,7 +955,7 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "bytes"
         },
         "overrides": []
       },
@@ -1013,7 +1013,7 @@
         },
         "definition": "label_values(huaweicloud_sys_waf_cpu_util,name)",
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "label": "独享引擎实例名称",
         "multi": true,
         "name": "instance_name",
@@ -1039,6 +1039,6 @@
   "timezone": "browser",
   "title": "Web应用防火墙(WAF)-独享实例引擎监控看板",
   "uid": "ce193biltj1moe",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }

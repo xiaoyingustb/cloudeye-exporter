@@ -92,6 +92,7 @@ func (exporter *BaseHuaweiCloudExporter) setProData(ctx context.Context, ch chan
 		}
 
 		label := getLabel(metric, allResourcesInfo)
+		label = transformUnit(&metric, label)
 		fqName := prometheus.BuildFQName(exporter.Prefix, replaceName(*metric.Namespace), metric.MetricName)
 
 		proMetric, err := prometheus.NewConstMetric(
@@ -117,6 +118,52 @@ func (exporter *BaseHuaweiCloudExporter) setProData(ctx context.Context, ch chan
 	}
 }
 
+func transformUnit(md *model.BatchMetricData, label labelInfo) labelInfo {
+	if !CloudConf.Global.UnitStandardizationEnabled {
+		// 指标单位标准化转换未开启，使用服务上报指标中的单位并退出
+		label.Name = append(label.Name, "unit")
+		label.Value = append(label.Value, *md.Unit)
+		return label
+	}
+
+	i18nUnit := getI18NUnit(md)
+	// md.MetricName表示特定指标单位转换/补齐操作
+	// *表示某类同单位指标的转换操作
+	metricNames := []string{md.MetricName, "*"}
+	for _, metricName := range metricNames {
+		if metricName == "*" && i18nUnit == "" {
+			continue
+		}
+		// 标准转换配置中寻找单位转换配置/单位补齐配置
+		standardUnitKey := fmt.Sprintf(keyPatternForUnitStandardization, *md.Namespace, metricName, i18nUnit)
+		standardUnitConf, ok := unitTransformConfMap[standardUnitKey]
+		if ok {
+			label.Name = append(label.Name, "unit", "unit_v2")
+			label.Value = append(label.Value, i18nUnit, standardUnitConf.UnitV2)
+			return label
+		}
+	}
+
+	// 最终兜底：服务上报指标数据中的单位
+	resultUnit := *md.Unit
+	if i18nUnit != "" {
+		// 标准化转换配置中未找到，再优先使用I18N配置给出的统一单位
+		resultUnit = i18nUnit
+	}
+
+	label.Name = append(label.Name, "unit")
+	label.Value = append(label.Value, resultUnit)
+	return label
+}
+
+func getI18NUnit(md *model.BatchMetricData) string {
+	unitInI18N, ok := i18nConfigMap[fmt.Sprintf(keyPatternForUnitUnifyI18n, *md.Namespace, md.MetricName)]
+	if !ok {
+		unitInI18N = ""
+	}
+	return unitInI18N
+}
+
 func isAgentMetric(namespace string) bool {
 	return namespace == "AGT.ECS" || namespace == "SERVICE.BMS"
 }
@@ -136,8 +183,6 @@ func getDimLabel(metric model.BatchMetricData) labelInfo {
 		label.Name = append(label.Name, strings.ReplaceAll(dim.Name, "-", "_"))
 		label.Value = append(label.Value, getDimValue(metric, dim.Name, dim.Value))
 	}
-	label.Name = append(label.Name, "unit")
-	label.Value = append(label.Value, *metric.Unit)
 	return label
 }
 

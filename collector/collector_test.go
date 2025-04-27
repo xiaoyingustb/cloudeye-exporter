@@ -36,11 +36,13 @@ func TestGetLabel(t *testing.T) {
 		"0001-0001-0000001": {Name: []string{"name"}, Value: []string{"host01"}},
 	}
 	label := getLabel(metric, info)
-	assert.Equal(t, 3, len(label.Name))
-	assert.Equal(t, 3, len(label.Value))
+	assert.Equal(t, 2, len(label.Name))
+	assert.Equal(t, 2, len(label.Value))
 }
 
 func TestGetDimValue(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
 	patches := getPatches()
 	defer patches.Reset()
 	logs.InitLog("")

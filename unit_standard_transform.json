@@ -1,0 +1,1182 @@
+[
+    {
+        "namespace": "AGT.ECS",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "MB/s",
+                "unit_v2": "MiB/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "MB",
+                "unit_v2": "MiB"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Lane",
+                "unit_v2": "lane"
+            },
+            {
+                "metric_name": "*",
+                "unit": "MByte/s",
+                "unit_v2": "MB/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "GB",
+                "unit_v2": "GiB"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Request/s",
+                "unit_v2": "request/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "bit/s",
+                "unit_v2": "bit/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count/s",
+                "unit_v2": "count/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "ms/Count",
+                "unit_v2": "ms/op"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte/op",
+                "unit_v2": "Byte/op(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "ms/op",
+                "unit_v2": "Byte/op(IEC)"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.CBR",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "GB",
+                "unit_v2": "GiB"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.CC",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "bit/s",
+                "unit_v2": "bit/s(SI)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Packet/s",
+                "unit_v2": "packet/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Packet",
+                "unit_v2": "packet"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.CDN",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "bit/s",
+                "unit_v2": "bit/s(SI)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte",
+                "unit_v2": "Byte(IEC)"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.CloudTable",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "GB",
+                "unit_v2": "GiB"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "MB",
+                "unit_v2": "MiB"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "KB/s",
+                "unit_v2": "KiB/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "doris_be_cache_usage_LastestSuccessChannelCache",
+                "unit": "",
+                "unit_v2": "%"
+            },
+            {
+                "metric_name": "doris_be_cache_usage_DataPageCache",
+                "unit": "",
+                "unit_v2": "%"
+            },
+            {
+                "metric_name": "doris_be_cache_usage_IndexPageCache",
+                "unit": "",
+                "unit_v2": "%"
+            },
+            {
+                "metric_name": "doris_be_cache_usage_SegmentCache",
+                "unit": "",
+                "unit_v2": "%"
+            },
+            {
+                "metric_name": "*",
+                "unit": "us",
+                "unit_v2": "μs"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Request/s",
+                "unit_v2": "request/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Bytes",
+                "unit_v2": "Byte(IEC)"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.DCAAS",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "Packet",
+                "unit_v2": "packet"
+            },
+            {
+                "metric_name": "*",
+                "unit": "bit/s",
+                "unit_v2": "bit/s(SI)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte",
+                "unit_v2": "Byte(SI)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Packet/s",
+                "unit_v2": "packet/s"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.DCS",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "KB/s",
+                "unit_v2": "KiB/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Packet/s",
+                "unit_v2": "packet/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count/s",
+                "unit_v2": "count/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Requests/s",
+                "unit_v2": "request/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "cnt",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "bytes",
+                "unit_v2": "Byte(IEC)"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.DDOS",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Kbps",
+                "unit_v2": "Kbit/s"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.DDS",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count/s",
+                "unit_v2": "count/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "MB",
+                "unit_v2": "MiB"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "h",
+                "unit_v2": "hour"
+            },
+            {
+                "metric_name": "*",
+                "unit": "MB/h",
+                "unit_v2": "MiB/h"
+            },
+            {
+                "metric_name": "*",
+                "unit": "GB",
+                "unit_v2": "GiB"
+            },
+            {
+                "metric_name": "*",
+                "unit": "times",
+                "unit_v2": "count"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.DMS",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count/s",
+                "unit_v2": "count/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count/min",
+                "unit_v2": "count/min"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "GB",
+                "unit_v2": "GiB"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.ECS",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Request/s",
+                "unit_v2": "request/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Packet",
+                "unit_v2": "packet"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Packet/s",
+                "unit_v2": "packet/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Credit",
+                "unit_v2": "credit"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "connect/s",
+                "unit_v2": "count/s"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.ELB",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "bit/s",
+                "unit_v2": "bit/s(SI)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count/s",
+                "unit_v2": "count/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte/s",
+                "unit_v2": "Byte/s(SI)"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.EVS",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Request/s",
+                "unit_v2": "request/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "KB/op",
+                "unit_v2": "KiB/op"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.GAUSSDBV5",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "kb",
+                "unit_v2": "KiB"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "MB",
+                "unit_v2": "MiB"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "GB",
+                "unit_v2": "GiB"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count/s",
+                "unit_v2": "count/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "µs",
+                "unit_v2": "μs"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.GEIP",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "byte",
+                "unit_v2": "Byte(SI)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "bit/s",
+                "unit_v2": "bit/s(SI)"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.NAT",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "bit/s",
+                "unit_v2": "bit/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte",
+                "unit_v2": "Byte(IEC)"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.NoSQL",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "Counts/s",
+                "unit_v2": "count/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "GB",
+                "unit_v2": "GiB"
+            },
+            {
+                "metric_name": "redis823_cluster_persist_key_num",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis826_disk_iops",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Bytes/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "redis832_cluster_dbcache_binlog_delay",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis817_slow_query_count",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis809_processed_command_count",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis810_max_connect_count",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis811_cluster_max_connect_count",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis812_cluster_processed_command_count",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis813_cluster_slow_query_count",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis798_cluster_expire_key_counts",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Bytes",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "redis800_cluster_max_request_argc",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis802_cluster_max_response_argc",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "us",
+                "unit_v2": "μs"
+            },
+            {
+                "metric_name": "redis807_cluster_all_connection_count",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis808_cluster_new_client_connection",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "bytes/Second",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "counts/s",
+                "unit_v2": "count/s"
+            },
+            {
+                "metric_name": "influxdb007_connection_num",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "influxdb009_slow_queries_num",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "nosql003_bytes_out",
+                "unit": "byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "nosql004_bytes_in",
+                "unit": "byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "hbase014_serverreadquerypersecond_1min_rate",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "hbase015_serverwritequerypersecond_1min_rate",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "hbase026_writerequestcount",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "hbase029_append_num_ops",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "hbase030_scansize_num_ops",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "hbase031_put_num_ops",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "hbase032_checkandput_num_ops",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "hbase033_increment_num_ops",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "hbase035_flushmemstoresize_num_ops",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "hbase037_totalrequestcount",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "hbase038_slowincrementcount",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "hbase039_slowgetcount",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "hbase040_slowputcount",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "hbase041_slowdeletecount",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "hbase042_slowappendcount",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis671_new_client_connection",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis672_no_auth",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis673_wrong_auth",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis674_max_pipelined",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis676_max_request_argc",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis678_max_response_argc",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Counts/Second",
+                "unit_v2": "count/s"
+            },
+            {
+                "metric_name": "redis668_cluster_key_counts",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count/s",
+                "unit_v2": "count/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "MB",
+                "unit_v2": "MiB"
+            },
+            {
+                "metric_name": "cassandra003_bytes_out",
+                "unit": "byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "cassandra004_bytes_in",
+                "unit": "byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "cassandra037_pending_write",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "cassandra038_pending_read",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "cassandra049_dropped_mutation",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "cassandra052_dropped_read",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "cassandra093_write_count_latency",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "cassandra098_read_count_latency",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "cassandra103_range_slice_count_latency",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "cassandra165_large_partition_num",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "influxdb001_series_num",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "influxdb005_write_concurrency",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "influxdb006_query_concurrency",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "cassandra168_imbalance_table_num",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis017_proxy_accept",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "redis032_shard_qps",
+                "unit": "Counts",
+                "unit_v2": "count/s"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.OBS",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "Count/s",
+                "unit_v2": "count/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Bytes",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "download_bytes",
+                "unit": "byte",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "download_traffic",
+                "unit": "byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "download_traffic_extranet",
+                "unit": "byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "download_traffic_intranet",
+                "unit": "byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Bytes/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Mb",
+                "unit_v2": "Mibit"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "upload_bytes",
+                "unit": "byte",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "upload_traffic",
+                "unit": "byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "upload_traffic_extranet",
+                "unit": "byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "upload_traffic_intranet",
+                "unit": "byte",
+                "unit_v2": "Byte(IEC)"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.RDS",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "Counts",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count/min",
+                "unit_v2": "count/min"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte/min",
+                "unit_v2": "Byte/min(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "GB",
+                "unit_v2": "GiB"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "KB/s",
+                "unit_v2": "KiB/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "MB",
+                "unit_v2": "MiB"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Row/s",
+                "unit_v2": "count/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count/s",
+                "unit_v2": "count/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "MB/s",
+                "unit_v2": "MiB/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "ratio",
+                "unit_v2": "%"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.VPC",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "bit/s",
+                "unit_v2": "bit/s(SI)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "pps",
+                "unit_v2": "packet/s"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte",
+                "unit_v2": "Byte(SI)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte/s",
+                "unit_v2": "Byte/s(SI)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte",
+                "unit_v2": "Byte(SI)"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.WAF",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte",
+                "unit_v2": "Byte(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte/s",
+                "unit_v2": "Byte/s(IEC)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Packet/s",
+                "unit_v2": "packet/s"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.HSS",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            }
+        ]
+    },
+    {
+        "namespace": "SYS.CFW",
+        "units": [
+            {
+                "metric_name": "*",
+                "unit": "Bit/s",
+                "unit_v2": "bit/s(SI)"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Count",
+                "unit_v2": "count"
+            },
+            {
+                "metric_name": "*",
+                "unit": "Byte",
+                "unit_v2": "Byte(SI)"
+            }
+        ]
+    }
+]

@@ -14,3 +14,7 @@
 |fw_instance_id<br>（云防火墙实例）|acl_deny_count|ACL规则阻断次数|个|
 |fw_instance_id<br>（云防火墙实例）|protection_bandwidth_usage|防护带宽使用率|%|
 |fw_instance_id<br>（云防火墙实例）|vpc_protection_bandwidth_usage|VPC间防护带宽使用量|Bit/s|
+|fw_instance_id<br>（云防火墙实例）|internet_protection_traffic|互联网防护流量|Bit|
+|fw_instance_id<br>（云防火墙实例）|vpc_protection_traffic|VPC间防护流量|Bit|
+|fw_instance_id<br>（云防火墙实例）|internet_protection_traffic_inbound|互联网入网防护流量|Bit|
+|fw_instance_id<br>（云防火墙实例）|internet_protection_traffic_outbound|互联网出网防护流量|Bit|

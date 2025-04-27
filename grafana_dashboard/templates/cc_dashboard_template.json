@@ -15,7 +15,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.4.1"
+      "version": "11.3.1"
     },
     {
       "type": "datasource",
@@ -70,6 +70,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -132,6 +133,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -167,6 +169,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -206,7 +209,7 @@
               }
             ]
           },
-          "unit": "binBps"
+          "unit": "bps"
         },
         "overrides": []
       },
@@ -229,6 +232,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -251,7 +255,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "网络流出带宽-云连接：云连接域间出站数据的比特率",
+      "description": "网络流入带宽-云连接：云连接域间入站数据的比特率",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -264,6 +268,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -303,7 +308,7 @@
               }
             ]
           },
-          "unit": "binBps"
+          "unit": "bps"
         },
         "overrides": []
       },
@@ -326,6 +331,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -333,14 +339,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_cc_network_outgoing_bits_rate{connectionEpId=~\"$EPS\"}",
+          "expr": "huaweicloud_sys_cc_network_incoming_bits_rate{connectionEpId=~\"$EPS\"}",
           "instant": false,
           "legendFormat": "连接名称：{{connectionName}}；带宽包名：{{packageName}}；域间带宽信息：{{interRegions}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "网络流出带宽",
+      "title": "网络流入带宽",
       "type": "timeseries"
     },
     {
@@ -348,7 +354,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "网络流入带宽-云连接：云连接域间入站数据的比特率",
+      "description": "网络流出带宽-云连接：云连接域间出站数据的比特率",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -361,6 +367,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -400,7 +407,7 @@
               }
             ]
           },
-          "unit": "binBps"
+          "unit": "bps"
         },
         "overrides": []
       },
@@ -423,6 +430,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -430,14 +438,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_cc_network_incoming_bits_rate{connectionEpId=~\"$EPS\"}",
+          "expr": "huaweicloud_sys_cc_network_outgoing_bits_rate{connectionEpId=~\"$EPS\"}",
           "instant": false,
           "legendFormat": "连接名称：{{connectionName}}；带宽包名：{{packageName}}；域间带宽信息：{{interRegions}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "网络流入带宽",
+      "title": "网络流出带宽",
       "type": "timeseries"
     },
     {
@@ -458,6 +466,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -520,6 +529,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -555,6 +565,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -617,6 +628,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -652,6 +664,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -714,6 +727,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -749,6 +763,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -811,6 +826,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -846,6 +862,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -908,6 +925,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -943,6 +961,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1005,6 +1024,7 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.3.1",
       "targets": [
         {
           "datasource": {
@@ -1023,7 +1043,8 @@
       "type": "timeseries"
     }
   ],
-  "schemaVersion": 39,
+  "refresh": "5s",
+  "schemaVersion": 40,
   "tags": [],
   "templating": {
     "list": [
@@ -1034,10 +1055,8 @@
           "uid": "${DS_PROMETHEUS}"
         },
         "definition": "huaweicloud_epinfo",
-        "hide": 0,
         "includeAll": false,
         "label": "企业项目",
-        "multi": false,
         "name": "EPS",
         "options": [],
         "query": {
@@ -1047,8 +1066,6 @@
         },
         "refresh": 1,
         "regex": "/epName=\"(?<text>[^\"]+)|epId=\"(?<value>[^\"]+)/g",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       }
     ]
@@ -1060,7 +1077,7 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "云连接(CC)",
-  "uid": "feezz159k04qoe",
-  "version": 2,
+  "uid": "feezz159k04qoe1",
+  "version": 5,
   "weekStart": ""
 }

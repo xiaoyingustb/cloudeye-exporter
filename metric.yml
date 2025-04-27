@@ -1441,7 +1441,6 @@ SYS.NoSQL:
       - redis833_cluster_dbcache_replication_delay
       - redis834_cluster_dbcache_recv_bps
     redis_cluster_id,redis_node_id:
-      - gemini001_cpu_usage
       - redis661_rsync_ops
       - redis669_connection_usage
       - nosql001_cpu_usage
@@ -2284,6 +2283,10 @@ SYS.CFW:
       - acl_deny_count
       - protection_bandwidth_usage
       - vpc_protection_bandwidth_usage
+      - internet_protection_traffic
+      - vpc_protection_traffic
+      - internet_protection_traffic_inbound
+      - internet_protection_traffic_outbound
 SYS.CDN:
   dim_metric_name:
     domain_name:
@@ -2875,3 +2878,10 @@ SYS.ER:
       - attachment_packets_drop_noroute
       - attachment_packets_in
       - attachment_packets_out
+SYS.GCB:
+  resource: "service"
+  dim_metric_name:
+    gcb_id:
+      - network_bytes
+      - network_bandwidth
+      - network_bandwidth_usage

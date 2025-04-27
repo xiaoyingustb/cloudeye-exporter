@@ -1,24 +1,69 @@
 {
   "__inputs": [
     {
-      "name": "DS_3VI-GAUSS-TEST-PROMETHEUS",
-      "label": "3vi-gauss-test-prometheus",
+      "name": "DS_PROMETHEUS",
+      "label": "prometheus",
       "description": "",
       "type": "datasource",
       "pluginId": "prometheus",
       "pluginName": "Prometheus"
     }
   ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.4.1"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph (old)",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
   "description": "【华为云GAUSSDB（for MySql）监控指标说明】https://support.huaweicloud.com/usermanual-gaussdbformysql/gaussdbformysql_03_0085.html",
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1722560228277,
   "links": [],
   "panels": [
     {
-      "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -27,8 +72,12 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "color-background",
-            "filterable": false
+            "cellOptions": {
+              "mode": "gradient",
+              "type": "color-background"
+            },
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -56,20 +105,15 @@
                 "id": "mappings",
                 "value": [
                   {
-                    "from": "",
-                    "id": 1,
-                    "text": "是",
-                    "to": "",
-                    "type": 1,
-                    "value": "master"
-                  },
-                  {
-                    "from": "",
-                    "id": 2,
-                    "text": "否",
-                    "to": "",
-                    "type": 1,
-                    "value": "slave"
+                    "options": {
+                      "master": {
+                        "text": "是"
+                      },
+                      "slave": {
+                        "text": "否"
+                      }
+                    },
+                    "type": "value"
                   }
                 ]
               }
@@ -126,7 +170,7 @@
             "properties": [
               {
                 "id": "unit",
-                "value": "Bps"
+                "value": "binBps"
               },
               {
                 "id": "custom.width",
@@ -153,7 +197,7 @@
             "properties": [
               {
                 "id": "unit",
-                "value": "Bps"
+                "value": "binBps"
               },
               {
                 "id": "custom.width",
@@ -312,10 +356,13 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "7.5.17",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql001_cpu_util{epId=~\"$EPS\"}",
@@ -327,7 +374,10 @@
           "refId": "A"
         },
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql002_mem_util{epId=~\"$EPS\"}",
@@ -339,7 +389,10 @@
           "refId": "B"
         },
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql004_bytes_in{epId=~\"$EPS\"}",
@@ -351,7 +404,10 @@
           "refId": "C"
         },
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql005_bytes_out{epId=~\"$EPS\"}",
@@ -363,7 +419,10 @@
           "refId": "D"
         },
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql006_conn_count{epId=~\"$EPS\"}",
@@ -375,7 +434,10 @@
           "refId": "E"
         },
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "exemplar": false,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql007_conn_active_count{epId=~\"$EPS\"}",
@@ -443,8 +505,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
-      "decimals": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "云数据库GaussDB（for mysql）：该指标用于统计测量对象的CPU利用率",
       "fieldConfig": {
         "defaults": {
@@ -482,7 +546,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.17",
+      "pluginVersion": "10.4.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -492,7 +556,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "exemplar": true,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql001_cpu_util{epId=~\"$EPS\"} - 0",
           "interval": "",
@@ -501,9 +568,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "CPU使用率",
       "tooltip": {
         "shared": true,
@@ -512,33 +577,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "percent",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -546,7 +602,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "云数据库GaussDB（for mysql）：该指标用于统计测量对象的内存利用率",
       "fieldConfig": {
         "defaults": {
@@ -581,7 +640,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.17",
+      "pluginVersion": "10.4.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -591,7 +650,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "exemplar": true,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql002_mem_util{epId=~\"$EPS\"} - 0",
           "interval": "",
@@ -600,9 +662,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "内存使用率",
       "tooltip": {
         "shared": true,
@@ -611,33 +671,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "percent",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -645,12 +696,13 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "云数据库GaussDB（for mysql）：该指标用于统计平均每秒从测量对象的所有网络适配器输入的流量",
       "fieldConfig": {
-        "defaults": {
-          "unit": "Bps"
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -680,7 +732,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.17",
+      "pluginVersion": "10.4.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -690,7 +742,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "exemplar": true,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql004_bytes_in{epId=~\"$EPS\"} - 0",
           "interval": "",
@@ -699,9 +754,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "网络输入吞吐量",
       "tooltip": {
         "shared": true,
@@ -710,33 +763,26 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
-          "format": "Bps",
-          "label": null,
+          "$$hashKey": "object:165",
+          "format": "binBps",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
+          "$$hashKey": "object:166",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -744,12 +790,13 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "云数据库GaussDB（for mysql）：该指标用于统计平均每秒从测量对象的所有网络适配器输出的流量",
       "fieldConfig": {
-        "defaults": {
-          "unit": "Bps"
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -779,7 +826,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.17",
+      "pluginVersion": "10.4.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -789,7 +836,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "exemplar": true,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql005_bytes_out{epId=~\"$EPS\"} - 0",
           "interval": "",
@@ -798,9 +848,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "网络输出吞吐量",
       "tooltip": {
         "shared": true,
@@ -809,33 +857,26 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
-          "format": "Bps",
-          "label": null,
+          "$$hashKey": "object:274",
+          "format": "binBps",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
+          "$$hashKey": "object:275",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -843,7 +884,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "云数据库GaussDB（for mysql）：该指标用于统计连接到MySQL服务器的总连接数",
       "fieldConfig": {
         "defaults": {
@@ -878,7 +922,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.17",
+      "pluginVersion": "10.4.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -888,7 +932,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "exemplar": true,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql006_conn_count{epId=~\"$EPS\"} - 0",
           "interval": "",
@@ -897,9 +944,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "数据库总连接数",
       "tooltip": {
         "shared": true,
@@ -908,33 +953,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "none",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -942,7 +978,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "云数据库GaussDB（for mysql）：该指标用于统计当前活跃的连接数",
       "fieldConfig": {
         "defaults": {
@@ -977,7 +1016,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.17",
+      "pluginVersion": "10.4.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -987,7 +1026,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "exemplar": true,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql007_conn_active_count{epId=~\"$EPS\"} - 0",
           "interval": "",
@@ -996,9 +1038,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "当前活跃连接数",
       "tooltip": {
         "shared": true,
@@ -1007,33 +1047,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "none",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1041,7 +1072,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "云数据库GaussDB（for mysql）：该指标用于统计事务执行次数，含提交的和回退的",
       "fieldConfig": {
         "defaults": {
@@ -1076,7 +1110,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.17",
+      "pluginVersion": "10.4.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1086,7 +1120,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "exemplar": true,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql009_tps{epId=~\"$EPS\"} - 0",
           "interval": "",
@@ -1095,9 +1132,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "事务执行频次",
       "tooltip": {
         "shared": true,
@@ -1106,33 +1141,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "次/秒",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1140,7 +1166,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "云数据库GaussDB（for mysql）：该指标用于统计数据库每秒执行select SQL语句数",
       "fieldConfig": {
         "defaults": {
@@ -1175,7 +1204,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.17",
+      "pluginVersion": "10.4.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1185,7 +1214,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "exemplar": true,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql008_qps{epId=~\"$EPS\"} - 0",
           "interval": "",
@@ -1194,9 +1226,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "query语句执行频率",
       "tooltip": {
         "shared": true,
@@ -1205,33 +1235,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "次/秒",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1239,7 +1260,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "云数据库GaussDB（for mysql）：该指标用于统计平均每秒Insert语句执行次数",
       "fieldConfig": {
         "defaults": {
@@ -1274,7 +1298,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.17",
+      "pluginVersion": "10.4.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1284,7 +1308,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "exemplar": true,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql029_comdml_ins_count{epId=~\"$EPS\"} - 0",
           "interval": "",
@@ -1293,9 +1320,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Insert语句执行频率",
       "tooltip": {
         "shared": true,
@@ -1304,33 +1329,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "次/秒",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1338,7 +1354,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "云数据库GaussDB（for mysql）：该指标用于统计平均每秒Delete语句执行次数",
       "fieldConfig": {
         "defaults": {
@@ -1373,7 +1392,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.17",
+      "pluginVersion": "10.4.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1383,7 +1402,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "exemplar": true,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql028_comdml_del_count{epId=~\"$EPS\"} - 0",
           "interval": "",
@@ -1392,9 +1414,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Delete语句执行频率",
       "tooltip": {
         "shared": true,
@@ -1403,33 +1423,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "次/秒",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1437,7 +1448,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "云数据库GaussDB（for mysql）：该指标用于统计平均每秒Update语句执行次数",
       "fieldConfig": {
         "defaults": {
@@ -1472,7 +1486,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.17",
+      "pluginVersion": "10.4.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1482,7 +1496,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "exemplar": true,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql034_comdml_upd_count{epId=~\"$EPS\"} - 0",
           "interval": "",
@@ -1491,9 +1508,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Update语句执行频率",
       "tooltip": {
         "shared": true,
@@ -1502,33 +1517,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "次/秒",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1536,7 +1542,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "云数据库GaussDB（for mysql）：该指标用于展示每分钟MySQL产生慢日志的数量",
       "fieldConfig": {
         "defaults": {
@@ -1571,7 +1580,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.17",
+      "pluginVersion": "10.4.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1581,7 +1590,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "exemplar": true,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql074_slow_queries{epId=~\"$EPS\"} - 0",
           "interval": "",
@@ -1590,9 +1602,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "慢日志个数统计",
       "tooltip": {
         "shared": true,
@@ -1601,33 +1611,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "个/分钟",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1635,7 +1636,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "云数据库GaussDB（for mysql）：该指标用于统计IO写入的IOPS。",
       "fieldConfig": {
         "defaults": {
@@ -1670,7 +1674,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.17",
+      "pluginVersion": "10.4.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1680,7 +1684,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "exemplar": true,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql342_iostat_iops_write{epId=~\"$EPS\"} - 0",
           "interval": "",
@@ -1689,9 +1696,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "IO写IOPS",
       "tooltip": {
         "shared": true,
@@ -1700,33 +1705,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "cps",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1734,7 +1730,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "description": "云数据库GaussDB（for mysql）：该指标用于统计IO读取的IOPS。",
       "fieldConfig": {
         "defaults": {
@@ -1769,7 +1768,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.17",
+      "pluginVersion": "10.4.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1779,7 +1778,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "exemplar": true,
           "expr": "huaweicloud_sys_gaussdb_gaussdb_mysql344_iostat_iops_read{epId=~\"$EPS\"} - 0",
           "interval": "",
@@ -1788,9 +1790,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "IO读IOPS",
       "tooltip": {
         "shared": true,
@@ -1799,49 +1799,39 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "cps",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     }
   ],
   "refresh": false,
-  "schemaVersion": 27,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "huaweicloud_epinfo",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "企业项目",
@@ -1857,21 +1847,19 @@
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_3VI-GAUSS-TEST-PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
         "definition": "query_result(count(huaweicloud_sys_gaussdb_gaussdb_mysql001_cpu_util{epId=~\"$EPS\"}))",
-        "description": null,
-        "error": null,
         "hide": 2,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "total",
         "options": [],
@@ -1884,7 +1872,6 @@
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -1899,5 +1886,6 @@
   "timezone": "",
   "title": "GaussDB For Mysql",
   "uid": "PkQqyyUSa",
-  "version": 2
+  "version": 2,
+  "weekStart": ""
 }

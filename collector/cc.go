@@ -71,19 +71,15 @@ func buildResourceInfoAndMetrics(metricNames []string, connections map[string]mo
 		}
 		var info labelInfo
 		connectionName, connectionValue := getConnectionInfo(connections, bandwidth.CloudConnectionId)
-		info.Name = append(info.Name, connectionName...)
-		info.Value = append(info.Value, connectionValue...)
+		info = appendNameValuePairToLabelInfo(info, connectionName, connectionValue)
 
 		pkgName, pkgValue := getBandwidthPackageInfo(packages, bandwidth.BandwidthPackageId)
-		info.Name = append(info.Name, pkgName...)
-		info.Value = append(info.Value, pkgValue...)
+		info = appendNameValuePairToLabelInfo(info, pkgName, pkgValue)
 
 		var regionBandWidthIds []string
 		if bandwidth.InterRegions != nil && len(*bandwidth.InterRegions) != 0 {
 			info.Name = append(info.Name, "interRegions", "bandwidthName")
-			info.Value = append(info.Value, fmt.Sprintf("%s<->%s",
-				getDefaultString((*bandwidth.InterRegions)[0].LocalRegionId), getDefaultString((*bandwidth.InterRegions)[0].RemoteRegionId)),
-				getDefaultString(&bandwidth.Name))
+			info.Value = append(info.Value, getInterRegionsInfo(bandwidth), getDefaultString(&bandwidth.Name))
 			for _, interRegion := range *bandwidth.InterRegions {
 				regionBandWidthIds = append(regionBandWidthIds, interRegion.Id)
 			}
@@ -101,10 +97,37 @@ func buildResourceInfoAndMetrics(metricNames []string, connections map[string]mo
 	return resourceInfos, filterMetrics
 }
 
+func getInterRegionsInfo(bandwidth model.InterRegionBandwidth) string {
+	if bandwidth.InterRegions == nil || len(*bandwidth.InterRegions) == 0 {
+		return ""
+	}
+	var localRegionId string
+	var remoteRegionId string
+	for _, interRegion := range *bandwidth.InterRegions {
+		if *interRegion.LocalRegionId == conf.Region {
+			localRegionId = getDefaultString(interRegion.LocalRegionId)
+			remoteRegionId = getDefaultString(interRegion.RemoteRegionId)
+			break
+		}
+	}
+	if localRegionId == "" && remoteRegionId == "" {
+		localRegionId = getDefaultString((*bandwidth.InterRegions)[0].LocalRegionId)
+		remoteRegionId = getDefaultString((*bandwidth.InterRegions)[0].RemoteRegionId)
+	}
+	return fmt.Sprintf("%s->%s", localRegionId, remoteRegionId)
+}
+
 func getConnectionInfo(connections map[string]model.CloudConnection, connectionId string) ([]string, []string) {
 	connection, ok := connections[connectionId]
 	if ok {
-		return []string{"connectionName", "connectionEpId"}, []string{connection.Name, *connection.EnterpriseProjectId}
+		names := []string{"connectionName", "connectionEpId"}
+		values := []string{connection.Name, *connection.EnterpriseProjectId}
+		if connection.Tags != nil {
+			tagKeys, tagValues := getTags(fmtTags(connection.Tags))
+			names = append(names, tagKeys...)
+			values = append(values, tagValues...)
+		}
+		return names, values
 	}
 	return nil, nil
 }

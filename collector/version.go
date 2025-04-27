@@ -1,5 +1,5 @@
 package collector
 
 const (
-	Version = "v2.0.16.1"
+	Version = "v2.0.17"
 )
