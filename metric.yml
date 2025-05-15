@@ -273,6 +273,7 @@ SYS.DCAAS:
       - latency
       - packet_loss_rate
       - network_status
+      - in_errors
     virtual_interface_id:
       - network_incoming_bits_rate
       - network_outgoing_bits_rate
@@ -409,6 +410,75 @@ SYS.ES:
       - IndexingRate
       - SearchLatency
       - SearchRate
+      - sum_thread_pool_flush_queue
+      - sum_thread_pool_flush_rejected
+      - max_thread_pool_flush_queue
+      - sum_thread_pool_flush_threads
+      - avg_thread_pool_flush_queue
+      - avg_thread_pool_flush_threads
+      - sum_thread_pool_generic_queue
+      - sum_thread_pool_generic_rejected
+      - max_thread_pool_generic_queue
+      - sum_thread_pool_generic_threads
+      - avg_thread_pool_generic_queue
+      - avg_thread_pool_generic_threads
+      - sum_thread_pool_management_queue
+      - sum_thread_pool_management_rejected
+      - max_thread_pool_management_queue
+      - sum_thread_pool_management_threads
+      - avg_thread_pool_management_queue
+      - avg_thread_pool_management_threads
+      - sum_thread_pool_refresh_queue
+      - sum_thread_pool_refresh_rejected
+      - max_thread_pool_refresh_queue
+      - sum_thread_pool_refresh_threads
+      - avg_thread_pool_refresh_queue
+      - avg_thread_pool_refresh_threads
+      - sum_thread_pool_obs_searcher_queue
+      - sum_thread_pool_obs_searcher_rejected
+      - max_thread_pool_obs_searcher_queue
+      - sum_thread_pool_obs_searcher_threads
+      - avg_thread_pool_obs_searcher_queue
+      - avg_thread_pool_obs_searcher_threads
+      - sum_thread_pool_obs_queue
+      - sum_thread_pool_obs_rejected
+      - max_thread_pool_obs_queue
+      - sum_thread_pool_obs_threads
+      - avg_thread_pool_obs_queue
+      - avg_thread_pool_obs_threads
+      - sum_thread_pool_obs_upload_queue
+      - sum_thread_pool_obs_upload_rejected
+      - max_thread_pool_obs_upload_queue
+      - sum_thread_pool_obs_upload_threads
+      - avg_thread_pool_obs_upload_queue
+      - avg_thread_pool_obs_upload_threads
+      - sum_thread_pool_obs_download_queue
+      - sum_thread_pool_obs_download_rejected
+      - max_thread_pool_obs_download_queue
+      - sum_thread_pool_obs_download_threads
+      - avg_thread_pool_obs_download_queue
+      - avg_thread_pool_obs_download_threads
+      - task_max_running_time
+      - number_of_pending_tasks
+      - sum_disk_read_requests_rate
+      - sum_disk_write_requests_rate
+      - sum_disk_read_bytes_rate
+      - sum_disk_write_bytes_rate
+      - avg_vector_index_off_heap_used_in_bytes
+      - avg_vector_index_off_heap_usage
+      - max_vector_index_off_heap_used_in_bytes
+      - max_vector_index_off_heap_usage
+      - vector_index_circuit_breaker_status
+      - request_count
+      - successfully_request_count
+      - failed_request_count
+      - limited_request_count
+      - cold_data_storage
+      - number_of_index_creation_failures
+      - shard_doc_exceed_threshold_count
+      - sum_events_in
+      - sum_events_filtered
+      - sum_events_out
     'cluster_id,instance_id':
       - load_average
       - cpu_usage
@@ -442,6 +512,41 @@ SYS.ES:
       - mem_used_in_bytes
       - current_opened_http_count
       - total_opened_http_count
+      - disk_util
+      - thread_pool_flush_queue
+      - thread_pool_flush_rejected
+      - thread_pool_flush_threads
+      - thread_pool_generic_queue
+      - thread_pool_generic_rejected
+      - thread_pool_generic_threads
+      - thread_pool_management_queue
+      - thread_pool_management_rejected
+      - thread_pool_management_threads
+      - thread_pool_refresh_queue
+      - thread_pool_refresh_rejected
+      - thread_pool_refresh_threads
+      - thread_pool_obs_searcher_queue
+      - thread_pool_obs_searcher_rejected
+      - thread_pool_obs_searcher_threads
+      - thread_pool_obs_queue
+      - thread_pool_obs_rejected
+      - thread_pool_obs_threads
+      - thread_pool_obs_upload_queue
+      - thread_pool_obs_upload_rejected
+      - thread_pool_obs_upload_threads
+      - thread_pool_obs_download_queue
+      - thread_pool_obs_download_rejected
+      - thread_pool_obs_download_threads
+      - disk_read_requests_rate
+      - disk_write_requests_rate
+      - disk_read_bytes_rate
+      - disk_write_bytes_rate
+      - shards_count
+      - vector_index_off_heap_used_in_bytes
+      - vector_index_off_heap_usage
+      - events_in
+      - events_filtered
+      - events_out
 SYS.RDS:
   resource: "rms"
   dim_metric_name:
@@ -527,6 +632,7 @@ SYS.RDS:
       - rds_long_transaction
       - rds_mdl_lock_count
       - iops_usage
+      - rds_threadpool_waiting_threads
     postgresql_cluster_id:
       - rds001_cpu_util
       - rds002_mem_util
@@ -632,6 +738,8 @@ SYS.RDS:
       - mssql_lazy_write_per_sec
       - mssql_page_life_expectancy
       - mssql_page_reads_per_sec
+      - mssql_worker_threads_usage_rate
+      - mssql_tempdb_disk_size
 SYS.ELB:
   dim_metric_name:
     lbaas_instance_id:
@@ -711,6 +819,15 @@ SYS.ELB:
       - dropped_traffic
       - dropped_packets
       - dropped_connections
+      - client_tls_negotiation_error
+      - upstream_tls_negotiation_error
+      - l7_2xx_ratio
+      - l7_4xx_ratio
+      - l7_5xx_ratio
+      - mirror_in_traffic
+      - mirror_out_traffic
+      - mirror_in_packets
+      - mirror_out_packets
     'lbaas_instance_id,lbaas_listener_id':
       - m1_cps
       - m2_act_conn
@@ -772,6 +889,15 @@ SYS.ELB:
       - elb_http_400
       - elb_http_3xx
       - elb_http_2xx
+      - client_tls_negotiation_error
+      - upstream_tls_negotiation_error
+      - l7_2xx_ratio
+      - l7_4xx_ratio
+      - l7_5xx_ratio
+      - mirror_in_traffic
+      - mirror_out_traffic
+      - mirror_in_packets
+      - mirror_out_packets
     'lbaas_instance_id,lbaas_pool_id':
       - m9_abnormal_servers
       - ma_normal_servers
@@ -788,6 +914,17 @@ SYS.ELB:
       - m17_l7_upstream_rt_p99
       - m24_l7_req_Bps
       - m25_l7_resp_Bps
+      - upstream_tls_negotiation_error
+      - l7_upstream_101
+      - l7_upstream_400
+      - l7_upstream_403
+      - l7_upstream_404
+      - l7_upstream_500
+      - l7_upstream_501
+      - l7_upstream_502
+      - l7_upstream_503
+      - l7_upstream_504
+      - l7_upstream_other_status
     'lbaas_instance_id,available_zone':
       - m1_cps
       - m2_act_conn
@@ -900,6 +1037,16 @@ SYS.GAUSSDB:
     - gaussdb_mysql126_table_open_cache_hits
     - gaussdb_mysql127_table_open_cache_misses
     - gaussdb_mysql128_long_trx_count
+    - gaussdb_mysql060_rx_errors
+    - gaussdb_mysql061_rx_dropped
+    - gaussdb_mysql062_tx_errors
+    - gaussdb_mysql063_tx_dropped
+    - gaussdb_mysql371_taurus_binlog_total_file_counts
+    - gaussdb_mysql378_create_temp_tbl_per_min
+    - gaussdb_mysql386_undo_spaces_trx_count
+    - gaussdb_mysql348_taurus_throttle_slice_num
+    - gaussdb_mysql339_taurus_sal_flow_control_instance_read_page_throttle
+    - gaussdb_mysql430_taurus_innodb_rpl_millisecond_behind_master
     'gaussdb_mysql_ha_id,gaussdb_mysql_ha_node_id':
     - rds001_cpu_util
     - rds002_mem_util
@@ -1001,6 +1148,13 @@ SYS.GAUSSDBV5:
       - rds017_disk_read_throughput
       - rds020_avg_disk_ms_per_write
       - rds021_avg_disk_ms_per_read
+      - io_bandwidth_usage
+      - iops_usage
+      - rds068_swap_used_ratio
+      - rds069_swap_total_size
+      - rds084_sys_database_size
+      - rds085_user_database_size
+      - retrans_rate
 SYS.DBPROXY:
   dim_metric_name:
     dbproxy_instance_id,dbproxy_node_id:
@@ -1037,6 +1191,13 @@ SYS.NAT:
       - package_drop_count_eip_port_alloc_beyond
       - package_drop_count_pps_beyond
       - package_drop_count_snat_connection_beyond
+      - total_inbound_tcp_bandwidth
+      - total_inbound_udp_bandwidth
+      - packets_drop_count_snat_connection_beyond
+      - packets_drop_count_pps_beyond
+      - total_outbound_tcp_bandwidth
+      - total_outbound_udp_bandwidth
+      - packets_drop_count_eip_port_alloc_beyond
 SYS.AS:
   dim_metric_name:
     AutoScalingGroup:
@@ -1067,6 +1228,17 @@ SYS.FunctionGraph:
       - minDuration
       - concurrency
       - reservedinstancenum
+      - duration_p950
+      - duration_p999
+      - duration_p800
+      - functionCost
+      - duration_p990
+      - functionErrorCount
+      - failRate
+      - memoryUsed
+      - systemErrorCount
+      - duration_p500
+      - payPerUseInstance
 SYS.DRS:
   dim_metric_name:
     instance_id:
@@ -1089,6 +1261,8 @@ SYS.DRS:
       - apply_average_commit_time
       - apply_current_state
       - apply_thread_workers
+      - apply_job_status
+      - apply_ddls_number
 SYS.DDS:
   dim_metric_name:
     mongodb_instance_id:
@@ -1190,6 +1364,25 @@ SYS.DDS:
       - mongo091_active_session_count
       - io_bandwidth_usage
       - iops_usage
+      - mongo092_rx_errors
+      - mongo093_rx_dropped
+      - mongo094_tx_errors
+      - mongo095_tx_dropped
+      - mongo096_retrans_segs
+      - mongo097_retrans_rate
+      - mongo098_out_rsts_nums
+      - mongo099_read_time_average
+      - mongo100_read_time_p99
+      - mongo101_read_time_p999
+      - mongo102_write_time_average
+      - mongo103_write_time_p99
+      - mongo104_write_time_p999
+      - mongo105_command_time_average
+      - mongo106_command_time_p99
+      - mongo107_command_time_p999
+      - mongo108_txn_time_average
+      - mongo109_txn_time_p99
+      - mongo110_txn_time_p999
 SYS.APIG:
   dim_metric_name:
     api_id:
@@ -1266,6 +1459,7 @@ SYS.WAF:
       - inbound_traffic_mean
       - outbound_traffic_peak
       - outbound_traffic_mean
+      - white_black_ip_protection_counts
 SYS.DLI:
   dim_metric_name:
     queue_id:
@@ -1280,6 +1474,10 @@ SYS.DLI:
       - queue_cu_num
       - queue_mem_used
       - queue_disk_used
+      - queue_alloc_cu_num
+      - queue_min_cu_num
+      - queue_priority
+      - queue_max_cu_num
     flink_job_id:
       - flink_read_records_per_second
       - flink_write_records_per_second
@@ -1325,6 +1523,8 @@ SYS.EFS:
       - iops
       - used_capacity
       - used_capacity_percent
+      - used_inode
+      - used_inode_percent
 SYS.CDM:
   dim_metric_name:
     instance_id:
@@ -1341,6 +1541,8 @@ SYS.CDM:
       - pg_submission_row
       - pg_failed_job_rate
       - inodes_usage
+      - pg_pending_job
+      - pending_threads
 SYS.DDMS:
   dim_metric_name:
     instance_id,node_id:
@@ -1358,6 +1560,7 @@ SYS.DDMS:
       - ddm_backend_connection_ratio
       - ddm_active_connections
       - ddm_connection_util
+      - ddm_node_status_alarm_code
 SYS.NoSQL:
   dim_metric_name:
     cassandra_cluster_id,cassandra_node_id:
@@ -2032,12 +2235,26 @@ SYS.DDOS:
       - instance_internet_in_rate
       - instance_new_connection
       - instance_concurrent_connection
+      - instance_udp_rate
+      - instance_icmp_packet_rate
+      - instance_dns_packet_rate
+      - instance_other_rate
+      - instance_fin_packet_rate
+      - instance_syn_packet_rate
+      - instance_sip_packet_rate
     package,ip:
       - ip_drop_rate
       - ip_back_to_source_rate
       - ip_internet_in_rate
       - ip_new_connection
       - ip_concurrent_connection
+      - ip_dns_packet_rate
+      - ip_icmp_packet_rate
+      - ip_fin_packet_rate
+      - ip_syn_packet_rate
+      - ip_sip_packet_rate
+      - ip_udp_rate
+      - ip_other_rate
 SYS.VPN:
   dim_metric_name:
     evpn_connection_id:
@@ -2164,6 +2381,17 @@ SYS.VPCEP:
       - vpcep_pps
       - vpcep_drop_num
       - vpcep_connections
+      - vpcep_rx_pps
+      - vpcep_from_server_rst_num
+      - vpcep_tx_byte
+      - vpcep_tx_pps
+      - vpcep_from_client_rst_num
+      - vpcep_rx_bps
+      - vpcep_to_server_rst_num
+      - vpcep_to_client_rst_num
+      - vpcep_rx_byte
+      - vpcep_tx_bps
+      - vpcep_act_connections
 SYS.ModelArts:
   dim_metric_name:
     service_id:
@@ -2174,6 +2402,8 @@ SYS.ModelArts:
       - req_count_4xx
       - req_count_5xx
       - avg_latency
+      - tp_999
+      - tp_99
     service_id,model_id:
       - cpu_usage
       - mem_usage
@@ -2186,6 +2416,8 @@ SYS.ModelArts:
       - disk_write_rate
       - send_bytes_rate
       - recv_bytes_rate
+      - npu_util
+      - npu_mem_usage
 SYS.GES:
   dim_metric_name:
     instance_id:
@@ -2240,6 +2472,8 @@ SYS.CC:
       - network_outgoing_packets
       - network_bandwidth_usage
       - network_bandwidth
+      - packet_loss_rate
+      - latency
 SYS.LakeFormation:
   resource: "service"
   dim_metric_name:
@@ -2256,7 +2490,6 @@ SYS.LakeFormation:
 SYS.DAYU:
   dim_metric_name:
     stream_id:
-      - dis11_stream_record_retention_time
       - dis01_stream_put_bytes_rate
       - dis02_stream_get_bytes_rate
       - dis03_stream_put_records
@@ -2267,6 +2500,12 @@ SYS.DAYU:
       - dis08_stream_get_req_average_latency
       - dis09_stream_traffic_control_put_records
       - dis10_stream_traffic_control_get_records
+      - dis11_stream_record_retention_time
+      - dis12_stream_accumulated_message_count
+      - dis13_stream_transfer_delay
+      - dis18_stream_bytes_put_max
+      - dis19_stream_readable_partition_count
+      - dis20_stream_writable_partition_count
 SYS.CFW:
   resource: "rms"
   dim_metric_name:
@@ -2287,6 +2526,13 @@ SYS.CFW:
       - vpc_protection_traffic
       - internet_protection_traffic_inbound
       - internet_protection_traffic_outbound
+      - internet_protection_bandwidth_usage_inbound
+      - internet_protection_bandwidth_usage_outbound
+      - internet_protection_bandwidth_usage_rate_inbound
+      - internet_protection_bandwidth_usage_rate_outbound
+      - internet_protection_pps_inbound
+      - internet_protection_pps_outbound
+      - ips_allow_count
 SYS.CDN:
   dim_metric_name:
     domain_name:
@@ -2356,6 +2602,8 @@ SYS.CDN:
       - network_ddos_bw
       - network_ddos_pps
       - req_num
+      - http_code_418_rate
+      - http_code_418
 SYS.WANQMonitor:
   dim_metric_name:
     task_id:
@@ -2369,6 +2617,7 @@ SYS.WANQMonitor:
       - request_cost_avg
       - response_cost_avg
       - download_cost_avg
+      - err_number
     task_id,city:
       - packet_loss_rate_avg
       - redirect_cost_avg
@@ -2740,6 +2989,14 @@ SYS.ANC:
       - vpc_outbound_pps
       - vpc_inbound_traffic
       - vpc_outbound_traffic
+      - inbound_bandwidth
+      - outbound_pps
+      - outbound_bandwidth
+      - connection
+      - inbound_traffic
+      - inbound_pps
+      - new_connection
+      - outbound_traffic
     anc_anc_id,anc_serviceassociation_id:
       - service_inbound_traffic
       - service_outbound_traffic
@@ -2750,6 +3007,14 @@ SYS.ANC:
       - service_new_connections
       - service_active_connections
       - service_connections
+      - inbound_bandwidth
+      - outbound_pps
+      - outbound_bandwidth
+      - connection
+      - inbound_traffic
+      - inbound_pps
+      - new_connection
+      - outbound_traffic
     anc_service_id:
       - service_inbound_traffic
       - service_outbound_traffic
@@ -2760,6 +3025,14 @@ SYS.ANC:
       - service_new_connections
       - service_active_connections
       - service_connections
+      - inbound_bandwidth
+      - outbound_pps
+      - outbound_bandwidth
+      - connection
+      - inbound_traffic
+      - inbound_pps
+      - new_connection
+      - outbound_traffic
     anc_service_id,anc_serviceregion_id:
       - service_inbound_traffic
       - service_outbound_traffic
@@ -2770,6 +3043,14 @@ SYS.ANC:
       - service_new_connections
       - service_active_connections
       - service_connections
+      - inbound_bandwidth
+      - outbound_pps
+      - outbound_bandwidth
+      - connection
+      - inbound_traffic
+      - inbound_pps
+      - new_connection
+      - outbound_traffic
     anc_membergroup_id:
       - total_server_count
       - healthy_server_count

@@ -77,12 +77,13 @@
 |rds_cluster_id<br>（MySQL实例）|rds081_vm_ioutils|磁盘I/O处于非空闲状态的时间百分比|%|
 |rds_cluster_id<br>（MySQL实例）|rds082_semi_sync_tx_avg_wait_time|事务平均等待时间|微秒|
 |rds_cluster_id<br>（MySQL实例）|rds173_replication_delay_avg|平均复制时延|s|
-|rds_cluster_id<br>（MySQL实例）|rds_innodb_log_waits_count|日志等待次数|Count|
-|rds_cluster_id<br>（MySQL实例）|rds_buffer_pool_wait_free|缓冲池空闲页等待次数|Count|
+|rds_cluster_id<br>（MySQL实例）|rds_innodb_log_waits_count|日志等待次数|count|
+|rds_cluster_id<br>（MySQL实例）|rds_buffer_pool_wait_free|缓冲池空闲页等待次数|count|
 |rds_cluster_id<br>（MySQL实例）|rds_conn_active_usage|活跃连接数使用率|%|
-|rds_cluster_id<br>（MySQL实例）|rds_long_transaction|长事务指标|Second|
-|rds_cluster_id<br>（MySQL实例）|rds_mdl_lock_count|MDL锁数量|Count|
+|rds_cluster_id<br>（MySQL实例）|rds_long_transaction|长事务指标|s|
+|rds_cluster_id<br>（MySQL实例）|rds_mdl_lock_count|MDL锁数量|count|
 |rds_cluster_id<br>（MySQL实例）|iops_usage|IOPS 使用率|%|
+|rds_cluster_id<br>（MySQL实例）|rds_threadpool_waiting_threads|线程池中等待线程数|count|
 |postgresql_cluster_id<br>（PostgreSQL实例）|rds001_cpu_util|CPU使用率|%|
 |postgresql_cluster_id<br>（PostgreSQL实例）|rds002_mem_util|内存使用率|%|
 |postgresql_cluster_id<br>（PostgreSQL实例）|rds003_iops|IOPS|次/秒|
@@ -186,3 +187,5 @@
 |rds_cluster_sqlserver_id<br>（Microsoft SQL Server实例）|mssql_lazy_write_per_sec|每秒惰性写入缓存数|个/秒|
 |rds_cluster_sqlserver_id<br>（Microsoft SQL Server实例）|mssql_page_life_expectancy|无引用页缓冲池停留时间|秒|
 |rds_cluster_sqlserver_id<br>（Microsoft SQL Server实例）|mssql_page_reads_per_sec|每秒页读取次数|个|
+|rds_cluster_sqlserver_id<br>（Microsoft SQL Server实例）|mssql_worker_threads_usage_rate|工作线程使用率|%|
+|rds_cluster_sqlserver_id<br>（Microsoft SQL Server实例）|mssql_tempdb_disk_size|临时表空间大小|MB(IEC)|

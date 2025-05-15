@@ -56,3 +56,4 @@
 |waf_instance_id<br>（防护域名）|cc_protection_counts|CC防护次数|次|
 |waf_instance_id<br>（防护域名）|crawlers|爬虫攻击请求量|次|
 |waf_instance_id<br>（防护域名）|precise_protection_counts|精准防护次数|次|
+|waf_instance_id<br>（防护域名）|white_black_ip_protection_counts|黑白名单防护次数|count|

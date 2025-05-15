@@ -68,3 +68,5 @@
 |domain_name<br>（域名）|network_ddos_bw|DDoS攻击带宽|bit/s|
 |domain_name<br>（域名）|network_ddos_pps|DDoS攻击包速率|count/s|
 |domain_name<br>（域名）|req_num|总请求数|count|
+|domain_name<br>（域名）|http_code_418_rate|状态码418占比|%|
+|domain_name<br>（域名）|http_code_418|状态码418|count|

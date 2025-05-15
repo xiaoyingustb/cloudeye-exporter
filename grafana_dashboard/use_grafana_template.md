@@ -81,6 +81,8 @@
    + [云解析服务 DNS](templates/dns_dashboard_template.json)
    + [企业门户 EWP](templates/ewp_dashboard_template.json)
    + [企业路由器 ER](templates/er_dashboard_template.json)
+   + [MaaS服务](templates/maas_dashboard_template.json)
+   + [弹性文件服务](templates/sfs_dashboard_template.json)
 4. 效果展示：
    >ECS:
    > ![img.png](pic/ecs.jpg)

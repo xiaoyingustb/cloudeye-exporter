@@ -18,3 +18,10 @@
 |gaussdbv5_instance_id,gaussdbv5_node_id<br>（云数据库 GaussDB实例,云数据库 GaussDB节点）|rds017_disk_read_throughput|数据磁盘读吞吐量|Byte/s|
 |gaussdbv5_instance_id,gaussdbv5_node_id<br>（云数据库 GaussDB实例,云数据库 GaussDB节点）|rds020_avg_disk_ms_per_write|数据磁盘单次写入花费的时间|ms|
 |gaussdbv5_instance_id,gaussdbv5_node_id<br>（云数据库 GaussDB实例,云数据库 GaussDB节点）|rds021_avg_disk_ms_per_read|数据磁盘单次读取花费的时间|ms|
+|gaussdbv5_instance_id,gaussdbv5_node_id<br>（云数据库 GaussDB实例,云数据库 GaussDB节点）|io_bandwidth_usage|磁盘io带宽占用率|%|
+|gaussdbv5_instance_id,gaussdbv5_node_id<br>（云数据库 GaussDB实例,云数据库 GaussDB节点）|iops_usage|IOPS使用率|%|
+|gaussdbv5_instance_id,gaussdbv5_node_id<br>（云数据库 GaussDB实例,云数据库 GaussDB节点）|rds068_swap_used_ratio|交换内存使用率|%|
+|gaussdbv5_instance_id,gaussdbv5_node_id<br>（云数据库 GaussDB实例,云数据库 GaussDB节点）|rds069_swap_total_size|交换内存总大小|MB|
+|gaussdbv5_instance_id,gaussdbv5_node_id<br>（云数据库 GaussDB实例,云数据库 GaussDB节点）|rds084_sys_database_size|系统数据库大小|byte(IEC)|
+|gaussdbv5_instance_id,gaussdbv5_node_id<br>（云数据库 GaussDB实例,云数据库 GaussDB节点）|rds085_user_database_size|用户数据库总大小|byte(IEC)|
+|gaussdbv5_instance_id,gaussdbv5_node_id<br>（云数据库 GaussDB实例,云数据库 GaussDB节点）|retrans_rate|重传比例|%|
