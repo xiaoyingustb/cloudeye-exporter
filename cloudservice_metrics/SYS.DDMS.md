@@ -16,3 +16,4 @@
 |instance_id,node_id<br>（DDM实例,DDM节点）|ddm_backend_connection_ratio|后端连接池水位|%|
 |instance_id,node_id<br>（DDM实例,DDM节点）|ddm_active_connections|活跃连接数|次数|
 |instance_id,node_id<br>（DDM实例,DDM节点）|ddm_connection_util|连接数使用率|%|
+|instance_id,node_id<br>（DDM实例,DDM节点）|ddm_node_status_alarm_code|DDM节点连通性检测||

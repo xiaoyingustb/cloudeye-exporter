@@ -10,3 +10,5 @@
 |efs_instance_id<br>（实例）|iops|IOPS||
 |efs_instance_id<br>（实例）|used_capacity|已用容量|byte|
 |efs_instance_id<br>（实例）|used_capacity_percent|容量使用率|%|
+|efs_instance_id<br>（实例）|used_inode|已用inode数|count|
+|efs_instance_id<br>（实例）|used_inode_percent|inode使用率|%|

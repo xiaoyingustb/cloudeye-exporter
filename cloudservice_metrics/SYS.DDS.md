@@ -99,3 +99,22 @@
 |mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo091_active_session_count|周期活跃会话数|Count|
 |mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|io_bandwidth_usage|磁盘 io 带宽占用率|%|
 |mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|iops_usage|IOPS 使用率|%|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo092_rx_errors|接收报文错误率|%|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo093_rx_dropped|接收报文丢包率|%|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo094_tx_errors|发送报文错误率|%|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo095_tx_dropped|发送报文丢包率|%|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo096_retrans_segs|重传包数目|count|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo097_retrans_rate|重传比例|%|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo098_out_rsts_nums|发送RST数目|count|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo099_read_time_average|读命令耗时平均值|ms|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo100_read_time_p99|读命令p99耗时|ms|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo101_read_time_p999|读命令p999耗时|ms|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo102_write_time_average|写命令耗时平均值|ms|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo103_write_time_p99|写命令p99耗时|ms|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo104_write_time_p999|写命令p999耗时|ms|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo105_command_time_average|command耗时平均值|ms|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo106_command_time_p99|command p99耗时|ms|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo107_command_time_p999|command p999耗时|ms|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo108_txn_time_average|事务耗时平均值|ms|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo109_txn_time_p99|事务p99耗时|ms|
+|mongodb_instance_id,mongodb_node_id<br>（文档数据库实例,文档数据库节点）|mongo110_txn_time_p999|事务p999耗时|ms|

@@ -13,6 +13,10 @@
 |queue_id<br>（队列）|queue_cu_num|队列CU使用量|Count|
 |queue_id<br>（队列）|queue_mem_used|队列内存使用量|MB|
 |queue_id<br>（队列）|queue_disk_used|队列磁盘使用率最大值|%|
+|queue_id<br>（队列）|queue_alloc_cu_num|队列CU分配量|count|
+|queue_id<br>（队列）|queue_min_cu_num|队列最小CU|count|
+|queue_id<br>（队列）|queue_max_cu_num|队列最大CU|count|
+|queue_id<br>（队列）|queue_priority|队列优先级||
 |flink_job_id<br>（Flink作业）|flink_read_records_per_second|Flink作业数据输入速率|record/s|
 |flink_job_id<br>（Flink作业）|flink_write_records_per_second|Flink作业数据输出速率|record/s|
 |flink_job_id<br>（Flink作业）|flink_read_records_total|Flink作业数据输入总数|records|

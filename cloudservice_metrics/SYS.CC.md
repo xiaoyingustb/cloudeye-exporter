@@ -12,3 +12,5 @@
 |cloud_connect_id,bwp_id,region_bandwidth_id<br>（云连接,带宽包,域间带宽）|network_outgoing_packets|网络流出包量|包|
 |cloud_connect_id,bwp_id,region_bandwidth_id<br>（云连接,带宽包,域间带宽）|network_bandwidth_usage|网络带宽使用率|%|
 |cloud_connect_id,bwp_id,region_bandwidth_id<br>（云连接,带宽包,域间带宽）|network_bandwidth|网络带宽值|bit/s|
+|cloud_connect_id,bwp_id,region_bandwidth_id<br>（云连接,带宽包,域间带宽）|packet_loss_rate|丢包率|%|
+|cloud_connect_id,bwp_id,region_bandwidth_id<br>（云连接,带宽包,域间带宽）|latency|时延|ms|

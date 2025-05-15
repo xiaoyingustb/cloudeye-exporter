@@ -21,3 +21,5 @@
 |instance_id<br>（DRS运行实例）|apply_average_commit_time|事务平均提交时间|ms|
 |instance_id<br>（DRS运行实例）|apply_current_state|同步状态||
 |instance_id<br>（DRS运行实例）|apply_thread_workers|同步线程数量||
+|instance_id<br>（DRS运行实例）|apply_job_status|任务状态||
+|instance_id<br>（DRS运行实例）|apply_ddls_number|DDL总数|count|

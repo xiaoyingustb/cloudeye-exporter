@@ -71,6 +71,16 @@
 |gaussdb_mysql_instance_id,gaussdb_mysql_node_id<br>（GaussDBforMySQL实例,GaussDBforMySQL节点）|gaussdb_mysql126_table_open_cache_hits|打开表缓存查找的命中数|Counts/min|
 |gaussdb_mysql_instance_id,gaussdb_mysql_node_id<br>（GaussDBforMySQL实例,GaussDBforMySQL节点）|gaussdb_mysql127_table_open_cache_misses|打开表缓存查找的未命中数|Counts/min|
 |gaussdb_mysql_instance_id,gaussdb_mysql_node_id<br>（GaussDBforMySQL实例,GaussDBforMySQL节点）|gaussdb_mysql128_long_trx_count|未关闭的长事务个数|个|
+|gaussdb_mysql_instance_id,gaussdb_mysql_node_id<br>（GaussDBforMySQL实例,GaussDBforMySQL节点）|gaussdb_mysql060_rx_errors|接收报文错误率|%|
+|gaussdb_mysql_instance_id,gaussdb_mysql_node_id<br>（GaussDBforMySQL实例,GaussDBforMySQL节点）|gaussdb_mysql061_rx_dropped|接收报文丢包率|%|
+|gaussdb_mysql_instance_id,gaussdb_mysql_node_id<br>（GaussDBforMySQL实例,GaussDBforMySQL节点）|gaussdb_mysql062_tx_errors|发送报文错误率|%|
+|gaussdb_mysql_instance_id,gaussdb_mysql_node_id<br>（GaussDBforMySQL实例,GaussDBforMySQL节点）|gaussdb_mysql063_tx_dropped|发送报文丢包率|%|
+|gaussdb_mysql_instance_id,gaussdb_mysql_node_id<br>（GaussDBforMySQL实例,GaussDBforMySQL节点）|gaussdb_mysql371_taurus_binlog_total_file_counts|Binlog文件个数|count|
+|gaussdb_mysql_instance_id,gaussdb_mysql_node_id<br>（GaussDBforMySQL实例,GaussDBforMySQL节点）|gaussdb_mysql378_create_temp_tbl_per_min|临时表每分钟创建数|count/min|
+|gaussdb_mysql_instance_id,gaussdb_mysql_node_id<br>（GaussDBforMySQL实例,GaussDBforMySQL节点）|gaussdb_mysql386_undo_spaces_trx_count|undo空间内未清理掉的事务个数|count|
+|gaussdb_mysql_instance_id,gaussdb_mysql_node_id<br>（GaussDBforMySQL实例,GaussDBforMySQL节点）|gaussdb_mysql348_taurus_throttle_slice_num|写流控|count|
+|gaussdb_mysql_instance_id,gaussdb_mysql_node_id<br>（GaussDBforMySQL实例,GaussDBforMySQL节点）|gaussdb_mysql339_taurus_sal_flow_control_instance_read_page_throttle|读流控|count|
+|gaussdb_mysql_instance_id,gaussdb_mysql_node_id<br>（GaussDBforMySQL实例,GaussDBforMySQL节点）|gaussdb_mysql430_taurus_innodb_rpl_millisecond_behind_master|毫秒级数据同步延迟|ms|
 |gaussdb_mysql_ha_id,gaussdb_mysql_ha_node_id<br>（GaussDBforMySQL经典架构实例,GaussDBforMySQL经典架构节点）|rds001_cpu_util|CPU使用率|%|
 |gaussdb_mysql_ha_id,gaussdb_mysql_ha_node_id<br>（GaussDBforMySQL经典架构实例,GaussDBforMySQL经典架构节点）|rds002_mem_util|内存使用率|%|
 |gaussdb_mysql_ha_id,gaussdb_mysql_ha_node_id<br>（GaussDBforMySQL经典架构实例,GaussDBforMySQL经典架构节点）|rds003_iops|IOPS|次/秒|

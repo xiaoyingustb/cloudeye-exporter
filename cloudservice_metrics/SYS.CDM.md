@@ -15,3 +15,5 @@
 |instance_id<br>（实例）|pg_submission_row|历史记录表行数|行|
 |instance_id<br>（实例）|pg_failed_job_rate|失败作业率|%|
 |instance_id<br>（实例）|inodes_usage|Inodes利用率|%|
+|instance_id<br>（实例）|pg_pending_job|排队作业数|count|
+|instance_id<br>（实例）|pending_threads|排队抽取并发数|count|
