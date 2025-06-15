@@ -16,7 +16,7 @@ func TestELBInfo_GetResourceInfo(t *testing.T) {
 	metricConf = map[string]MetricConf{
 		"SYS.ELB": {
 			DimMetricName: map[string][]string{"lbaas_instance_id": {"mc_l7_http_2xx"}, "lbaas_instance_id,lbaas_listener_id": {"mc_l7_http_2xx"},
-				"lbaas_instance_id,lbaas_pool_id": {"m18_l7_upstream_2xx"}, "lbaas_instance_id,available_zone": {"mc_l7_http_2xx"}},
+				"lbaas_instance_id,lbaas_pool_id": {"m18_l7_upstream_2xx"}, "lbaas_instance_id,available_zone": {"mc_l7_http_2xx"}, "lbaas_instance_id,ip_address": {"upstream_tls_negotiation_error"}},
 		},
 	}
 	patches := getPatches()
@@ -25,7 +25,7 @@ func TestELBInfo_GetResourceInfo(t *testing.T) {
 		{
 			Values: gomonkey.Params{&model.ListLoadBalancersResponse{
 				Loadbalancers: &[]model.LoadBalancer{
-					{Name: "test_lb", EnterpriseProjectId: "test_epId", VipAddress: "127.0.0.1", Provider: "test_provider",
+					{Name: "test_lb", EnterpriseProjectId: "test_epId", VipAddress: "127.0.0.1", Ipv6VipAddress: "test_ipv6_addr", Provider: "test_provider",
 						Listeners: []model.ListenerRef{{Id: "test_listener"}}, Pools: []model.PoolRef{{Id: "test_pool"}}, AvailabilityZoneList: []string{"cn-north-7"}},
 				},
 			}, nil},

@@ -1,0 +1,1 @@
+> CES exporter默认导出SYS.GEIP下已上报的全量指标，具体请参考[官网文档](https://support.huaweicloud.com/intl/zh-cn/usermanual-eip/eip_geip_0013.html)

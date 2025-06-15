@@ -48,6 +48,7 @@
    + [弹性云服务器 ECS](templates/ecs_dashboard_template.json)
    + [弹性负载均衡 ELB](templates/elb_dashboard_template.json)
    + [关系型数据库 RDS](templates/rds_dashboard_template.json)
+   + [关系型数据库 RDS(PostGreSQL)](templates/postgresql_dashboard_template.json)
    + [Web应用防火墙 WAF](templates/old_version/waf_dashboard_template.json)
    + [Web应用防火墙 WAF-独享引擎实例](templates/old_version/waf_premium_instance_dashboard_template.json)
    + [弹性公网IP和带宽 VPC](templates/vpc_dashboard_template.json)
@@ -82,7 +83,9 @@
    + [企业门户 EWP](templates/ewp_dashboard_template.json)
    + [企业路由器 ER](templates/er_dashboard_template.json)
    + [MaaS服务](templates/maas_dashboard_template.json)
-   + [弹性文件服务](templates/sfs_dashboard_template.json)
+   + [全域互联带宽](templates/gcb_dashboard_template.json)
+   + [SFS Turbo (EFS)](templates/efs_dashboard_template.json)
+   + [全域弹性公网IP和带宽](templates/geip_dashboard_template.json)
 4. 效果展示：
    >ECS:
    > ![img.png](pic/ecs.jpg)

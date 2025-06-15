@@ -63,13 +63,26 @@ func getLakeFormationClient() *lakeformation.LakeFormationClient {
 }
 
 func getAllLKInstance() ([]ResourceBaseInfo, error) {
+	var results []ResourceBaseInfo
+	epIds := getEpIdRequestPart()
+	for _, epId := range epIds {
+		instancesByEpId, err := getLKInstanceByEpId(epId)
+		if err != nil {
+			return nil, err
+		}
+		results = append(results, instancesByEpId...)
+	}
+	return results, nil
+}
+
+func getLKInstanceByEpId(epId string) ([]ResourceBaseInfo, error) {
 	offset := 0
 	limit := 1000
 	request := &lakeformationmodel.ListLakeFormationInstancesRequest{
 		InRecycleBin:        false,
 		Offset:              int32(offset),
 		Limit:               int32(limit),
-		EnterpriseProjectId: "all_granted_eps",
+		EnterpriseProjectId: epId,
 	}
 	var instances []lakeformationmodel.LakeFormationInstance
 	for {

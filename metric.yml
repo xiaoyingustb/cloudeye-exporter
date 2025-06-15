@@ -595,9 +595,6 @@ SYS.RDS:
       - rds048_disk_used_size
       - rds049_disk_read_throughput
       - rds050_disk_write_throughput
-      - rds051_avg_disk_sec_per_read
-      - rds052_avg_disk_sec_per_write
-      - rds053_avg_disk_queue_length
       - rds072_conn_usage
       - rds073_replication_delay
       - rds074_slow_queries
@@ -652,9 +649,6 @@ SYS.RDS:
       - rds048_disk_used_size
       - rds049_disk_read_throughput
       - rds050_disk_write_throughput
-      - rds051_avg_disk_sec_per_read
-      - rds052_avg_disk_sec_per_write
-      - rds053_avg_disk_queue_length
       - rds082_tps
       - rds083_conn_usage
       - row_per_second
@@ -713,8 +707,6 @@ SYS.RDS:
       - rds048_disk_used_size
       - rds049_disk_read_throughput
       - rds050_disk_write_throughput
-      - rds051_avg_disk_sec_per_read
-      - rds052_avg_disk_sec_per_write
       - rds053_avg_disk_queue_length
       - rds054_db_connections_in_use
       - rds055_transactions_per_sec
@@ -965,6 +957,68 @@ SYS.ELB:
       - l7_qps_usage
       - m26_in_bandwidth_ipv6
       - m27_out_bandwidth_ipv6
+    'lbaas_instance_id,ip_address':
+      - m1_cps
+      - m2_act_conn
+      - m3_inact_conn
+      - m4_ncps
+      - m5_in_pps
+      - m6_out_pps
+      - m7_in_Bps
+      - m8_out_Bps
+      - mb_l7_qps
+      - mc_l7_http_2xx
+      - md_l7_http_3xx
+      - me_l7_http_4xx
+      - mf_l7_http_5xx
+      - m10_l7_http_other_status
+      - m11_l7_http_404
+      - m12_l7_http_499
+      - m13_l7_http_502
+      - m14_l7_rt
+      - m18_l7_upstream_2xx
+      - m19_l7_upstream_3xx
+      - m15_l7_upstream_4xx
+      - m16_l7_upstream_5xx
+      - l7_upstream_101
+      - l7_upstream_400
+      - l7_upstream_403
+      - l7_upstream_404
+      - l7_upstream_500
+      - l7_upstream_501
+      - l7_upstream_502
+      - l7_upstream_503
+      - l7_upstream_504
+      - l7_upstream_other_status
+      - elb_http_2xx
+      - elb_http_3xx
+      - elb_http_4xx
+      - elb_http_400
+      - elb_http_404
+      - elb_http_408
+      - elb_http_499
+      - elb_http_5xx
+      - elb_http_502
+      - elb_http_503
+      - elb_http_504
+      - m17_l7_upstream_rt
+      - m1a_l7_upstream_rt_max
+      - m1b_l7_upstream_rt_min
+      - m1c_l7_rt_max
+      - m1d_l7_rt_min
+      - m22_in_bandwidth
+      - m23_out_bandwidth
+      - dropped_connections
+      - dropped_packets
+      - dropped_traffic
+      - ipgroup_blocked_packets
+      - ipgroup_blocked_traffic
+      - mirror_in_traffic
+      - mirror_out_traffic
+      - mirror_in_packets
+      - mirror_out_packets
+      - client_tls_negotiation_error
+      - upstream_tls_negotiation_error
 SYS.GAUSSDB:
   dim_metric_name:
     'gaussdb_mysql_instance_id,gaussdb_mysql_node_id':
@@ -1155,6 +1209,9 @@ SYS.GAUSSDBV5:
       - rds084_sys_database_size
       - rds085_user_database_size
       - retrans_rate
+      - cpu_user_usage
+      - cpu_sys_usage
+      - cpu_wait_usage
 SYS.DBPROXY:
   dim_metric_name:
     dbproxy_instance_id,dbproxy_node_id:
@@ -1512,6 +1569,16 @@ SYS.SFS:
       - used_capicity
       - total_capicity
       - capicity_usage
+    bucket_name:
+      - read_bytes_intranet
+      - write_bytes_intranet
+      - read_tps
+      - read_latency
+      - write_latency
+      - write_tps
+      - capacity_standard
+      - capacity_infrequentaccess
+      - capacity_performance
 SYS.EFS:
   dim_metric_name:
     efs_instance_id:
@@ -2269,6 +2336,7 @@ SYS.VPN:
       - send_pkt_rate
       - recv_rate
       - send_rate
+      - bgp_peer_status
     evpn_connection_id,evpn_sa_id:
       - sa_send_pkt_rate
       - sa_recv_pkt_rate
@@ -2342,21 +2410,118 @@ SYS.APIC:
       - throttled_calls
       - avg_latency
       - max_latency
+      - req_count_error
+      - req_count_1xx
+      - req_count_2xx
+      - req_count_3xx
+      - req_count_499
+      - avg_inner_latency
+      - max_inner_latency
+      - avg_backend_latency
+      - max_backend_latency
+      - avg_input_throughput
+      - avg_output_throughput
+      - input_throughput
+      - output_throughput
+      - inbound_downstream_bandwidth
+      - inbound_down_stream
+      - inbound_downstream_bandwidth_usage
+      - inbound_upstream_bandwidth
+      - inbound_up_stream
+      - inbound_upstream_bandwidth_usage
+      - outbound_downstream_bandwidth
+      - outbound_down_stream
+      - outbound_downstream_bandwidth_usage
+      - outbound_upstream_bandwidth
+      - outbound_up_stream
+      - outbound_upstream_bandwidth_usage
     instance_id,api_id:
       - req_count
+      - req_count_1xx
       - req_count_2xx
+      - req_count_3xx
       - req_count_4xx
       - req_count_5xx
+      - req_count_499
       - req_count_error
       - avg_latency
       - max_latency
       - input_throughput
       - output_throughput
+      - throttled_calls
+      - avg_inner_latency
+      - max_inner_latency
+      - avg_backend_latency
+      - max_backend_latency
+      - avg_input_throughput
+      - avg_output_throughput
     instance_id,node_ip:
       - node_system_load
       - node_qps
       - node_cpu_usage
       - node_memory_usage
+    instance_id,app_id:
+      - req_count
+      - req_count_error
+      - req_count_4xx
+      - req_count_5xx
+      - req_count_1xx
+      - req_count_2xx
+      - req_count_3xx
+      - req_count_499
+      - throttled_calls
+      - avg_latency
+      - max_latency
+      - avg_inner_latency
+      - max_inner_latency
+      - avg_backend_latency
+      - max_backend_latency
+      - avg_input_throughput
+      - avg_output_throughput
+      - input_throughput
+      - output_throughput
+    instance_id,api_group_id:
+      - req_count
+      - req_count_error
+      - req_count_4xx
+      - req_count_5xx
+      - req_count_1xx
+      - req_count_2xx
+      - req_count_3xx
+      - req_count_499
+      - throttled_calls
+      - avg_latency
+      - max_latency
+      - avg_inner_latency
+      - max_inner_latency
+      - avg_backend_latency
+      - max_backend_latency
+      - avg_input_throughput
+      - avg_output_throughput
+      - input_throughput
+      - output_throughput
+    instance_id,app_id,api_id:
+      - req_count
+      - req_count_error
+      - req_count_4xx
+      - req_count_5xx
+      - req_count_1xx
+      - req_count_2xx
+      - req_count_3xx
+      - req_count_499
+      - throttled_calls
+      - avg_latency
+      - max_latency
+      - avg_inner_latency
+      - max_inner_latency
+      - avg_backend_latency
+      - max_backend_latency
+      - avg_input_throughput
+      - avg_output_throughput
+      - input_throughput
+      - output_throughput
+    instance_id,plugin_type,plugin_id,node_ip:
+      - jwks_service_req_status
 SYS.BMS:
   dim_metric_name:
     instance_id:
@@ -2854,6 +3019,8 @@ SYS.OBS:
       - request_count_monitor_3XX
       - upload_bytes_extranet
       - request_count_monitor_7XX
+      - request_count_monitor_4XX
+      - request_count_monitor_5XX
     bucket_name,api_name,http_code:
       - request_code_count
     bucket_name,http_code:
@@ -3097,7 +3264,8 @@ SYS.EG:
     channel_id:
       - pub_process_time
       - pub_failed_rate
-      - pub_num,pub_success_num
+      - pub_num
+      - pub_success_num
       - pub_failed_num
       - pub_success_rate
     streaming_id:

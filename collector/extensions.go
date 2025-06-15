@@ -63,6 +63,7 @@ var (
 		"SYS.ER":            ERInfo{},
 		"SYS.MaaS":          MaaSInfo{},
 		"SYS.GCB":           GCBInfo{},
+		"SYS.GEIP":          GeipInfo{},
 	}
 )
 
