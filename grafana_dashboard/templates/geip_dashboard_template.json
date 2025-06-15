@@ -52,6 +52,7 @@
       }
     ]
   },
+  "description": "【华为云GEIP监控指标说明】https://support.huaweicloud.com/usermanual-eip/eip_geip_0013.html",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
@@ -68,7 +69,8 @@
       },
       "id": 2,
       "panels": [],
-      "title": "SFS容量型指标",
+      "repeat": "EPS",
+      "title": "GEIP带宽资源总览 企业项目：$EPS",
       "type": "row"
     },
     {
@@ -82,9 +84,9 @@
             "mode": "thresholds"
           },
           "custom": {
-            "align": "auto",
+            "align": "center",
             "cellOptions": {
-              "type": "color-background"
+              "type": "auto"
             },
             "inspect": false
           },
@@ -95,6 +97,10 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           }
@@ -103,73 +109,23 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "读带宽"
+              "options": "计费模式"
             },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "binBps"
-              }
-            ]
+            "properties": []
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "写带宽"
+              "options": "入云带宽"
             },
             "properties": [
               {
                 "id": "unit",
-                "value": "binBps"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "读OPS"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "cps"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "写OPS"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "cps"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "已用容量"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "bytes"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "容量型文件系统名称"
-            },
-            "properties": [
+                "value": "bps"
+              },
               {
                 "id": "custom.cellOptions",
                 "value": {
-                  "mode": "gradient",
                   "type": "color-background"
                 }
               },
@@ -179,8 +135,206 @@
                   "mode": "absolute",
                   "steps": [
                     {
-                      "color": "transparent",
+                      "color": "green",
                       "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 5242880
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 10485760
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "入云带宽使用率"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 50
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "入云流量"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "decbytes"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 10485760
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 52428800
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "出云带宽"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bps"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 5242880
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 10485760
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "出云带宽使用率"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 50
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "出云流量"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "decbytes"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 10485760
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 52428800
                     }
                   ]
                 }
@@ -190,7 +344,7 @@
         ]
       },
       "gridPos": {
-        "h": 10,
+        "h": 8,
         "w": 24,
         "x": 0,
         "y": 1
@@ -200,6 +354,7 @@
         "cellHeight": "sm",
         "footer": {
           "countRows": false,
+          "enablePagination": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -217,7 +372,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "huaweicloud_sys_sfs_read_bandwidth",
+          "expr": "huaweicloud_sys_geip_downstream_bandwidth{epId=~\"$EPS\",geip_internet_bandwidth_id=~\".+\"}",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -231,7 +386,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "huaweicloud_sys_sfs_write_bandwidth",
+          "expr": "huaweicloud_sys_geip_downstream_bandwidth_usage{epId=~\"$EPS\",geip_internet_bandwidth_id=~\".+\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -246,7 +401,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "huaweicloud_sys_sfs_read_ops",
+          "expr": "huaweicloud_sys_geip_down_stream{epId=~\"$EPS\",geip_internet_bandwidth_id=~\".+\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -261,7 +416,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "huaweicloud_sys_sfs_write_ops",
+          "expr": "huaweicloud_sys_geip_upstream_bandwidth{epId=~\"$EPS\",geip_internet_bandwidth_id=~\".+\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -276,28 +431,47 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "huaweicloud_sys_sfs_used_capicity",
+          "expr": "huaweicloud_sys_geip_upstream_bandwidth_usage{epId=~\"$EPS\",geip_internet_bandwidth_id=~\".+\"}",
           "format": "table",
           "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
           "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "huaweicloud_sys_geip_up_stream{epId=~\"$EPS\",geip_internet_bandwidth_id=~\".+\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "F"
         }
       ],
-      "title": "容量型文件系统指标概况",
+      "title": "带宽资源总览表【企业项目：$EPS】",
       "transformations": [
         {
           "id": "filterFieldsByName",
           "options": {
             "include": {
               "names": [
+                "bandwidth_id",
+                "chargeMode",
                 "name",
                 "Value #A",
                 "Value #B",
                 "Value #C",
                 "Value #D",
-                "Value #E"
+                "Value #E",
+                "Value #F",
+                "bandwidthType"
               ]
             }
           }
@@ -313,12 +487,16 @@
             "includeByName": {},
             "indexByName": {},
             "renameByName": {
-              "Value #A": "读带宽",
-              "Value #B": "写带宽",
-              "Value #C": "读OPS",
-              "Value #D": "写OPS",
-              "Value #E": "已用容量",
-              "name": "容量型文件系统名称"
+              "Value #A": "入云带宽",
+              "Value #B": "入云带宽使用率",
+              "Value #C": "入云流量",
+              "Value #D": "出云带宽",
+              "Value #E": "出云带宽使用率",
+              "Value #F": "出云流量",
+              "bandwidthType": "带宽类型",
+              "bandwidth_id": "带宽ID",
+              "chargeMode": "计费模式",
+              "name": "带宽名称"
             }
           }
         }
@@ -326,115 +504,24 @@
       "type": "table"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "description": "该指标用于统计文件系统在周期内的读数据量",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "binBps"
-        },
-        "overrides": []
-      },
+      "collapsed": false,
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 1,
+        "w": 24,
         "x": 0,
-        "y": 11
+        "y": 9
       },
       "id": 3,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "max",
-            "mean"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "11.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "code",
-          "expr": "huaweicloud_sys_sfs_read_bandwidth",
-          "instant": false,
-          "legendFormat": "实例名称：{{name}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "读带宽",
-      "type": "timeseries"
+      "panels": [],
+      "repeat": "EPS",
+      "title": "带宽 资源详情 企业项目：$EPS",
+      "type": "row"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "该指标用于统计文件系统在周期内的写数据量",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -487,15 +574,15 @@
               }
             ]
           },
-          "unit": "binBps"
+          "unit": "bps"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 11
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 10
       },
       "id": 4,
       "options": {
@@ -523,14 +610,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_sfs_write_bandwidth",
+          "expr": "huaweicloud_sys_geip_downstream_bandwidth{epId=~\"$EPS\",geip_internet_bandwidth_id=~\".+\"}",
           "instant": false,
-          "legendFormat": "实例名称：{{name}}",
+          "legendFormat": "带宽名称：{{name}}，计费模式：{{chargeMode}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "写带宽",
+      "title": "入云带宽",
       "type": "timeseries"
     },
     {
@@ -538,7 +625,6 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "该指标用于统计文件系统在周期内的读写数据量",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -591,15 +677,15 @@
               }
             ]
           },
-          "unit": "binBps"
+          "unit": "percent"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 19
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 10
       },
       "id": 5,
       "options": {
@@ -627,14 +713,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_sfs_rw_bandwidth",
+          "expr": "huaweicloud_sys_geip_downstream_bandwidth_usage{epId=~\"$EPS\",geip_internet_bandwidth_id=~\".+\"}",
           "instant": false,
-          "legendFormat": "实例名称：{{name}}",
+          "legendFormat": "带宽名称：{{name}}，计费模式：{{chargeMode}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "读写带宽",
+      "title": "入云带宽使用率",
       "type": "timeseries"
     },
     {
@@ -642,7 +728,6 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "该指标用于统计文件系统在周期内的读次数",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -695,15 +780,15 @@
               }
             ]
           },
-          "unit": "cps"
+          "unit": "decbytes"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 19
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 10
       },
       "id": 6,
       "options": {
@@ -731,14 +816,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_sfs_read_ops",
+          "expr": "huaweicloud_sys_geip_down_stream{epId=~\"$EPS\",geip_internet_bandwidth_id=~\".+\"}",
           "instant": false,
-          "legendFormat": "实例名称：{{name}}",
+          "legendFormat": "带宽名称：{{name}}，计费模式：{{chargeMode}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "读OPS",
+      "title": "入云流量",
       "type": "timeseries"
     },
     {
@@ -746,7 +831,6 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "该指标用于统计文件系统在周期内的写次数",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -799,15 +883,15 @@
               }
             ]
           },
-          "unit": "cps"
+          "unit": "bps"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 9,
+        "w": 8,
         "x": 0,
-        "y": 27
+        "y": 19
       },
       "id": 7,
       "options": {
@@ -835,14 +919,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_sfs_write_ops",
+          "expr": "huaweicloud_sys_geip_upstream_bandwidth{epId=~\"$EPS\",geip_internet_bandwidth_id=~\".+\"}",
           "instant": false,
-          "legendFormat": "实例名称：{{name}}",
+          "legendFormat": "带宽名称：{{name}}，计费模式：{{chargeMode}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "写OPS",
+      "title": "出云带宽",
       "type": "timeseries"
     },
     {
@@ -850,7 +934,6 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "该指标用于统计文件系统在周期内的读写次数",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -903,15 +986,15 @@
               }
             ]
           },
-          "unit": "cps"
+          "unit": "percent"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 27
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 19
       },
       "id": 8,
       "options": {
@@ -939,14 +1022,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_sfs_rw_ops",
+          "expr": "huaweicloud_sys_geip_upstream_bandwidth_usage{epId=~\"$EPS\",geip_internet_bandwidth_id=~\".+\"}",
           "instant": false,
-          "legendFormat": "实例名称：{{name}}",
+          "legendFormat": "带宽名称：{{name}}，计费模式：{{chargeMode}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "读写OPS",
+      "title": "出云带宽使用率",
       "type": "timeseries"
     },
     {
@@ -954,7 +1037,6 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "该指标用于统计文件系统在周期内的已用容量",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1007,15 +1089,15 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "decbytes"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 35
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 19
       },
       "id": 9,
       "options": {
@@ -1043,14 +1125,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_sfs_used_capicity",
+          "expr": "huaweicloud_sys_geip_up_stream{epId=~\"$EPS\",geip_internet_bandwidth_id=~\".+\"}",
           "instant": false,
-          "legendFormat": "实例名称：{{name}}",
+          "legendFormat": "带宽名称：{{name}}，计费模式：{{chargeMode}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "已用容量",
+      "title": "出网流量",
       "type": "timeseries"
     },
     {
@@ -1059,11 +1141,11 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 43
+        "y": 28
       },
-      "id": 11,
+      "id": 10,
       "panels": [],
-      "title": "通用文件系统指标",
+      "title": "全域弹性公网IP 资源总览 企业项目：$EPS",
       "type": "row"
     },
     {
@@ -1077,10 +1159,11 @@
             "mode": "thresholds"
           },
           "custom": {
-            "align": "auto",
+            "align": "center",
             "cellOptions": {
-              "type": "color-background"
+              "type": "auto"
             },
+            "filterable": false,
             "inspect": false
           },
           "mappings": [],
@@ -1090,6 +1173,10 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           }
@@ -1098,60 +1185,24 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "文件系统读带宽"
+              "options": "入云带宽"
             },
             "properties": [
               {
-                "id": "unit",
-                "value": "binBps"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "文件系统写带宽"
-            },
-            "properties": [
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "auto"
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
               {
                 "id": "unit",
-                "value": "binBps"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "文件系统读TPS"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "none"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "文件系统写TPS"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "none"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "读时延"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "ms"
+                "value": "bps"
               },
               {
                 "id": "thresholds",
@@ -1163,12 +1214,12 @@
                       "value": null
                     },
                     {
-                      "color": "yellow",
-                      "value": 3000
+                      "color": "orange",
+                      "value": 5242880
                     },
                     {
-                      "color": "red",
-                      "value": 10000
+                      "color": "dark-red",
+                      "value": 10485760
                     }
                   ]
                 }
@@ -1178,19 +1229,18 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "写时延"
+              "options": "入云带宽使用率"
             },
             "properties": [
               {
-                "id": "custom.cellOptions",
-                "value": {
-                  "mode": "gradient",
-                  "type": "color-background"
-                }
+                "id": "unit",
+                "value": "percent"
               },
               {
-                "id": "unit",
-                "value": "ms"
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
               },
               {
                 "id": "thresholds",
@@ -1202,12 +1252,172 @@
                       "value": null
                     },
                     {
-                      "color": "yellow",
-                      "value": 3000
+                      "color": "orange",
+                      "value": 50
                     },
                     {
-                      "color": "red",
-                      "value": 10000
+                      "color": "dark-red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "入云流量"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "decbytes"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 10485760
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 52428800
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "出云带宽"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bps"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 5242880
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 10485760
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "出云带宽使用率"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 50
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "出云流量"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "decbytes"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 10485760
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 52428800
                     }
                   ]
                 }
@@ -1217,12 +1427,12 @@
         ]
       },
       "gridPos": {
-        "h": 10,
+        "h": 8,
         "w": 24,
         "x": 0,
-        "y": 44
+        "y": 29
       },
-      "id": 12,
+      "id": 11,
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -1233,7 +1443,13 @@
           ],
           "show": false
         },
-        "showHeader": true
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "出网使用率"
+          }
+        ]
       },
       "pluginVersion": "11.3.1",
       "targets": [
@@ -1244,7 +1460,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "huaweicloud_sys_sfs_read_bytes_intranet",
+          "expr": "huaweicloud_sys_geip_downstream_bandwidth{epId=~\"$EPS\",geip_global_eip_id=~\".+\"}",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -1258,7 +1474,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "huaweicloud_sys_sfs_write_bytes_intranet",
+          "expr": "huaweicloud_sys_geip_downstream_bandwidth_usage{epId=~\"$EPS\",geip_global_eip_id=~\".+\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -1273,7 +1489,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "huaweicloud_sys_sfs_read_tps",
+          "expr": "huaweicloud_sys_geip_down_stream{epId=~\"$EPS\",geip_global_eip_id=~\".+\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -1288,7 +1504,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "huaweicloud_sys_sfs_write_tps",
+          "expr": "huaweicloud_sys_geip_upstream_bandwidth{epId=~\"$EPS\",geip_global_eip_id=~\".+\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -1303,7 +1519,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "huaweicloud_sys_sfs_read_latency",
+          "expr": "huaweicloud_sys_geip_upstream_bandwidth_usage{epId=~\"$EPS\",geip_global_eip_id=~\".+\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -1318,7 +1534,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "huaweicloud_sys_sfs_write_latency",
+          "expr": "huaweicloud_sys_geip_up_stream{epId=~\"$EPS\",geip_global_eip_id=~\".+\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -1327,20 +1543,22 @@
           "refId": "F"
         }
       ],
-      "title": "通用文件系统指标概况",
+      "title": "全域弹性公网IP资源总览表【企业项目：$EPS】",
       "transformations": [
         {
           "id": "filterFieldsByName",
           "options": {
             "include": {
               "names": [
+                "ipVersion",
+                "name",
                 "Value #A",
                 "Value #B",
                 "Value #C",
                 "Value #D",
                 "Value #E",
-                "bucket_name",
-                "Value #F"
+                "Value #F",
+                "ipAddress"
               ]
             }
           }
@@ -1354,15 +1572,29 @@
           "options": {
             "excludeByName": {},
             "includeByName": {},
-            "indexByName": {},
+            "indexByName": {
+              "Value #A": 3,
+              "Value #B": 4,
+              "Value #C": 5,
+              "Value #D": 6,
+              "Value #E": 7,
+              "Value #F": 8,
+              "ipAddress": 1,
+              "ipVersion": 2,
+              "name": 0
+            },
             "renameByName": {
-              "Value #A": "文件系统读带宽",
-              "Value #B": "文件系统写带宽",
-              "Value #C": "文件系统读TPS",
-              "Value #D": "文件系统写TPS",
-              "Value #E": "读时延",
-              "Value #F": "写时延",
-              "name": "容量型文件系统名称"
+              "Value #A": "入云带宽",
+              "Value #B": "入云带宽使用率",
+              "Value #C": "入云流量",
+              "Value #D": "出云带宽",
+              "Value #E": "出云带宽使用率",
+              "Value #F": "出云流量",
+              "bandwidthChargeMode": "计费模式",
+              "ipAddress": "IP地址",
+              "ipVersion": "IP协议版本",
+              "name": "名称",
+              "publicip_id": "弹性公网IP ID"
             }
           }
         }
@@ -1370,115 +1602,23 @@
       "type": "table"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "description": "该指标用于测量读IO负载",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "binBps"
-        },
-        "overrides": []
-      },
+      "collapsed": false,
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 1,
+        "w": 24,
         "x": 0,
-        "y": 54
+        "y": 37
       },
-      "id": 10,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "max",
-            "mean"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "11.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "code",
-          "expr": "huaweicloud_sys_sfs_read_bytes_intranet",
-          "instant": false,
-          "legendFormat": "实例名称：{{bucket_name}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "文件系统读带宽",
-      "type": "timeseries"
+      "id": 12,
+      "panels": [],
+      "title": "全域弹性公网IP详情 企业项目：$EPS",
+      "type": "row"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "该指标用于测量写IO负载",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1508,7 +1648,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false,
+            "spanNulls": true,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -1531,15 +1671,15 @@
               }
             ]
           },
-          "unit": "binBps"
+          "unit": "bps"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 54
+        "w": 8,
+        "x": 0,
+        "y": 38
       },
       "id": 13,
       "options": {
@@ -1567,14 +1707,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_sfs_write_bytes_intranet",
+          "expr": "huaweicloud_sys_geip_downstream_bandwidth{epId=~\"$EPS\",geip_global_eip_id=~\".+\"}",
           "instant": false,
-          "legendFormat": "实例名称：{{bucket_name}}",
+          "legendFormat": "名称：{{name}}，IP：{{ipAddress}}，IP协议版本：{{ipVersion}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "文件系统写带宽",
+      "title": "入云带宽",
       "type": "timeseries"
     },
     {
@@ -1582,7 +1722,6 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "文件系统读TPS",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1612,7 +1751,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false,
+            "spanNulls": true,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -1628,18 +1767,22 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           },
-          "unit": "none"
+          "unit": "percent"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 62
+        "w": 8,
+        "x": 8,
+        "y": 38
       },
       "id": 14,
       "options": {
@@ -1667,14 +1810,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_sfs_read_tps",
+          "expr": "huaweicloud_sys_geip_downstream_bandwidth_usage{epId=~\"$EPS\",geip_global_eip_id=~\".+\"}",
           "instant": false,
-          "legendFormat": "实例名称：{{bucket_name}}",
+          "legendFormat": "名称：{{name}}，IP：{{ipAddress}}，IP协议版本：{{ipVersion}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "读TPS",
+      "title": "入云带宽使用率",
       "type": "timeseries"
     },
     {
@@ -1682,7 +1825,6 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "文件系统写TPS",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1712,7 +1854,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false,
+            "spanNulls": true,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -1728,18 +1870,22 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           },
-          "unit": "none"
+          "unit": "decbytes"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 62
+        "w": 8,
+        "x": 16,
+        "y": 38
       },
       "id": 15,
       "options": {
@@ -1767,14 +1913,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_sfs_write_tps",
+          "expr": "huaweicloud_sys_geip_down_stream{epId=~\"$EPS\",geip_global_eip_id=~\".+\"}",
           "instant": false,
-          "legendFormat": "实例名称：{{bucket_name}}",
+          "legendFormat": "名称：{{name}}，IP：{{ipAddress}}，IP协议版本：{{ipVersion}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "写TPS",
+      "title": "入云流量",
       "type": "timeseries"
     },
     {
@@ -1782,7 +1928,6 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "该指标用于统计文件系统的IO平均读时延。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1812,7 +1957,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false,
+            "spanNulls": true,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -1828,18 +1973,22 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           },
-          "unit": "ms"
+          "unit": "bps"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
+        "w": 8,
         "x": 0,
-        "y": 70
+        "y": 46
       },
       "id": 16,
       "options": {
@@ -1867,14 +2016,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_sfs_read_latency",
+          "expr": "huaweicloud_sys_geip_upstream_bandwidth{epId=~\"$EPS\",geip_global_eip_id=~\".+\"}",
           "instant": false,
-          "legendFormat": "实例名称：{{bucket_name}}",
+          "legendFormat": "名称：{{name}}，IP：{{ipAddress}}，IP协议版本：{{ipVersion}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "读时延",
+      "title": "出云带宽",
       "type": "timeseries"
     },
     {
@@ -1882,7 +2031,6 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "该指标用于统计文件系统的IO平均写时延。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1912,7 +2060,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false,
+            "spanNulls": true,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -1928,18 +2076,22 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           },
-          "unit": "ms"
+          "unit": "percent"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 70
+        "w": 8,
+        "x": 8,
+        "y": 46
       },
       "id": 17,
       "options": {
@@ -1967,14 +2119,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_sfs_write_latency",
+          "expr": "huaweicloud_sys_geip_upstream_bandwidth_usage{epId=~\"$EPS\",geip_global_eip_id=~\".+\"}",
           "instant": false,
-          "legendFormat": "实例名称：{{bucket_name}}",
+          "legendFormat": "名称：{{name}}，IP：{{ipAddress}}，IP协议版本：{{ipVersion}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "写时延",
+      "title": "出云带宽使用率",
       "type": "timeseries"
     },
     {
@@ -1982,7 +2134,6 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "容量型存储数据所占用的存储空间容量",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2012,7 +2163,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false,
+            "spanNulls": true,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -2028,18 +2179,22 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "decbytes"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 78
+        "w": 8,
+        "x": 16,
+        "y": 46
       },
       "id": 18,
       "options": {
@@ -2067,231 +2222,52 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "huaweicloud_sys_sfs_capacity_standard",
+          "expr": "huaweicloud_sys_geip_up_stream{epId=~\"$EPS\",geip_global_eip_id=~\".+\"}",
           "instant": false,
-          "legendFormat": "实例名称：{{bucket_name}}",
+          "legendFormat": "名称：{{name}}，IP：{{ipAddress}}，IP协议版本：{{ipVersion}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "容量型存储用量",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "description": "低频型存储数据所占用的存储空间容量",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "bytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 78
-      },
-      "id": 19,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "max",
-            "mean"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "11.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "code",
-          "expr": "huaweicloud_sys_sfs_capacity_infrequentaccess",
-          "instant": false,
-          "legendFormat": "实例名称：{{bucket_name}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "低频型存储用量",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "description": "性能型存储数据所占用的存储空间容量",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "bytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 86
-      },
-      "id": 20,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "max",
-            "mean"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "11.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "code",
-          "expr": "huaweicloud_sys_sfs_capacity_performance",
-          "instant": false,
-          "legendFormat": "实例名称：{{bucket_name}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "性能型存储用量",
+      "title": "出云流量",
       "type": "timeseries"
     }
   ],
-  "refresh": "",
+  "refresh": "30s",
   "schemaVersion": 40,
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "huaweicloud_epinfo",
+        "includeAll": false,
+        "label": "企业项目",
+        "name": "EPS",
+        "options": [],
+        "query": {
+          "qryType": 4,
+          "query": "huaweicloud_epinfo",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "/epName=\"(?<text>[^\"]+)|epId=\"(?<value>[^\"]+)/g",
+        "type": "query"
+      }
+    ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
-  "timezone": "browser",
-  "title": "弹性文件服务（SFS）",
-  "uid": "dekd9sk42ayo0d",
-  "version": 8,
+  "timezone": "",
+  "title": "全域弹性公网IP（GEIP）",
+  "uid": "dfa72048-c799-4fdc-adfa-36b472b981a5",
+  "version": 7,
   "weekStart": ""
 }

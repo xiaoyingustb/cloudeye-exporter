@@ -142,6 +142,8 @@ func (getter ELBInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.Metric
 				buildPoolInfo(sysConfigMap, &loadBalancer, info, &filterMetrics, resourceInfos)
 
 				buildAvailabilityZoneInfo(sysConfigMap, &loadBalancer, info, &filterMetrics, resourceInfos)
+
+				buildIpAddressInfo(sysConfigMap, &loadBalancer, info, &filterMetrics, resourceInfos)
 			}
 		}
 		elbInfo.LabelInfo = resourceInfos
@@ -209,6 +211,38 @@ func buildAvailabilityZoneInfo(sysConfigMap map[string][]string, loadBalancer *m
 		}
 		*filterMetrics = append(*filterMetrics, zonesMetrics...)
 		resourceInfos[GetResourceKeyFromMetricInfo(zonesMetrics[0])] = zoneInfo
+	}
+}
+
+func buildIpAddressInfo(sysConfigMap map[string][]string, loadBalancer *model.LoadBalancer, info labelInfo, filterMetrics *[]cesmodel.MetricInfoList, resourceInfos map[string]labelInfo) {
+	metricNames, ok := sysConfigMap["lbaas_instance_id,ip_address"]
+	if !ok {
+		logs.Logger.Warn("ip address metric names not config")
+		return
+	}
+	var ipAddresses []string
+	if loadBalancer.VipAddress != "" {
+		ipAddresses = append(ipAddresses, loadBalancer.VipAddress)
+	}
+	if loadBalancer.Ipv6VipAddress != "" {
+		// 指标上报时Ipv6地址被进行了符号转换
+		ipv6VipAddress := strings.ReplaceAll(loadBalancer.Ipv6VipAddress, ":", "#")
+		ipAddresses = append(ipAddresses, ipv6VipAddress)
+	}
+	for _, publicIp := range loadBalancer.Publicips {
+		ipAddresses = append(ipAddresses, publicIp.PublicipAddress)
+	}
+	for _, ipAddress := range ipAddresses {
+		metrics := buildDimensionMetrics(metricNames, "SYS.ELB",
+			[]cesmodel.MetricsDimension{{Name: "lbaas_instance_id", Value: loadBalancer.Id}, {Name: "ip_address", Value: ipAddress}})
+		*filterMetrics = append(*filterMetrics, metrics...)
+		ipAddressInfo := labelInfo{
+			Name:  []string{},
+			Value: []string{},
+		}
+		ipAddressInfo.Name = append(ipAddressInfo.Name, info.Name...)
+		ipAddressInfo.Value = append(ipAddressInfo.Value, info.Value...)
+		resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = ipAddressInfo
 	}
 }
 

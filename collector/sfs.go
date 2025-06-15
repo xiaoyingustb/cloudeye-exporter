@@ -39,6 +39,13 @@ func (getter SFSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 			}
 			resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
 		}
+
+		bucketMetrics, err := getBucketMetrics()
+		if err == nil {
+			filterMetrics = append(filterMetrics, bucketMetrics...)
+		} else {
+			logs.Logger.Errorf("Get bucket metrics error: %s", err.Error())
+		}
 		sfsInfo.LabelInfo = resourceInfos
 		sfsInfo.FilterMetrics = filterMetrics
 		sfsInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
@@ -60,6 +67,20 @@ type ListAllShareResponse struct {
 type Share struct {
 	ID   string `json:"id"`
 	Name string `json:"name"`
+}
+
+func getBucketMetrics() ([]model.MetricInfoList, error) {
+	allMetrics, err := listAllMetrics("SYS.SFS")
+	if err != nil {
+		return nil, err
+	}
+	var bucketMetrics []model.MetricInfoList
+	for _, metric := range allMetrics {
+		if len(metric.Dimensions) > 0 && metric.Dimensions[0].Name == "bucket_name" {
+			bucketMetrics = append(bucketMetrics, metric)
+		}
+	}
+	return bucketMetrics, nil
 }
 
 func getAllShareInfo() ([]ResourceBaseInfo, error) {
