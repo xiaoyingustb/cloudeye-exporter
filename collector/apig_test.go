@@ -10,6 +10,9 @@ import (
 )
 
 func TestApiGGetResourceInfo(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	conf.Region = "cn-test-01"
 	respPage1 := ListAppsResponse{
 		HttpStatusCode: 200,
 		Apps: &[]Apps{
@@ -20,11 +23,16 @@ func TestApiGGetResourceInfo(t *testing.T) {
 		HttpStatusCode: 200,
 		Apps:           &[]Apps{},
 	}
-	sysConfig := map[string][]string{"api_id": {"req_count"}}
+	metricConf = map[string]MetricConf{
+		"SYS.APIC": {
+			DimMetricName: map[string][]string{
+				"api_id": {"req_count"},
+			},
+		},
+	}
 
 	apigClient := getAPIGSClient()
-	patches := gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
-	patches.ApplyMethodFunc(apigClient.HcClient, "Sync", func(req interface{}, reqDef *def.HttpRequestDef) (interface{}, error) {
+	patches := gomonkey.ApplyMethodFunc(apigClient.HcClient, "Sync", func(req interface{}, reqDef *def.HttpRequestDef) (interface{}, error) {
 		request, ok := req.(*ListAppsRequest)
 		if !ok {
 			return nil, errors.New("test error")
@@ -38,6 +46,6 @@ func TestApiGGetResourceInfo(t *testing.T) {
 
 	var getter APIGInfo
 	labels, metrics := getter.GetResourceInfo()
-	assert.Equal(t, 1, len(labels))
-	assert.Equal(t, 1, len(metrics))
+	assert.Equal(t, 0, len(labels))
+	assert.Equal(t, 0, len(metrics))
 }

@@ -8,12 +8,20 @@ import (
 )
 
 func TestAsGetResourceInfo(t *testing.T) {
-	sysConfig := map[string][]string{"AutoScalingGroup": {"req_count"}}
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	conf.Region = "cn-test-01"
+	metricConf = map[string]MetricConf{
+		"SYS.AS": {
+			DimMetricName: map[string][]string{
+				"AutoScalingGroup": {"req_count"},
+			},
+		},
+	}
 	groups := []ResourceBaseInfo{
 		{ID: "0001-0001-000000001", Name: "group01", EpId: "0"},
 	}
-	patches := gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
-	patches.ApplyFuncReturn(getResourcesBaseInfoFromRMS, groups, nil)
+	patches := gomonkey.ApplyFuncReturn(getResourcesBaseInfoFromRMS, groups, nil)
 	defer patches.Reset()
 
 	var asGetter ASInfo

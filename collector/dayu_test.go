@@ -10,10 +10,18 @@ import (
 )
 
 func TestDayuGetResourceInfo(t *testing.T) {
-	sysConfig := map[string][]string{"stream_id": {"dis11_stream_record_retention_time"}}
-	patches := gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	conf.Region = "cn-test-01"
+	metricConf = map[string]MetricConf{
+		"SYS.DAYU": {
+			DimMetricName: map[string][]string{
+				"stream_id": {"dis11_stream_record_retention_time"},
+			},
+		},
+	}
 	dayuClient := &core.HcHttpClient{}
-	patches.ApplyFuncReturn(getHcClient, dayuClient)
+	patches := gomonkey.ApplyFuncReturn(getHcClient, dayuClient)
 	resp := ListStreamsResp{
 		HttpStatusCode: 200,
 		HasMoreStreams: false,

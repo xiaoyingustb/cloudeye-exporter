@@ -8,9 +8,17 @@ import (
 )
 
 func TestEsGetResourceInfo(t *testing.T) {
-	sysConfig := map[string][]string{"cluster_id": {"disk_util"}}
-	patches := gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
-	patches.ApplyFuncReturn(listResources, mockRmsResource(), nil)
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	conf.Region = "cn-test-01"
+	metricConf = map[string]MetricConf{
+		"SYS.ES": {
+			DimMetricName: map[string][]string{
+				"cluster_id": {"disk_util"},
+			},
+		},
+	}
+	patches := gomonkey.ApplyFuncReturn(listResources, mockRmsResource(), nil)
 	defer patches.Reset()
 
 	var esgetter ESInfo

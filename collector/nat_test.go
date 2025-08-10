@@ -8,9 +8,17 @@ import (
 )
 
 func TestNatGetResourceInfo(t *testing.T) {
-	sysConfig := map[string][]string{"nat_gateway_id": {"snat_connection"}}
-	patches := gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
-	patches.ApplyFuncReturn(listResources, mockRmsResource(), nil)
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	conf.Region = "cn-test-01"
+	metricConf = map[string]MetricConf{
+		"SYS.NAT": {
+			DimMetricName: map[string][]string{
+				"nat_gateway_id": {"snat_connection"},
+			},
+		},
+	}
+	patches := gomonkey.ApplyFuncReturn(listResources, mockRmsResource(), nil)
 	defer patches.Reset()
 
 	var netgetter NATInfo
