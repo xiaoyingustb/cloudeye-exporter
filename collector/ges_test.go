@@ -8,9 +8,17 @@ import (
 )
 
 func TestGesGetResourceInfo(t *testing.T) {
-	sysConfig := map[string][]string{"instance_id": {"ges001_vertex_util"}}
-	patches := gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
-	patches.ApplyFuncReturn(listResources, mockRmsResource(), nil)
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	conf.Region = "cn-test-01"
+	metricConf = map[string]MetricConf{
+		"SYS.GES": {
+			DimMetricName: map[string][]string{
+				"instance_id": {"ges001_vertex_util"},
+			},
+		},
+	}
+	patches := gomonkey.ApplyFuncReturn(listResources, mockRmsResource(), nil)
 	defer patches.Reset()
 
 	var gesgetter GESInfo

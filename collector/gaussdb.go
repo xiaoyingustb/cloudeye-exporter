@@ -135,7 +135,15 @@ func getAllDBProxyNodesFromRMS() ([]rmsModel.ResourceEntity, error) {
 
 func getAllGaussdbNodesFromRMS() ([]GaussdbNodeInfo, map[string]rmsModel.ResourceEntity, error) {
 	resp, err := listResources("gaussdbformysql", "nodes")
+	if err != nil {
+		logs.Logger.Errorf("Failed to list resource of gaussdb.nodes, error: %s", err.Error())
+		return nil, nil, err
+	}
 	instanceResp, err := listResources("gaussdbformysql", "instance")
+	if err != nil {
+		logs.Logger.Errorf("Failed to list resource of gaussdb.instances, error: %s", err.Error())
+		return nil, nil, err
+	}
 
 	instanceMap := make(map[string]rmsModel.ResourceEntity)
 	for _, entity := range instanceResp {

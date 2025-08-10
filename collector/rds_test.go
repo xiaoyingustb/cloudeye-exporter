@@ -8,15 +8,23 @@ import (
 )
 
 func TestRdsGetResourceInfo(t *testing.T) {
-	sysConfig := map[string][]string{"rds_cluster_id": {"rds001_cpu_util"}}
-	patches := gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	conf.Region = "cn-test-01"
+	metricConf = map[string]MetricConf{
+		"SYS.RDS": {
+			DimMetricName: map[string][]string{
+				"rds_cluster_id": {"rds001_cpu_util"},
+			},
+		},
+	}
 	volumes := mockRmsResource()
 	volumes[0].Properties = map[string]interface{}{
 		"cpu":        "2",
 		"mem":        "16",
 		"engineName": "mysql",
 	}
-	patches.ApplyFuncReturn(listResources, volumes, nil)
+	patches := gomonkey.ApplyFuncReturn(listResources, volumes, nil)
 	defer patches.Reset()
 
 	var rdsInfo RDSInfo

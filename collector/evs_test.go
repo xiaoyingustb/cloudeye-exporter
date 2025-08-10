@@ -18,6 +18,7 @@ func TestEvsGetResourceInfo(t *testing.T) {
 	logs.InitLog("")
 	metricConf = map[string]MetricConf{
 		"SYS.EVS": {
+			Resource: "rms",
 			DimMetricName: map[string][]string{
 				"disk_name": {"disk_device_read_bytes_rate"},
 			},

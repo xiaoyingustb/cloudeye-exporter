@@ -8,9 +8,17 @@ import (
 )
 
 func TestFunctionGraphGetResourceInfo(t *testing.T) {
-	sysConfig := map[string][]string{"package-functionname": {"count"}}
-	patches := gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
-	patches.ApplyFuncReturn(listResources, mockRmsResource(), nil)
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	conf.Region = "cn-test-01"
+	metricConf = map[string]MetricConf{
+		"SYS.FunctionGraph": {
+			DimMetricName: map[string][]string{
+				"package-functionname": {"count"},
+			},
+		},
+	}
+	patches := gomonkey.ApplyFuncReturn(listResources, mockRmsResource(), nil)
 	defer patches.Reset()
 
 	var fsgetter FunctionGraphInfo

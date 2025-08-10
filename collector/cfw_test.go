@@ -68,13 +68,19 @@ func TestCFWInfo_GetResourceInfo_getResourcesFromRMSFailed(t *testing.T) {
 }
 
 func TestCFWInfo_GetResourceInfo_success(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	conf.Region = "cn-test-01"
 	patches := getPatches()
 	defer patches.Reset()
 
-	metricConfigMap := map[string][]string{
-		"fw_instance_id": {"metric1", "metric2"},
+	metricConf = map[string]MetricConf{
+		"SYS.CFW": {
+			DimMetricName: map[string][]string{
+				"fw_instance_id": {"metric1", "metric2"},
+			},
+		},
 	}
-	patches.ApplyFuncReturn(getMetricConfigMap, metricConfigMap)
 	patches.ApplyFuncReturn(listResources, resourceEntityInit(), nil)
 	logs.InitLog("")
 	cfwInfoTest := CFWInfo{}

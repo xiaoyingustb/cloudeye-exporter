@@ -86,6 +86,7 @@
    + [全域互联带宽](templates/gcb_dashboard_template.json)
    + [SFS Turbo (EFS)](templates/efs_dashboard_template.json)
    + [全域弹性公网IP和带宽](templates/geip_dashboard_template.json)
+   + [分布式数据库中间件 DDM](templates/ddms_dashboard_template.json)
 4. 效果展示：
    >ECS:
    > ![img.png](pic/ecs.jpg)

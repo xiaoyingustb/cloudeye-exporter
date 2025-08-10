@@ -8,9 +8,17 @@ import (
 )
 
 func TestEfsGetResourceInfo(t *testing.T) {
-	sysConfig := map[string][]string{"efs_instance_id": {"client_connections"}}
-	patches := gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
-	patches.ApplyFuncReturn(listResources, mockRmsResource(), nil)
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	conf.Region = "cn-test-01"
+	metricConf = map[string]MetricConf{
+		"SYS.EFS": {
+			DimMetricName: map[string][]string{
+				"efs_instance_id": {"client_connections"},
+			},
+		},
+	}
+	patches := gomonkey.ApplyFuncReturn(listResources, mockRmsResource(), nil)
 	defer patches.Reset()
 
 	var efsgetter EFSInfo

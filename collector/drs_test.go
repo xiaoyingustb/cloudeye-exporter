@@ -8,6 +8,16 @@ import (
 )
 
 func TestDrsGetResourceInfo(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	conf.Region = "cn-test-01"
+	metricConf = map[string]MetricConf{
+		"SYS.DRS": {
+			DimMetricName: map[string][]string{
+				"instance_id": {"cpu_util"},
+			},
+		},
+	}
 	sysConfig := map[string][]string{"instance_id": {"cpu_util"}}
 	patches := gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
 	patches.ApplyFuncReturn(listResources, mockRmsResource(), nil)

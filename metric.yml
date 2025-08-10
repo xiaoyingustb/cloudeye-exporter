@@ -595,6 +595,9 @@ SYS.RDS:
       - rds048_disk_used_size
       - rds049_disk_read_throughput
       - rds050_disk_write_throughput
+      - rds051_avg_disk_sec_per_read
+      - rds052_avg_disk_sec_per_write
+      - rds053_avg_disk_queue_length
       - rds072_conn_usage
       - rds073_replication_delay
       - rds074_slow_queries
@@ -649,6 +652,9 @@ SYS.RDS:
       - rds048_disk_used_size
       - rds049_disk_read_throughput
       - rds050_disk_write_throughput
+      - rds051_avg_disk_sec_per_read
+      - rds052_avg_disk_sec_per_write
+      - rds053_avg_disk_queue_length
       - rds082_tps
       - rds083_conn_usage
       - row_per_second
@@ -707,6 +713,8 @@ SYS.RDS:
       - rds048_disk_used_size
       - rds049_disk_read_throughput
       - rds050_disk_write_throughput
+      - rds051_avg_disk_sec_per_read
+      - rds052_avg_disk_sec_per_write
       - rds053_avg_disk_queue_length
       - rds054_db_connections_in_use
       - rds055_transactions_per_sec

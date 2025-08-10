@@ -8,12 +8,19 @@ import (
 )
 
 func TestDcaassGetResourceInfo(t *testing.T) {
-	sysConfig := map[string][]string{
-		"virtual_gateway_id":   {"network_incoming_bits_rate"},
-		"virtual_interface_id": {"network_incoming_bits_rate"},
-		"direct_connect_id":    {"network_incoming_bits_rate"}}
-	patches := gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
-	patches.ApplyFuncReturn(listResources, mockRmsResource(), nil)
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	conf.Region = "cn-test-01"
+	metricConf = map[string]MetricConf{
+		"SYS.DCAAS": {
+			DimMetricName: map[string][]string{
+				"virtual_gateway_id":   {"network_incoming_bits_rate"},
+				"virtual_interface_id": {"network_incoming_bits_rate"},
+				"direct_connect_id":    {"network_incoming_bits_rate"},
+			},
+		},
+	}
+	patches := gomonkey.ApplyFuncReturn(listResources, mockRmsResource(), nil)
 	defer patches.Reset()
 
 	var dcaasgetter DCAASInfo

@@ -9,6 +9,9 @@ import (
 )
 
 func TestCbrGetResourceInfo(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	conf.Region = "cn-test-01"
 	defaultEpId := "0"
 	respPage1 := model.ListVaultResponse{
 		HttpStatusCode: 200,
@@ -20,11 +23,16 @@ func TestCbrGetResourceInfo(t *testing.T) {
 		HttpStatusCode: 200,
 		Vaults:         &[]model.Vault{},
 	}
-	sysConfig := map[string][]string{"instance_id": {"vault_util"}}
+	metricConf = map[string]MetricConf{
+		"SYS.CBR": {
+			DimMetricName: map[string][]string{
+				"instance_id": {"vault_util"},
+			},
+		},
+	}
 
 	cbrClient := getCBRClient()
-	patches := gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
-	patches.ApplyFuncReturn(getResourceFromRMS, false)
+	patches := gomonkey.ApplyFuncReturn(getResourceFromRMS, false)
 	patches.ApplyMethodFunc(cbrClient, "ListVault", func(req *model.ListVaultRequest) (*model.ListVaultResponse, error) {
 		if *req.Offset == 0 {
 			return &respPage1, nil

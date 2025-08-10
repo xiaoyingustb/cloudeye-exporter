@@ -9,8 +9,16 @@ import (
 )
 
 func TestCDMGetResourceInfo(t *testing.T) {
-	sysConfig := map[string][]string{"instance_id": {"cpu_usage"}}
-	patches := gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	conf.Region = "cn-test-01"
+	metricConf = map[string]MetricConf{
+		"SYS.CDM": {
+			DimMetricName: map[string][]string{
+				"instance_id": {"cpu_usage"},
+			},
+		},
+	}
 	connectionsPage := model.ListClustersResponse{
 		HttpStatusCode: 200,
 		Clusters: &[]model.Clusters{
@@ -24,7 +32,7 @@ func TestCDMGetResourceInfo(t *testing.T) {
 		},
 	}
 	cdmClient := getCDMClient()
-	patches.ApplyMethodFunc(cdmClient, "ListClusters", func(req *model.ListClustersRequest) (*model.ListClustersResponse, error) {
+	patches := gomonkey.ApplyMethodFunc(cdmClient, "ListClusters", func(req *model.ListClustersRequest) (*model.ListClustersResponse, error) {
 		return &connectionsPage, nil
 	})
 

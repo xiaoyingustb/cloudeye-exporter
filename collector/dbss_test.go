@@ -9,9 +9,17 @@ import (
 )
 
 func TestDBssGetResourceInfo(t *testing.T) {
-	sysConfig := map[string][]string{"audit_id": {"cpu_util"}}
-	patches := gomonkey.ApplyFuncReturn(getMetricConfigMap, sysConfig)
-	patches.ApplyFuncReturn(listResources, mockRmsResource(), nil)
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	conf.Region = "cn-test-01"
+	metricConf = map[string]MetricConf{
+		"SYS.DBSS": {
+			DimMetricName: map[string][]string{
+				"audit_id": {"cpu_util"},
+			},
+		},
+	}
+	patches := gomonkey.ApplyFuncReturn(listResources, mockRmsResource(), nil)
 	defer patches.Reset()
 
 	var dbssgetter DBSSInfo

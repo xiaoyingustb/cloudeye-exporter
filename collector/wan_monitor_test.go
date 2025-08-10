@@ -13,15 +13,20 @@ func TestWanQMonitorGetResourceInfo(t *testing.T) {
 	defer patches.Reset()
 	conf.DomainID = "123"
 
-	sysConfig := map[string][]string{
-		"task_id":               {"packet_loss_rate_avg"},
-		"task_id,city":          {"packet_loss_rate_avg"},
-		"task_id,operator":      {"packet_loss_rate_avg"},
-		"task_id,operator,city": {"packet_loss_rate_avg"},
-		"task_id,probe_id":      {"packet_loss_rate_avg"},
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	conf.Region = "cn-test-01"
+	metricConf = map[string]MetricConf{
+		"SYS.WANQMonitor": {
+			DimMetricName: map[string][]string{
+				"task_id":               {"packet_loss_rate_avg"},
+				"task_id,city":          {"packet_loss_rate_avg"},
+				"task_id,operator":      {"packet_loss_rate_avg"},
+				"task_id,operator,city": {"packet_loss_rate_avg"},
+				"task_id,probe_id":      {"packet_loss_rate_avg"},
+			},
+		},
 	}
-	patches.ApplyFuncReturn(getMetricConfigMap, sysConfig)
-
 	resp := QualityMonitorTasksResponse{
 		Tasks: []Task{
 			{

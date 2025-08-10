@@ -13,7 +13,6 @@
 |evpn_connection_id<br>（企业版站点入云VPN连接）|send_pkt_rate|发送包速率|pps|
 |evpn_connection_id<br>（企业版站点入云VPN连接）|recv_rate|接收速率|bps|
 |evpn_connection_id<br>（企业版站点入云VPN连接）|send_rate|发送速率|bps|
-|evpn_connection_id<br>（企业版站点入云VPN连接）|bgp_peer_status|BGP邻居状态指标||
 |evpn_connection_id,evpn_sa_id<br>（企业版站点入云VPN连接,企业版站点入云VPN连接sa）|sa_send_pkt_rate|SA发送包速率|pps|
 |evpn_connection_id,evpn_sa_id<br>（企业版站点入云VPN连接,企业版站点入云VPN连接sa）|sa_recv_pkt_rate|SA接收包速率|pps|
 |evpn_connection_id,evpn_sa_id<br>（企业版站点入云VPN连接,企业版站点入云VPN连接sa）|sa_recv_rate|SA接收速率|bps|
