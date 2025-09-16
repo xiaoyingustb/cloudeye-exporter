@@ -17,7 +17,7 @@ var (
 	dimMap    = map[string][]string{
 		"cassandra": {"cassandra_cluster_id,cassandra_node_id"},
 		"mongodb":   {"mongodb_cluster_id", "mongodb_cluster_id,mongodb_node_id"},
-		"influxdb":  {"influxdb_cluster_id,influxdb_node_id"},
+		"influxdb":  {"influxdb_cluster_id", "influxdb_cluster_id,influxdb_node_id"},
 		"redis":     {"redis_cluster_id", "redis_cluster_id,redis_node_id"},
 	}
 )
@@ -36,8 +36,28 @@ func (getter NoSQLInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricI
 			return nosqlInfo.LabelInfo, nosqlInfo.FilterMetrics
 		}
 		for _, instance := range instances {
-			buildMetricsAndInfo(instance, &filterMetrics, resourceInfos)
+			buildMetricsAndInfo(instance, resourceInfos)
 		}
+		allMetrics, err := listAllMetrics("SYS.NoSQL")
+		if err != nil {
+			logs.Logger.Errorf("Get all metrics of SYS.NoSQLS error: %s", err.Error())
+			return nosqlInfo.LabelInfo, nosqlInfo.FilterMetrics
+		}
+
+		for _, metricInfo := range allMetrics {
+			resourceKey := GetResourceKeyFromMetricInfo(metricInfo)
+			if resourceKey == "" {
+				continue
+			}
+			if _, ok := resourceInfos[resourceKey]; !ok {
+				continue
+			}
+
+			if IsMetricInfoInWhiteList(metricInfo) {
+				filterMetrics = append(filterMetrics, metricInfo)
+			}
+		}
+
 		nosqlInfo.LabelInfo = resourceInfos
 		nosqlInfo.FilterMetrics = filterMetrics
 		nosqlInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
@@ -45,52 +65,41 @@ func (getter NoSQLInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricI
 	return nosqlInfo.LabelInfo, nosqlInfo.FilterMetrics
 }
 
-func buildMetricsAndInfo(instance nosqlmodel.ListInstancesResult, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) {
+func buildMetricsAndInfo(instance nosqlmodel.ListInstancesResult, resourceInfos map[string]labelInfo) {
 	dimStrArr, ok := dimMap[instance.Datastore.Type]
 	if !ok {
 		logs.Logger.Debugf("Instances type is invalid")
 		return
 	}
-	var metricNames []string
 	for _, dimStr := range dimStrArr {
-		metricNames = getMetricConfigMap("SYS.NoSQL")[dimStr]
-		if len(metricNames) == 0 {
-			logs.Logger.Debugf("metric names is empty: %s", dimStr)
-			continue
-		}
 		dimName := strings.Split(dimStr, ",")
 		if len(dimName) == 1 {
-			buildClusterResources(instance, dimName, metricNames, filterMetrics, resourceInfos)
+			buildClusterResources(instance, resourceInfos)
 		} else {
-			buildNodeDimResources(instance, dimName, metricNames, filterMetrics, resourceInfos)
+			buildNodeDimResources(instance, dimName, resourceInfos)
 		}
 	}
 }
 
-func buildNodeDimResources(instance nosqlmodel.ListInstancesResult, dimName []string, metricNames []string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) {
+func buildNodeDimResources(instance nosqlmodel.ListInstancesResult, dimName []string, resourceInfos map[string]labelInfo) {
 	for _, group := range instance.Groups {
 		for _, node := range group.Nodes {
-			metrics := buildDimensionMetrics(metricNames, "SYS.NoSQL",
-				[]model.MetricsDimension{{Name: dimName[0], Value: instance.Id}, {Name: dimName[1], Value: node.Id}})
-			*filterMetrics = append(*filterMetrics, metrics...)
 			nodeInfo := labelInfo{
 				Name: []string{"instanceName", "lbIPAddress", "lbPort", "epId", "type", "mode", "nodeName", "nodePrivateIP", "nodePublicIp"},
 				Value: []string{instance.Name, getDefaultString(instance.LbIpAddress), getDefaultString(instance.LbPort), instance.EnterpriseProjectId, instance.Datastore.Type, instance.Mode,
 					node.Name, node.PrivateIp, node.PublicIp},
 			}
-			resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = nodeInfo
+			resourceInfos[GetResourceKeyFromDimensions([]model.MetricsDimension{{Name: dimName[0], Value: instance.Id}, {Name: dimName[1], Value: node.Id}})] = nodeInfo
 		}
 	}
 }
 
-func buildClusterResources(instance nosqlmodel.ListInstancesResult, dimName []string, metricNames []string, filterMetrics *[]model.MetricInfoList, resourceInfos map[string]labelInfo) {
-	metrics := buildSingleDimensionMetrics(metricNames, "SYS.NoSQL", dimName[0], instance.Id)
-	*filterMetrics = append(*filterMetrics, metrics...)
+func buildClusterResources(instance nosqlmodel.ListInstancesResult, resourceInfos map[string]labelInfo) {
 	instanceInfo := labelInfo{
 		Name:  []string{"instanceName", "lbIPAddress", "lbPort", "epId", "type", "mode"},
 		Value: []string{instance.Name, getDefaultString(instance.LbIpAddress), getDefaultString(instance.LbPort), instance.EnterpriseProjectId, instance.Datastore.Type, instance.Mode},
 	}
-	resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = instanceInfo
+	resourceInfos[instance.Id] = instanceInfo
 }
 
 func getAllNoSQLInstances() ([]nosqlmodel.ListInstancesResult, error) {

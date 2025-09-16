@@ -85,7 +85,7 @@ func (exporter *BaseHuaweiCloudExporter) setProData(ctx context.Context, ch chan
 	}()
 	for _, metric := range dataList {
 		exporter.debugMetricInfo(metric)
-		data, err := getLatestData(metric.Datapoints)
+		datapoint, err := getLatestData(metric.Datapoints)
 		if err != nil {
 			logs.Logger.Warnf("[%s] Get data point error: %s, metric_name: %s, dimension: %+v", exporter.txnKey, err.Error(), metric.MetricName, metric.Dimensions)
 			continue
@@ -95,13 +95,19 @@ func (exporter *BaseHuaweiCloudExporter) setProData(ctx context.Context, ch chan
 		label = transformUnit(&metric, label)
 		fqName := prometheus.BuildFQName(exporter.Prefix, replaceName(*metric.Namespace), metric.MetricName)
 
-		proMetric, err := prometheus.NewConstMetric(
+		tmpMetric, err := prometheus.NewConstMetric(
 			prometheus.NewDesc(fqName, fqName, label.Name, nil),
-			prometheus.GaugeValue, data, label.Value...)
+			prometheus.GaugeValue, *datapoint.Average, label.Value...)
 		if err != nil {
 			logs.Logger.Errorf("[%s] New const metric error: %s, fqName: %s, label: %+v",
 				exporter.txnKey, err.Error(), fqName, label)
 			continue
+		}
+		var proMetric prometheus.Metric
+		if CloudConf.Global.MetricTimestampExportEnabled {
+			proMetric = prometheus.NewMetricWithTimestamp(time.UnixMilli(datapoint.Timestamp), tmpMetric)
+		} else {
+			proMetric = tmpMetric
 		}
 		dimArray := make([]string, 0, len(*metric.Dimensions))
 		for _, dimension := range *metric.Dimensions {
@@ -173,6 +179,12 @@ func getLabel(metric model.BatchMetricData, info map[string]labelInfo) labelInfo
 	if extendLabel, exist := info[GetResourceKeyFromMetricData(metric)]; exist {
 		label.Name = append(label.Name, extendLabel.Name...)
 		label.Value = append(label.Value, extendLabel.Value...)
+		for idx, labelName := range extendLabel.Name {
+			if labelName == "epId" && GetEpNameByEpId(extendLabel.Value[idx]) != "" {
+				label.Name = append(label.Name, "epName")
+				label.Value = append(label.Value, GetEpNameByEpId(extendLabel.Value[idx]))
+			}
+		}
 	}
 	return label
 }
@@ -325,12 +337,12 @@ func (exporter *BaseHuaweiCloudExporter) debugMetricInfo(md model.BatchMetricDat
 	logs.Logger.Debugf("[%s] Get data points of metric are: %s", exporter.txnKey, string(dataJson))
 }
 
-func getLatestData(data []model.DatapointForBatchMetric) (float64, error) {
+func getLatestData(data []model.DatapointForBatchMetric) (*model.DatapointForBatchMetric, error) {
 	if len(data) == 0 {
-		return 0, errors.New("data not found")
+		return nil, errors.New("data not found")
 	}
 
-	return *data[len(data)-1].Average, nil
+	return &data[len(data)-1], nil
 }
 
 func isMetricLabelConflict(fqName string, label labelInfo, metricMap *PrometheusMetricMap) bool {

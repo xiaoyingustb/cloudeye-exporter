@@ -27,19 +27,29 @@ func TestGCBGetResourceInfo(t *testing.T) {
 	defaultEpId := "0"
 	id := "gcb-0001"
 	name := "gcb1"
-	connectionsPage := model.ListGlobalConnectionBandwidthsResponse{
+	directional_name := "test_directional_name"
+	directional_id := "test_directional_id"
+	connectionsPage := ListGlobalConnectionBandwidthsResponse{
 		HttpStatusCode: 200,
-		GlobalconnectionBandwidths: []model.GlobalConnectionBandwidth{
-			{Id: id, Name: &name, EnterpriseProjectId: &defaultEpId},
+		GlobalconnectionBandwidths: []GlobalConnectionBandwidth{
+			{
+				Id:                  id,
+				Name:                &name,
+				EnterpriseProjectId: &defaultEpId,
+				DirectionalConnections: []DirectionalConnection{
+					{
+						Name: directional_name,
+						Id:   directional_id,
+					},
+				},
+			},
 		},
 		PageInfo: &model.PageInfo{},
 	}
 
 	ccClient := cc.CcClient{}
 	patches.ApplyFuncReturn(getCCClient, &ccClient)
-	patches.ApplyMethodFunc(&ccClient, "ListGlobalConnectionBandwidths", func(req *model.ListGlobalConnectionBandwidthsRequest) (*model.ListGlobalConnectionBandwidthsResponse, error) {
-		return &connectionsPage, nil
-	})
+	patches.ApplyMethodReturn(ccClient.HcClient, "Sync", &connectionsPage, nil)
 	patches.ApplyFuncReturn(listAllMetrics, []model2.MetricInfoList{
 		{
 			Dimensions: []model2.MetricsDimension{
@@ -55,7 +65,7 @@ func TestGCBGetResourceInfo(t *testing.T) {
 
 	var gcbgetter GCBInfo
 	labels, metrics := gcbgetter.GetResourceInfo()
-	assert.Equal(t, 1, len(labels))
+	assert.Equal(t, 2, len(labels))
 	assert.Equal(t, 1, len(metrics))
 	metricConf = map[string]MetricConf{}
 }

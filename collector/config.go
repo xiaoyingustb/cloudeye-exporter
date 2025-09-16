@@ -40,6 +40,8 @@ type Global struct {
 	MaxRoutines                 int    `yaml:"max_routines"`
 	ScrapeBatchSize             int    `yaml:"scrape_batch_size"`
 	ResourceSyncIntervalMinutes int    `yaml:"resource_sync_interval_minutes"`
+	MetricInfoExpirationDays    int    `yaml:"metric_info_expiration_days"`
+	MetricInfoCleanThreshold    int    `yaml:"metric_info_clean_threshold"`
 	EpIds                       string `yaml:"ep_ids"`
 	MetricsConfPath             string `yaml:"metrics_conf_path"`
 	LogsConfPath                string `yaml:"logs_conf_path"`
@@ -57,9 +59,10 @@ type Global struct {
 	// CN列表，用于校验https证书链中的DNS名称
 	ClientCN string `yaml:"client_cn"`
 
-	UnitStandardizationEnabled  bool   `yaml:"unit_standardization_enabled"`
-	I18nConfigFilePath          string `yaml:"i18n_config_file_path"`
-	UnitStandardizationFilePath string `yaml:"unit_standardization_file_path"`
+	UnitStandardizationEnabled   bool   `yaml:"unit_standardization_enabled"`
+	I18nConfigFilePath           string `yaml:"i18n_config_file_path"`
+	UnitStandardizationFilePath  string `yaml:"unit_standardization_file_path"`
+	MetricTimestampExportEnabled bool   `yaml:"metric_timestamp_export_enabled"`
 }
 
 type CloudConfig struct {
@@ -141,6 +144,22 @@ func SetDefaultConfigValues(config *CloudConfig) {
 
 	if config.Global.ResourceSyncIntervalMinutes <= 0 {
 		config.Global.ResourceSyncIntervalMinutes = 180
+	}
+
+	if config.Global.MetricInfoExpirationDays <= 2 {
+		config.Global.MetricInfoExpirationDays = 2
+	}
+
+	if config.Global.MetricInfoExpirationDays >= 20 {
+		config.Global.MetricInfoExpirationDays = 20
+	}
+
+	if config.Global.MetricInfoCleanThreshold <= 5000 {
+		config.Global.MetricInfoCleanThreshold = 5000
+	}
+
+	if config.Global.MetricInfoCleanThreshold >= 50000 {
+		config.Global.MetricInfoCleanThreshold = 50000
 	}
 
 	if config.Global.MetricsConfPath == "" {

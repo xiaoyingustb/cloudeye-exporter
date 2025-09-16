@@ -29,8 +29,8 @@ func (getter BMSInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.Metric
 				metrics := buildSingleDimensionMetrics(metricNames, "SYS.BMS", "instance_id", instance.ID)
 				filterMetrics = append(filterMetrics, metrics...)
 				info := labelInfo{
-					Name:  []string{"name", "epId", "ip"},
-					Value: []string{instance.Name, instance.EpId, instance.IP},
+					Name:  []string{"name", "epId", "ip", "fixedIp", "floatingIp"},
+					Value: []string{instance.Name, instance.EpId, instance.IP, instance.FixedIP, instance.FloatingIP},
 				}
 				keys, values := getTags(instance.Tags)
 				info.Name = append(info.Name, keys...)

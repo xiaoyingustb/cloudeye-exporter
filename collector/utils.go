@@ -36,11 +36,31 @@ func init() {
 	}
 }
 
+type MetricInfoListWithTTL struct {
+	TTL int64
+	model.MetricInfoList
+}
+
 type serversInfo struct {
 	TTL           int64
 	LabelInfo     map[string]labelInfo
 	FilterMetrics []model.MetricInfoList
 	sync.Mutex
+}
+
+type newServersInfo struct {
+	TTL           int64
+	LabelInfo     map[string]labelInfo
+	FilterMetrics []MetricInfoListWithTTL
+	sync.Mutex
+}
+
+func (o newServersInfo) GetFilteredMetrics() []model.MetricInfoList {
+	var resultMetricList []model.MetricInfoList
+	for index := range o.FilterMetrics {
+		resultMetricList = append(resultMetricList, o.FilterMetrics[index].MetricInfoList)
+	}
+	return resultMetricList
 }
 
 type labelInfo struct {
@@ -53,6 +73,17 @@ type RmsInfo struct {
 	Name string
 	EpId string
 	Tags map[string]string
+}
+
+func GetResourceKeyFromDimensions(dimensions []model.MetricsDimension) string {
+	sort.Slice(dimensions, func(i, j int) bool {
+		return dimensions[i].Name < dimensions[j].Name
+	})
+	dimValuesList := make([]string, 0, len(dimensions))
+	for _, dim := range dimensions {
+		dimValuesList = append(dimValuesList, dim.Value)
+	}
+	return strings.Join(dimValuesList, ".")
 }
 
 func GetResourceKeyFromMetricInfo(metric model.MetricInfoList) string {
@@ -273,6 +304,11 @@ func GetResourceInfoExpirationTime() time.Duration {
 	return time.Duration(intervalMinutes) * time.Minute
 }
 
+func GetMetricInfoExpirationTime() time.Duration {
+	expirationDays := CloudConf.Global.MetricInfoExpirationDays
+	return time.Duration(expirationDays*24) * time.Hour
+}
+
 // ContainsInArray 判断字符串是否包含在数组中,由于sort.SearchStrings使用二分查找法,需要传入按字母序排序后的数组
 func ContainsInArray(sortedArray []string, target string) bool {
 	index := sort.SearchStrings(sortedArray, target)
@@ -378,4 +414,53 @@ func appendNameValuePairToLabelInfo(labelInfo labelInfo, names []string, values 
 		labelInfo.Value = append(labelInfo.Value, values[index])
 	}
 	return labelInfo
+}
+
+func getMetricKeyFromMetricInfo(metric model.MetricInfoList) string {
+	resourceKey := GetResourceKeyFromMetricInfo(metric)
+	return fmt.Sprintf("%s.%s", resourceKey, metric.MetricName)
+}
+
+func mergeMetricsWithCache(newMetrics []model.MetricInfoList, oldMetrics []MetricInfoListWithTTL) []MetricInfoListWithTTL {
+	mergedMetricMap := map[string]MetricInfoListWithTTL{}
+	for _, oldMetric := range oldMetrics {
+		metricKey := getMetricKeyFromMetricInfo(oldMetric.MetricInfoList)
+		mergedMetricMap[metricKey] = oldMetric
+	}
+
+	var newMetricInfoList []MetricInfoListWithTTL
+	for _, metric := range newMetrics {
+		newMetricKey := getMetricKeyFromMetricInfo(metric)
+		metricItem := MetricInfoListWithTTL{
+			TTL:            time.Now().Add(GetMetricInfoExpirationTime()).Unix(),
+			MetricInfoList: metric,
+		}
+		newMetricInfoList = append(newMetricInfoList, metricItem)
+		mergedMetricMap[newMetricKey] = metricItem
+	}
+
+	// 小于需要清理的阈值，直接返回merge后的全量指标列表
+	if len(mergedMetricMap) < CloudConf.Global.MetricInfoCleanThreshold {
+		var resultMetrics []MetricInfoListWithTTL
+		for _, tmpCacheMetric := range mergedMetricMap {
+			resultMetrics = append(resultMetrics, tmpCacheMetric)
+		}
+		return resultMetrics
+	}
+	// 大于需要清理的阈值，小于该阈值的2倍（超过该二倍值需要使用新指标直接覆盖缓存），执行清理任务，并返回清理后的指标列表
+	if len(mergedMetricMap) < 2*CloudConf.Global.MetricInfoCleanThreshold {
+		return cleanMergedMetrics(mergedMetricMap)
+	}
+	// 大于2倍阈值，直接返回新的指标列表
+	return newMetricInfoList
+}
+
+func cleanMergedMetrics(mergedMetricMap map[string]MetricInfoListWithTTL) []MetricInfoListWithTTL {
+	var cleanedMetrics []MetricInfoListWithTTL
+	for _, metric := range mergedMetricMap {
+		if time.Now().Unix() < metric.TTL {
+			cleanedMetrics = append(cleanedMetrics, metric)
+		}
+	}
+	return cleanedMetrics
 }

@@ -10,7 +10,7 @@ import (
 	"github.com/huaweicloud/cloudeye-exporter/logs"
 )
 
-var obsServerInfo serversInfo
+var obsServerInfo newServersInfo
 
 type OBSInfo struct{}
 
@@ -19,12 +19,11 @@ func (getter OBSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 	var filteredMetrics []model.MetricInfoList
 	obsServerInfo.Lock()
 	defer obsServerInfo.Unlock()
-
 	if obsServerInfo.LabelInfo == nil || time.Now().Unix() > obsServerInfo.TTL {
 		allMetrics, err := listAllMetrics("SYS.OBS")
 		if err != nil {
 			logs.Logger.Errorf("[%s] Get all metrics of SYS.OBS failed, error is: %s", err.Error())
-			return obsServerInfo.LabelInfo, obsServerInfo.FilterMetrics
+			return obsServerInfo.LabelInfo, obsServerInfo.GetFilteredMetrics()
 		}
 		for _, metricInfo := range allMetrics {
 			if IsMetricInfoInWhiteList(metricInfo) {
@@ -41,7 +40,7 @@ func (getter OBSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 		services, err := getAllServerFromRMS("obs", "buckets")
 		if err != nil {
 			logs.Logger.Error("Get all obs server from RMS failed, error is:", err.Error())
-			return obsServerInfo.LabelInfo, obsServerInfo.FilterMetrics
+			return obsServerInfo.LabelInfo, obsServerInfo.GetFilteredMetrics()
 		}
 		for _, instance := range services {
 			if _, ok := metricDimMap[instance.Name]; ok {
@@ -73,10 +72,10 @@ func (getter OBSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 			}
 		}
 		obsServerInfo.LabelInfo = resourceInfos
-		obsServerInfo.FilterMetrics = filteredMetrics
+		obsServerInfo.FilterMetrics = mergeMetricsWithCache(filteredMetrics, obsServerInfo.FilterMetrics)
 		obsServerInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
 	}
-	return obsServerInfo.LabelInfo, obsServerInfo.FilterMetrics
+	return obsServerInfo.LabelInfo, obsServerInfo.GetFilteredMetrics()
 }
 
 func getTenantId(metric cesmodel.MetricInfoList) string {

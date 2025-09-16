@@ -110,6 +110,7 @@ global:
   unit_standardization_enabled: false # 可选配置，用于启用指标数据的单位标签优化能力，默认关闭。启用后，原单位标签unit与华为云CES Console、帮助中心文档保持一致；新增unit_v2单位标签，为华为云各云服务的指标单位制定新标准，更易读，更易理解，方便用户在配置Grafana看板时选择单位使用
   i18n_config_file_path: "/root/i18n.json" # 可选配置，指标数据的标签优化能力依赖于CES I18N国际化配置信息，exporter默认从CES服务I18N接口获取国际化配置，若接口不可用，建议指定该国际化配置的本地文件路径
   unit_standardization_file_path: "/root/unit_standard_transform.json" # 指标数据的单位标签优化能力依赖该文件，开启优化能力时建议指定该配置文件路径
+  metric_timestamp_export_enabled: false # 可选配置，用于导出指标原始时间戳，默认false。启用后，指标时间戳字段将取值为实际的采集时间，否则取值为prometheus从exporter请求指标时的时间
   
   # 可选配置，根据实际情况替换示例中的代理协议、地址和端口号
   proxy_schema: "http"                      
