@@ -2,6 +2,7 @@ package collector
 
 import (
 	"fmt"
+	"sync"
 	"time"
 
 	http_client "github.com/huaweicloud/huaweicloud-sdk-go-v3/core"
@@ -15,11 +16,14 @@ import (
 
 var epsInfo = &EpsInfo{
 	EpDetails: make([]model.EpDetail, 0),
+	EpMap:     sync.Map{},
 }
 
 type EpsInfo struct {
 	EpDetails []model.EpDetail
+	EpMap     sync.Map
 	TTL       int64
+	sync.Mutex
 }
 
 const HelpInfo = `# HELP huaweicloud_epinfo huaweicloud_epinfo
@@ -59,6 +63,8 @@ func listEps() ([]model.EpDetail, error) {
 	if epsInfo != nil && time.Now().Unix() < epsInfo.TTL {
 		return epsInfo.EpDetails, nil
 	}
+	epsInfo.Lock()
+	defer epsInfo.Unlock()
 
 	limit := int32(1000)
 	Offset := int32(0)
@@ -84,7 +90,35 @@ func listEps() ([]model.EpDetail, error) {
 		}
 		*req.Offset += limit
 	}
+	// 清空 epsInfo.EpMap 的所有键值对
+	epsInfo.EpMap.Range(func(key, value interface{}) bool {
+		epsInfo.EpMap.Delete(key) // 删除当前遍历到的键
+		return true               // 返回 true 以继续遍历下一个键值对
+	})
+	for _, resource := range resources {
+		epsInfo.EpMap.Store(resource.Id, resource.Name)
+	}
 	epsInfo.EpDetails = resources
 	epsInfo.TTL = time.Now().Add(GetResourceInfoExpirationTime()).Unix()
 	return epsInfo.EpDetails, nil
+}
+
+var once sync.Once
+
+func GetEpNameByEpId(epId string) string {
+	once.Do(func() {
+		_, err := listEps()
+		if err != nil {
+			logs.Logger.Errorf("Get enterprise project name by enterprise project id(%s) error: %s", epId, err.Error())
+		}
+	})
+	epName, ok := epsInfo.EpMap.Load(epId)
+	if !ok {
+		return ""
+	}
+	result, ok := epName.(string)
+	if !ok {
+		return ""
+	}
+	return result
 }

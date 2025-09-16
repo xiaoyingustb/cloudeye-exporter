@@ -10,6 +10,8 @@ import (
 )
 
 func TestGetEPSClient(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
 	endpointConfig = map[string]string{
 		"eps": "https://eps.myhuaweicloud.com",
 	}
@@ -18,6 +20,8 @@ func TestGetEPSClient(t *testing.T) {
 }
 
 func TestGetEPSInfo(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
 	endpointConfig = map[string]string{
 		"eps": "https://eps.myhuaweicloud.com",
 	}
@@ -47,4 +51,38 @@ func TestGetEPSInfo(t *testing.T) {
 	defer patches.Reset()
 	_, err := GetEPSInfo()
 	assert.Nil(t, err)
+}
+
+func TestGetEpNameByEpId(t *testing.T) {
+	conf.AccessKey = "test_ak"
+	conf.SecretKey = "test_sk"
+	endpointConfig = map[string]string{
+		"eps": "https://eps.myhuaweicloud.com",
+	}
+	client := eps.NewEpsClient(getEPSClientBuilder().Build())
+	patches := gomonkey.NewPatches()
+	outputs := []gomonkey.OutputCell{
+		{
+			Values: gomonkey.Params{&model.ListEnterpriseProjectResponse{
+				EnterpriseProjects: &[]model.EpDetail{
+					{
+						Id:          "0",
+						Name:        "default",
+						Description: "默认企业项目",
+						Status:      1,
+					},
+				},
+			}, nil},
+		},
+		{
+			Values: gomonkey.Params{&model.ListEnterpriseProjectResponse{
+				EnterpriseProjects: &[]model.EpDetail{},
+			}, nil},
+		},
+	}
+	patches.ApplyMethodSeq(client, "ListEnterpriseProject", outputs)
+	patches.ApplyFuncReturn(eps.NewEpsClient, client)
+	defer patches.Reset()
+	epName := GetEpNameByEpId("0")
+	assert.Equal(t, "default", epName)
 }

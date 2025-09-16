@@ -75,17 +75,17 @@ func TestTransMetric(t *testing.T) {
 }
 
 func TestGetLatestData(t *testing.T) {
-	value, err := getLatestData([]model.DatapointForBatchMetric{})
-	assert.Equal(t, true, value == 0)
+	datapoint, err := getLatestData([]model.DatapointForBatchMetric{})
+	assert.Equal(t, true, datapoint == nil)
 	assert.Equal(t, "data not found", err.Error())
 	avg1, avg2 := 23.5, 63.52
 	data := []model.DatapointForBatchMetric{
 		{Average: &avg1, Timestamp: time.Now().Unix()*1000 - 1000*60},
 		{Average: &avg2, Timestamp: time.Now().Unix() * 1000},
 	}
-	value, err = getLatestData(data)
+	datapoint, err = getLatestData(data)
 	assert.Equal(t, true, err == nil)
-	assert.Equal(t, avg2, value)
+	assert.Equal(t, avg2, *datapoint.Average)
 }
 
 func TestIsMetricLabelConflict(t *testing.T) {

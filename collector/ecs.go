@@ -43,8 +43,8 @@ func (getter ECSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 				metrics := buildSingleDimensionMetrics(metricNames, "SYS.ECS", "instance_id", server.ID)
 				filterMetrics = append(filterMetrics, metrics...)
 				info := labelInfo{
-					Name:  []string{"hostname", "epId", "hostIP"},
-					Value: []string{server.Name, server.EpId, server.IP},
+					Name:  []string{"hostname", "epId", "hostIP", "fixedIP", "floatingIP"},
+					Value: []string{server.Name, server.EpId, server.IP, server.FixedIP, server.FloatingIP},
 				}
 				keys, values := getTags(server.Tags)
 				info.Name = append(info.Name, keys...)
@@ -61,7 +61,9 @@ func (getter ECSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 
 type EcsInstancesInfo struct {
 	ResourceBaseInfo
-	IP string
+	IP         string
+	FloatingIP string
+	FixedIP    string
 }
 
 func getECSClient() *ecs.EcsClient {
@@ -111,11 +113,12 @@ func getAllServerByEpId(epId string) ([]EcsInstancesInfo, error) {
 					tags[tagArray[0]] = tagArray[1]
 				}
 			}
+			ips, fixedIps, floatingIps := getIPFromEcsInfo(server.Addresses)
 			servers = append(servers, EcsInstancesInfo{
 				ResourceBaseInfo: ResourceBaseInfo{
 					ID: server.Id, Name: server.Name,
 					Tags: tags, EpId: *server.EnterpriseProjectId},
-				IP: getIPFromEcsInfo(server.Addresses),
+				IP: ips, FixedIP: fixedIps, FloatingIP: floatingIps,
 			})
 		}
 		*options.Offset += 1
@@ -123,14 +126,22 @@ func getAllServerByEpId(epId string) ([]EcsInstancesInfo, error) {
 	return servers, nil
 }
 
-func getIPFromEcsInfo(addresses map[string][]ecsmodel.ServerAddress) string {
+func getIPFromEcsInfo(addresses map[string][]ecsmodel.ServerAddress) (string, string, string) {
 	var ips []string
+	var fixedIps []string
+	var floatingIps []string
 	for _, address := range addresses {
 		for i := range address {
 			ips = append(ips, address[i].Addr)
+			if address[i].OSEXTIPStype != nil && address[i].OSEXTIPStype.Value() == "fixed" {
+				fixedIps = append(fixedIps, address[i].Addr)
+			}
+			if address[i].OSEXTIPStype != nil && address[i].OSEXTIPStype.Value() == "floating" {
+				floatingIps = append(floatingIps, address[i].Addr)
+			}
 		}
 	}
-	return strings.Join(ips, ",")
+	return strings.Join(ips, ","), strings.Join(fixedIps, ","), strings.Join(floatingIps, ",")
 }
 
 func getAllServerFromRMS(provider, resourceType string) ([]EcsInstancesInfo, error) {
@@ -150,23 +161,32 @@ func getAllServerFromRMS(provider, resourceType string) ([]EcsInstancesInfo, err
 		services[index].Name = *resource.Name
 		services[index].EpId = *resource.EpId
 		services[index].Tags = resource.Tags
-		services[index].IP = getIPInfoFromProperties(&properties)
+		services[index].IP, services[index].FixedIP, services[index].FloatingIP = getIPInfoFromProperties(&properties)
 	}
 	return services, nil
 }
 
 type EcsProperties struct {
 	Addresses []struct {
-		Addr string
+		Addr         string
+		OsExtIpsType string
 	} `json:"addresses"`
 }
 
-func getIPInfoFromProperties(properties *EcsProperties) string {
+func getIPInfoFromProperties(properties *EcsProperties) (string, string, string) {
 	var ips []string
+	var fixedIps []string
+	var floatingIps []string
 	for i := range properties.Addresses {
 		ips = append(ips, properties.Addresses[i].Addr)
+		if properties.Addresses[i].OsExtIpsType == "fixed" {
+			fixedIps = append(fixedIps, properties.Addresses[i].Addr)
+		}
+		if properties.Addresses[i].OsExtIpsType == "floating" {
+			floatingIps = append(floatingIps, properties.Addresses[i].Addr)
+		}
 	}
-	return strings.Join(ips, ",")
+	return strings.Join(ips, ","), strings.Join(fixedIps, ","), strings.Join(floatingIps, ",")
 }
 
 type AGTECSInfo struct{}

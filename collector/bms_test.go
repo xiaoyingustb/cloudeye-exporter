@@ -25,7 +25,7 @@ func TestBmsGetResourceInfo(t *testing.T) {
 	patches := getPatches()
 	logs.InitLog("")
 	patches.ApplyFuncReturn(getAllServerFromRMS, instances, nil)
-	patches.ApplyFuncReturn(getIPFromEcsInfo, "")
+	patches.ApplyFuncReturn(getIPFromEcsInfo, "", "", "")
 	defer patches.Reset()
 
 	var bmsGetter BMSInfo
