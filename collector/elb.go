@@ -135,15 +135,21 @@ func (getter ELBInfo) GetResourceInfo() (map[string]labelInfo, []cesmodel.Metric
 				keys, values := getElbTags(loadBalancer.Tags)
 				info.Name = append(info.Name, keys...)
 				info.Value = append(info.Value, values...)
-				resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = info
+				commonInfo := labelInfo{
+					Name:  []string{},
+					Value: []string{},
+				}
+				commonInfo.Name = append(commonInfo.Name, info.Name...)
+				commonInfo.Value = append(commonInfo.Value, info.Value...)
+				resourceInfos[GetResourceKeyFromMetricInfo(metrics[0])] = commonInfo
 
-				buildListenerInfo(sysConfigMap, &loadBalancer, info, &filterMetrics, resourceInfos)
+				buildListenerInfo(sysConfigMap, &loadBalancer, commonInfo, &filterMetrics, resourceInfos)
 
-				buildPoolInfo(sysConfigMap, &loadBalancer, info, &filterMetrics, resourceInfos)
+				buildPoolInfo(sysConfigMap, &loadBalancer, commonInfo, &filterMetrics, resourceInfos)
 
-				buildAvailabilityZoneInfo(sysConfigMap, &loadBalancer, info, &filterMetrics, resourceInfos)
+				buildAvailabilityZoneInfo(sysConfigMap, &loadBalancer, commonInfo, &filterMetrics, resourceInfos)
 
-				buildIpAddressInfo(sysConfigMap, &loadBalancer, info, &filterMetrics, resourceInfos)
+				buildIpAddressInfo(sysConfigMap, &loadBalancer, commonInfo, &filterMetrics, resourceInfos)
 			}
 		}
 		elbInfo.LabelInfo = resourceInfos

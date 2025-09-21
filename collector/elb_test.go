@@ -21,12 +21,20 @@ func TestELBInfo_GetResourceInfo(t *testing.T) {
 	}
 	patches := getPatches()
 	logs.InitLog("")
+	tags := []model.Tag{
+		{
+			Key:   new(string),
+			Value: new(string),
+		},
+	}
+	*tags[0].Key = "test_tag"
+	*tags[0].Value = "test_tag_value"
 	lbOutputs := []gomonkey.OutputCell{
 		{
 			Values: gomonkey.Params{&model.ListLoadBalancersResponse{
 				Loadbalancers: &[]model.LoadBalancer{
 					{Name: "test_lb", EnterpriseProjectId: "test_epId", VipAddress: "127.0.0.1", Ipv6VipAddress: "test_ipv6_addr", Provider: "test_provider",
-						Listeners: []model.ListenerRef{{Id: "test_listener"}}, Pools: []model.PoolRef{{Id: "test_pool"}}, AvailabilityZoneList: []string{"cn-north-7"}},
+						Listeners: []model.ListenerRef{{Id: "test_listener"}}, Pools: []model.PoolRef{{Id: "test_pool"}}, AvailabilityZoneList: []string{"cn-north-7"}, Tags: tags},
 				},
 			}, nil},
 		},
@@ -58,7 +66,7 @@ func TestELBInfo_GetResourceInfo(t *testing.T) {
 		{
 			Values: gomonkey.Params{&model.ListPoolsResponse{
 				Pools: &[]model.Pool{
-					{Id: "test_pool", Name: "test_listener", Protocol: "http"},
+					{Id: "test_pool", Name: "test_pool", Protocol: "http"},
 				},
 			}, nil},
 		},
@@ -91,4 +99,54 @@ func TestELBInfo_GetResourceInfo(t *testing.T) {
 	labelInfos, metricInfos := elbGetter.GetResourceInfo()
 	assert.NotEmpty(t, labelInfos)
 	assert.NotEmpty(t, metricInfos)
+	expectLabelInfos := map[string]labelInfo{}
+	expectLabelInfos[""] = labelInfo{
+		Name:  []string{"name", "epId", "vip_address", "provider", "test_tag"},
+		Value: []string{"test_lb", "test_epId", "127.0.0.1", "test_provider", "test_tag_value"},
+	}
+	expectLabelInfos[".test_listener"] = labelInfo{
+		Name:  []string{"name", "epId", "vip_address", "provider", "test_tag", "listener_name", "port", "protocol"},
+		Value: []string{"test_lb", "test_epId", "127.0.0.1", "test_provider", "test_tag_value", "test_listener", "8087", "http"},
+	}
+	expectLabelInfos[".test_pool"] = labelInfo{
+		Name:  []string{"name", "epId", "vip_address", "provider", "test_tag", "pool_name", "pool_protocol"},
+		Value: []string{"test_lb", "test_epId", "127.0.0.1", "test_provider", "test_tag_value", "test_pool", "http"},
+	}
+	expectLabelInfos["127.0.0.1."] = labelInfo{
+		Name:  []string{"name", "epId", "vip_address", "provider", "test_tag"},
+		Value: []string{"test_lb", "test_epId", "127.0.0.1", "test_provider", "test_tag_value"},
+	}
+	expectLabelInfos["cn-north-7."] = labelInfo{
+		Name:  []string{"name", "epId", "vip_address", "provider", "test_tag", "state", "public_border_group", "category", "protocol"},
+		Value: []string{"test_lb", "test_epId", "127.0.0.1", "test_provider", "test_tag_value", "ACTIVE", "center", "0", "l4,l7"},
+	}
+	expectLabelInfos["test_ipv6_addr."] = labelInfo{
+		Name:  []string{"name", "epId", "vip_address", "provider", "test_tag"},
+		Value: []string{"test_lb", "test_epId", "127.0.0.1", "test_provider", "test_tag_value"},
+	}
+	for key, labelInfo := range labelInfos {
+		assert.NotEmpty(t, expectLabelInfos[key])
+		assert.True(t, labelInfoEqual(labelInfo, expectLabelInfos[key]))
+	}
+
+}
+
+func labelInfoEqual(a, b labelInfo) bool {
+	if len(a.Name) != len(b.Name) {
+		return false
+	}
+	for i := range a.Name {
+		if a.Name[i] != b.Name[i] {
+			return false
+		}
+	}
+	if len(a.Value) != len(b.Value) {
+		return false
+	}
+	for i := range a.Value {
+		if a.Value[i] != b.Value[i] {
+			return false
+		}
+	}
+	return true
 }
