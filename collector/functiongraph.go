@@ -16,8 +16,8 @@ type functionInfo struct {
 	FunctionProperties
 }
 type FunctionProperties struct {
-	FuncName string `json:"func_name"`
-	Package  string `json:"package"`
+	Package string `json:"package"`
+	Version string `json:"version"`
 }
 
 type FunctionGraphInfo struct{}
@@ -35,11 +35,11 @@ func (getter FunctionGraphInfo) GetResourceInfo() (map[string]labelInfo, []cesmo
 				return functionGraphInfo.LabelInfo, functionGraphInfo.FilterMetrics
 			}
 			for _, function := range functions {
-				metrics := buildSingleDimensionMetrics(metricNames, "SYS.FunctionGraph", "package-functionname", fmt.Sprintf("%s-%s", function.Package, function.FuncName))
+				metrics := buildSingleDimensionMetrics(metricNames, "SYS.FunctionGraph", "package-functionname", fmt.Sprintf("%s-%s-%s", function.Package, function.Name, function.Version))
 				filterMetrics = append(filterMetrics, metrics...)
 				info := labelInfo{
-					Name:  []string{"epId", "package", "function_name"},
-					Value: []string{function.EpId, function.Package, function.FuncName},
+					Name:  []string{"epId", "package", "function_name", "version"},
+					Value: []string{function.EpId, function.Package, function.Name, function.Version},
 				}
 				keys, values := getTags(function.Tags)
 				info.Name = append(info.Name, keys...)

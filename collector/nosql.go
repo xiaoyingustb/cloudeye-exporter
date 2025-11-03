@@ -1,10 +1,13 @@
 package collector
 
 import (
+	"errors"
+	"net/http"
 	"strings"
 	"time"
 
 	"github.com/huaweicloud/huaweicloud-sdk-go-v3/core/auth/basic"
+	"github.com/huaweicloud/huaweicloud-sdk-go-v3/core/def"
 	"github.com/huaweicloud/huaweicloud-sdk-go-v3/services/ces/v1/model"
 	nosql "github.com/huaweicloud/huaweicloud-sdk-go-v3/services/gaussdbfornosql/v3"
 	nosqlmodel "github.com/huaweicloud/huaweicloud-sdk-go-v3/services/gaussdbfornosql/v3/model"
@@ -38,6 +41,17 @@ func (getter NoSQLInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricI
 		for _, instance := range instances {
 			buildMetricsAndInfo(instance, resourceInfos)
 		}
+
+		dynamoTables, err := getDynamoDbInstances()
+		if err != nil {
+			logs.Logger.Errorf("Get All NoSQL Dynamo Tables error: %s", err.Error())
+			return nosqlInfo.LabelInfo, nosqlInfo.FilterMetrics
+		}
+
+		for _, table := range dynamoTables {
+			buildDynamoTableResources(table, resourceInfos)
+		}
+
 		allMetrics, err := listAllMetrics("SYS.NoSQL")
 		if err != nil {
 			logs.Logger.Errorf("Get all metrics of SYS.NoSQLS error: %s", err.Error())
@@ -65,6 +79,14 @@ func (getter NoSQLInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricI
 	return nosqlInfo.LabelInfo, nosqlInfo.FilterMetrics
 }
 
+func buildDynamoTableResources(table DynamoTableInfo, infos map[string]labelInfo) {
+	instanceInfo := labelInfo{
+		Name:  []string{"name", "status"},
+		Value: []string{table.Name, table.Status},
+	}
+	infos[table.Id] = instanceInfo
+}
+
 func buildMetricsAndInfo(instance nosqlmodel.ListInstancesResult, resourceInfos map[string]labelInfo) {
 	dimStrArr, ok := dimMap[instance.Datastore.Type]
 	if !ok {
@@ -82,6 +104,9 @@ func buildMetricsAndInfo(instance nosqlmodel.ListInstancesResult, resourceInfos 
 }
 
 func buildNodeDimResources(instance nosqlmodel.ListInstancesResult, dimName []string, resourceInfos map[string]labelInfo) {
+	if resourceInfos == nil {
+		resourceInfos = make(map[string]labelInfo)
+	}
 	for _, group := range instance.Groups {
 		for _, node := range group.Nodes {
 			nodeInfo := labelInfo{
@@ -121,6 +146,61 @@ func getAllNoSQLInstances() ([]nosqlmodel.ListInstancesResult, error) {
 		*options.Offset += limit
 	}
 	return instances, nil
+}
+
+type DynamoTableInfo struct {
+	Id     string `json:"id"`
+	Name   string `json:"name"`
+	Status string `json:"status"`
+}
+
+type DynamoTablesResp struct {
+	TotalCount     int               `json:"total_count"`
+	Tables         []DynamoTableInfo `json:"tables"`
+	HttpStatusCode int               `json:"-"`
+}
+
+type ListDynamoTablesRep struct {
+	Limit  int `json:"limit"`
+	Offset int `json:"offset"`
+}
+
+func genReqDefForListDynamoTables() *def.HttpRequestDef {
+	reqDefBuilder := def.NewHttpRequestDefBuilder().WithMethod(http.MethodGet).WithPath("/v3/{project_id}/serverless/dynamodb/tables").
+		WithResponse(new(DynamoTablesResp)).WithContentType("application/json")
+
+	reqDefBuilder.WithRequestField(def.NewFieldDef().WithName("Limit").WithJsonTag("limit").WithLocationType(def.Query))
+	reqDefBuilder.WithRequestField(def.NewFieldDef().WithName("Offset").WithJsonTag("offset").WithLocationType(def.Query))
+	return reqDefBuilder.Build()
+}
+
+func getDynamoDbInstances() ([]DynamoTableInfo, error) {
+	client := getNoSQLClient()
+	var tables []DynamoTableInfo
+	request := &ListDynamoTablesRep{Limit: 100}
+	for {
+		resp, err := getDynamoTables(client, request)
+		if err != nil {
+			logs.Logger.Errorf("Failed to get list dynamo tables: %s", err.Error())
+			return nil, err
+		}
+		response, ok := resp.(*DynamoTablesResp)
+		if !ok {
+			err := errors.New("resp type is not DynamoTablesResp")
+			logs.Logger.Errorf("Failed to get list dynamo tables: %s", err.Error())
+			return nil, err
+		}
+		if len(response.Tables) == 0 {
+			break
+		}
+		tables = append(tables, response.Tables...)
+		request.Offset += 100
+	}
+	return tables, nil
+}
+
+func getDynamoTables(client *nosql.GaussDBforNoSQLClient, request *ListDynamoTablesRep) (interface{}, error) {
+	return client.HcClient.Sync(request, genReqDefForListDynamoTables())
 }
 
 func getNoSQLClient() *nosql.GaussDBforNoSQLClient {

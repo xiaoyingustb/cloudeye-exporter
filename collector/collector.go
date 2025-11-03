@@ -284,9 +284,10 @@ func transMetric(metricInfoList model.MetricInfoList) model.MetricInfo {
 }
 
 func (exporter *BaseHuaweiCloudExporter) Collect(ch chan<- prometheus.Metric) {
-	duration, err := time.ParseDuration("-10m")
+	queryDuration := fmt.Sprintf("-%dm", CloudConf.Global.MetricQueryDuration)
+	duration, err := time.ParseDuration(queryDuration)
 	if err != nil {
-		logs.Logger.Error("ParseDuration -10m error:", err.Error())
+		logs.Logger.Errorf("ParseDuration %s error:", queryDuration, err.Error())
 		return
 	}
 	ctx, cancel := context.WithCancel(context.Background())

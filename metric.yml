@@ -2676,3 +2676,20 @@ SYS.ER:
       - attachment_packets_drop_noroute
       - attachment_packets_in
       - attachment_packets_out
+SYS.ECP:
+  resource: "rms"
+  dim_metric_name:
+    instance_id:
+      - cpu_util
+      - disk_read_bytes_rate
+      - disk_write_bytes_rate
+      - disk_read_requests_rate
+      - disk_write_requests_rate
+      - network_incoming_bytes_aggregate_rate
+      - network_outgoing_bytes_aggregate_rate
+      - network_vm_connections
+      - network_vm_bandwidth_in
+      - network_vm_bandwidth_out
+      - network_vm_pps_in
+      - network_vm_pps_out
+      - network_vm_newconnections

@@ -64,6 +64,7 @@ var (
 		"SYS.MaaS":          MaaSInfo{},
 		"SYS.GCB":           GCBInfo{},
 		"SYS.GEIP":          GeipInfo{},
+		"SYS.ECP":           ECPInfo{},
 	}
 )
 

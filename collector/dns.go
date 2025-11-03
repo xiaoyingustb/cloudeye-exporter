@@ -32,7 +32,7 @@ func (getter DNSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 			return dnsServerInfo.LabelInfo, dnsServerInfo.FilterMetrics
 		}
 
-		var allRecordSets []dnsModel.ListRecordSetsWithTags
+		var allRecordSets []dnsModel.QueryRecordSetWithLineAndTagsResp
 		publicRecordSets, err := getAllRecordSets("public")
 		if err != nil {
 			logs.Logger.Errorf("Failed to get public record sets, error is: %s", err.Error())
@@ -92,14 +92,14 @@ func (getter DNSInfo) GetResourceInfo() (map[string]labelInfo, []model.MetricInf
 	return dnsServerInfo.LabelInfo, dnsServerInfo.FilterMetrics
 }
 
-func getAllRecordSets(zoneType string) ([]dnsModel.ListRecordSetsWithTags, error) {
+func getAllRecordSets(zoneType string) ([]dnsModel.QueryRecordSetWithLineAndTagsResp, error) {
 	limit := int32(500)
 	offset := int32(0)
-	var recordSets []dnsModel.ListRecordSetsWithTags
+	var recordSets []dnsModel.QueryRecordSetWithLineAndTagsResp
 
 	for {
-		request := &dnsModel.ListRecordSetsRequest{ZoneType: &zoneType, Limit: &limit, Offset: &offset}
-		response, err := getDnsClient().ListRecordSets(request)
+		request := &dnsModel.ListRecordSetsWithLineRequest{ZoneType: &zoneType, Limit: &limit, Offset: &offset}
+		response, err := getDnsClient().ListRecordSetsWithLine(request)
 		if err != nil {
 			logs.Logger.Errorf("Failed to get all record sets, type is: %s, error is: %s", zoneType, err.Error())
 			return nil, err

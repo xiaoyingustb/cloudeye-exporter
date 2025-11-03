@@ -63,6 +63,7 @@ type Global struct {
 	I18nConfigFilePath           string `yaml:"i18n_config_file_path"`
 	UnitStandardizationFilePath  string `yaml:"unit_standardization_file_path"`
 	MetricTimestampExportEnabled bool   `yaml:"metric_timestamp_export_enabled"`
+	MetricQueryDuration          int    `yaml:"metric_query_duration"`
 }
 
 type CloudConfig struct {
@@ -188,6 +189,10 @@ func SetDefaultConfigValues(config *CloudConfig) {
 
 	if config.Global.UnitStandardizationFilePath == "" {
 		config.Global.UnitStandardizationFilePath = "./unit_standard_transform.json"
+	}
+
+	if config.Global.MetricQueryDuration < 10 || config.Global.MetricQueryDuration > 60 {
+		config.Global.MetricQueryDuration = 10
 	}
 }
 
